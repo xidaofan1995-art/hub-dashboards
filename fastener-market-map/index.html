@@ -1,0 +1,532 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>紧固件市场全景图</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@700;900&display=swap">
+<style>
+/* SignalCraft 信号工坊 · 模式A 智库报告 */
+:root{
+ --bg:#f4f6f7;--panel:#fff;--ink:#14232b;--muted:#5b6b73;--line:#d9e1e5;
+ --navy:#0f2a3d;--on-navy:#fff;--on-navy-muted:#a9c4d3;
+ --blue:#1f5fd1;--blue-soft:#e7eefb;--teal:#0a7a6e;--teal-soft:#e3f3f0;
+ --amber:#d98a1c;--amber-ink:#8a5300;--amber-soft:#fbf0dc;--coral:#d0532e;--on-amber:#1a1206;
+ --r-sm:2px;--r-md:6px;
+ --f-display:"Noto Serif SC","Songti SC",serif;
+ --f-body:"IBM Plex Sans","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+ --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --bg:#0b1114;--panel:#121b20;--ink:#e8eef0;--muted:#9aabb2;--line:#263239;--navy:#16384f;--on-navy-muted:#b4cddb;
+ --blue:#6e9bf0;--blue-soft:#17284a;--teal:#3dbba9;--teal-soft:#123832;--amber:#e6a84a;--amber-ink:#f0bc6a;--amber-soft:#3a2a12;--coral:#ef8461;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b1114;--panel:#121b20;--ink:#e8eef0;--muted:#9aabb2;--line:#263239;--navy:#16384f;--on-navy-muted:#b4cddb;
+ --blue:#6e9bf0;--blue-soft:#17284a;--teal:#3dbba9;--teal-soft:#123832;--amber:#e6a84a;--amber-ink:#f0bc6a;--amber-soft:#3a2a12;--coral:#ef8461;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 var(--f-body)}
+.wrap{max-width:1200px;margin:0 auto;padding:28px 16px 64px;display:grid;gap:32px}
+h2{font:700 22px var(--f-body);margin:0}
+.sec{display:grid;gap:12px}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px}
+.hint{font-size:12px;color:var(--muted)}
+.hero{position:relative;overflow:hidden;background:var(--navy);color:var(--on-navy);padding:44px 24px 34px;border-radius:var(--r-md);min-height:260px;display:grid;align-content:end;gap:10px}
+.hero svg{position:absolute;inset:0;width:100%;height:100%;opacity:.5;pointer-events:none}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--navy) 0%,color-mix(in srgb,var(--navy) 78%,transparent) 45%,color-mix(in srgb,var(--navy) 10%,transparent) 90%)}
+.hero>*:not(svg){position:relative;z-index:1}
+.eyebrow{font:500 11px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--on-navy-muted)}
+h1{font:900 clamp(30px,5vw,46px)/1.12 var(--f-display);letter-spacing:.02em;margin:0}
+.lede{max-width:600px;margin:0;color:var(--on-navy-muted);font-size:14px;line-height:1.75}
+.meta{display:flex;flex-wrap:wrap;gap:4px 16px;font:12px var(--f-mono);color:var(--on-navy-muted)}
+.meta b{color:var(--on-navy);font-weight:500}
+.meta .note{color:var(--amber)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:16px 18px;display:grid;gap:4px;align-content:start}
+.kpi .k{font-size:12px;font-weight:500;color:var(--muted)}
+.kpi .v{font-size:30px;font-weight:500;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .v small{font-size:12px;color:var(--muted);font-weight:400;margin-left:3px}
+.kpi.hi .v{color:var(--blue)}.kpi.warn .v{color:var(--coral)}
+.kpi .d{font-size:12px;color:var(--muted)}
+@media(max-width:600px){.kpis{gap:6px}.kpi{padding:10px 8px;text-align:center}.kpi .v{font-size:20px}.kpi .d{display:none}.kpi .k{font-size:10.5px}}
+.etag{display:inline-block;font-size:11.5px;font-weight:500;padding:1px 8px;border-radius:var(--r-sm)}
+.etag.ok{color:var(--blue);background:var(--blue-soft)}
+.etag.pd{color:var(--amber-ink);background:var(--amber-soft)}
+.etag.go{color:var(--teal);background:var(--teal-soft)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:18px 20px;display:grid;gap:8px;align-content:start}
+.card h3{margin:0;font-size:15.5px;line-height:1.35}
+.card p{margin:0;font-size:13.5px}
+.card .tl{display:flex;justify-content:space-between;align-items:center;gap:8px}
+/* layers */
+.layers{background:var(--panel);border:1px solid var(--line);padding:18px;display:grid;gap:8px}
+.layer{display:grid;grid-template-columns:28px 120px minmax(0,1fr);gap:12px;align-items:start;padding:8px 0;border-top:1px solid var(--line)}
+.layer:first-child{border-top:0}
+.layer .n{font:500 12px var(--f-mono);color:var(--muted);padding-top:2px}
+.layer .t{font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-size:12.5px;padding:2px 9px;border:1px solid var(--line);border-radius:999px;background:var(--bg)}
+.chips span.on{border-color:var(--amber);background:var(--amber-soft);color:var(--amber-ink);font-weight:500}
+@media(max-width:600px){.layer{grid-template-columns:22px minmax(0,1fr)}.layer .chips{grid-column:1/-1}}
+/* matrix */
+.mx-wrap{overflow-x:auto;border:1px solid var(--line);background:var(--panel)}
+.mx{border-collapse:collapse;width:100%;min-width:780px;font-size:13px}
+.mx th,.mx td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.mx th{font-size:11.5px;font-weight:500;color:var(--muted);background:var(--bg);white-space:nowrap}
+.mx td.nm b{display:block;font-size:13.5px}
+.mx td.nm small{font:11px var(--f-mono);color:var(--muted)}
+.mx tr.top td.nm b::after{content:"优先";margin-left:6px;font-size:10.5px;padding:1px 6px;border-radius:9px;background:var(--amber);color:var(--on-amber);font-weight:500}
+/* bars */
+.chart{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:20px 22px;display:grid;gap:10px}
+.crow{display:grid;grid-template-columns:70px minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:12.5px}
+.crow .tr{height:16px;background:var(--bg);border-radius:var(--r-sm);overflow:hidden}
+.crow .fl{height:100%;background:var(--blue);border-radius:var(--r-sm)}
+.crow.hi .fl{background:var(--amber)}.crow.hi .lb{font-weight:700}
+.crow .v{font:12px var(--f-mono);text-align:right}
+.take{margin:0;font-size:13px;padding:9px 11px;background:var(--blue-soft);border-radius:4px}
+.take b{color:var(--blue)}
+.twocol{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px}
+.src{font-size:11.5px;color:var(--muted)}
+.ladder{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.step{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--blue);padding:14px 16px;display:grid;gap:6px}
+.step .p{font:500 11px var(--f-mono);color:var(--muted);letter-spacing:.08em}
+.step h3{margin:0;font-size:15px}.step p{margin:0;font-size:13px;color:var(--muted)}
+@media(max-width:760px){.ladder{grid-template-columns:1fr}}
+ul.risk{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+ul.risk li{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 16px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;font-size:13.5px}
+.srcs{font-size:12.5px;color:var(--muted);display:grid;gap:3px}
+.srcs a{color:var(--blue)}
+footer{font:11.5px var(--f-mono);color:var(--muted)}
+.fbar{display:grid;gap:8px;position:sticky;top:0;z-index:20;margin:-12px 0;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(6px);padding:10px 0;border-bottom:1px solid var(--line)}
+.frow{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;align-items:center}
+.frow::-webkit-scrollbar{display:none}
+.frow .fl2{flex:none;font:500 11px var(--f-mono);color:var(--muted);letter-spacing:.02em;min-width:64px;white-space:nowrap}
+.chip{font:inherit;font-size:12.5px;flex:none;min-height:30px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.chip i{font:normal 11px var(--f-mono);color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--on-navy)}
+.chip[aria-pressed="true"] i{color:var(--on-navy-muted)}
+.fbar input{font:inherit;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:7px 10px;border-radius:var(--r-md);min-height:38px}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.tc{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:16px 18px;display:grid;gap:9px;align-content:start;min-width:0;--c:var(--blue);--cs:var(--blue-soft)}
+.tc.t-dist{--c:var(--teal);--cs:var(--teal-soft)}.tc.t-peer{--c:var(--amber-ink);--cs:var(--amber-soft)}.tc.t-plat{--c:var(--navy);--cs:var(--bg)}
+.tc .top{display:flex;gap:12px;align-items:flex-start}
+.tile{width:40px;height:40px;border-radius:10px;background:var(--cs);color:var(--c);display:grid;place-items:center;flex:none;font:500 12px var(--f-mono)}
+.tc h4{margin:0;font-size:15px;line-height:1.35;overflow-wrap:anywhere}
+.tc .sub{font:11px var(--f-mono);color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:11.5px;padding:1px 8px;border-radius:var(--r-sm);background:var(--cs);color:var(--c);font-weight:500}
+.tag.n{background:var(--bg);color:var(--muted);border:1px solid var(--line);font-weight:400}
+.tc .use{margin:0;font-size:13px;padding:8px 10px;background:var(--cs);border-radius:4px}
+.tc .use b{color:var(--c)}
+.tc .foot{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);gap:8px}
+.tc .st{font-size:12px;padding:2px 9px;border-radius:999px;border:1px solid currentColor;color:var(--muted)}
+.cnt{font:12px var(--f-mono);color:var(--muted)}
+</style></head><body>
+<div class="wrap">
+
+<header class="hero">
+<svg viewBox="0 0 1200 320" preserveAspectRatio="xMaxYMax slice" aria-hidden="true"><defs><radialGradient id="g" cx=".72" cy=".62" r=".45"><stop offset="0" stop-color="#d98a1c" stop-opacity=".35"/><stop offset="1" stop-color="#0f2a3d" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="320" fill="url(#g)"/><circle cx="870" cy="196" r="54" fill="#d98a1c" opacity=".5"/>
+<g fill="#2f5570" opacity=".75"><rect x="420" y="191" width="18" height="23"/><rect x="458" y="177" width="10" height="37"/><rect x="474" y="168" width="10" height="46"/><rect x="524" y="173" width="10" height="41"/><rect x="584" y="182" width="14" height="32"/><rect x="674" y="169" width="14" height="45"/><rect x="786" y="169" width="18" height="45"/><rect x="878" y="169" width="14" height="45"/><rect x="936" y="169" width="18" height="45"/><rect x="984" y="170" width="18" height="44"/><rect x="1094" y="169" width="10" height="45"/></g>
+<g stroke="#b4cddb" stroke-width="2.2" fill="none" opacity=".8"><path d="M596 226V103M624 226V103M590 103H714M563 114l33-11M610 103V82l77 21"/><path d="M683 226V76M717 226V76M677 76H827M643 90l40-14M700 76V50l94 26"/><path d="M1067 226V109M1093 226V109M1061 109H1179"/></g>
+<g><rect x="560" y="192" width="20" height="7" fill="#d0532e"/><rect x="582" y="192" width="20" height="7" fill="#1f5fd1"/><rect x="604" y="192" width="20" height="7" fill="#d98a1c"/><rect x="626" y="192" width="20" height="7" fill="#5f7f94"/><rect x="692" y="192" width="20" height="7" fill="#9fc0d6"/><rect x="714" y="192" width="20" height="7" fill="#d98a1c"/></g>
+<rect x="0" y="226" width="1200" height="8" fill="#24425a"/><path d="M640 252H1000L1060 236V228H620Z" fill="#0a1f2e"/></svg>
+<div class="eyebrow">FASTENER MARKET MAP · 特耐 · 2026-11</div>
+<h1>紧固件市场全景图</h1>
+<p class="lede">机会不在标准件，在精密、定制、有认证门槛的细分赛道，以及对大厂产能与工艺的补位。结论来自第三方口径与项目底表，待特耐设备、认证数据校准。</p>
+<div class="meta"><span>数据底表 <b>4 张工作表</b></span><span>客户线索 <b>50</b></span><span>竞品 <b>14</b></span><span class="note">待补：特耐设备/认证/产能</span></div>
+</header>
+
+<section class="kpis" data-tab="ov" aria-label="关键数字">
+<div class="kpi hi"><span class="k">2025 出口额</span><span class="v">100.5<small>亿美元</small></span><span class="d">海关数据，Fastener World 整理</span></div>
+<div class="kpi warn"><span class="k">较 2022 峰值</span><span class="v">−8.1<small>%</small></span><span class="d">峰值 109.4 亿美元</span></div>
+<div class="kpi"><span class="k">国内产值 2023</span><span class="v">1513<small>亿元</small></span><span class="d">第三方口径，出口约占产量 40%</span></div>
+<div class="kpi"><span class="k">客户线索</span><span class="v">50<small>家</small></span><span class="d">海关数据买家，覆盖 13 个国家/地区</span></div>
+</section>
+
+<section class="sec" data-tab="ov">
+<div class="sec-h"><h2>核心结论</h2><span class="hint">基于现有资料的判断</span></div>
+<div class="cards">
+<div class="card"><div class="tl"><h3>先切消费电子与智能硬件</h3><span class="etag go">优先</span></div><p>微型螺丝、CD纹、防松、防水在 1688 同类品销量靠前；特耐有约 100 台 CD纹、约 50 台防松设备，与现有智能硬件供应链重叠。</p></div>
+<div class="card"><div class="tl"><h3>汽车先做认证规划</h3><span class="etag pd">待核实</span></div><p>汽车占下游约 58%（口径待核实），门槛是 IATF 16949，周期长，不宜与消费电子同步冲刺。</p></div>
+<div class="card"><div class="tl"><h3>两类客户两套打法</h3><span class="etag ok">已核实</span></div><p>品固 PINGOOD 是可扩大份额的战略客户；翔建精工是竞合型客户，价值在产能外溢与特殊工艺补位。</p></div>
+<div class="card"><div class="tl"><h3>出口是核心变量</h3><span class="etag ok">已核实</span></div><p>2025 前 11 个月出口量 510.7 万吨，同比 +7.5%，但单价持续下降；对美国依赖仍高。</p></div>
+</div>
+</section>
+
+<section class="sec" data-tab="ov">
+<div class="sec-h"><h2>六维度细分地图</h2><span class="hint">逐层交叉，定位到具体赛道 · 高亮为示例</span></div>
+<div class="layers">
+<div class="layer"><span class="n">01</span><span class="t">应用行业</span><div class="chips"><span class="on">消费电子</span><span>智能硬件</span><span>新能源汽车</span><span>医疗设备</span><span>船舶</span><span>航空航天</span></div></div>
+<div class="layer"><span class="n">02</span><span class="t">产品结构</span><div class="chips"><span class="on">微型精密螺丝</span><span>防松螺丝</span><span>防水螺丝</span><span>防盗螺丝</span><span>铆接件</span><span>冲压件</span></div></div>
+<div class="layer"><span class="n">03</span><span class="t">材料</span><div class="chips"><span>304/316 不锈钢</span><span>碳钢</span><span>黄铜</span><span>钛合金</span><span>铝合金</span></div></div>
+<div class="layer"><span class="n">04</span><span class="t">表面处理</span><div class="chips"><span class="on">黑锌</span><span>锌镍</span><span>PVD</span><span>达克罗</span><span>钝化</span></div></div>
+<div class="layer"><span class="n">05</span><span class="t">工艺 / 认证</span><div class="chips"><span class="on">自动锁付</span><span>走心机</span><span>冷镦</span><span>IATF 16949</span><span>高洁净</span></div></div>
+<div class="layer"><span class="n">06</span><span class="t">客户痛点</span><div class="chips"><span>松动</span><span>防水密封</span><span>外观件一致性</span><span>防拆</span><span>小批量快速交付</span></div></div>
+</div>
+</section>
+
+<section class="sec" data-tab="pl">
+<div class="sec-h"><h2>开发主线</h2><span class="hint">基于国别风险、品类渠道矩阵与特耐已知产能 · 初判，待你按资源调整</span></div>
+<p class="use" style="background:var(--teal-soft,#e3f2ef);margin:0 0 12px;padding:12px 14px;font-size:14px"><b>一句话：</b>以越南工厂为桥头堡先打东盟电子与摩托车客户，国内主攻团队熟悉的智能安防与 AI 服务器防松件；欧美不直发，走国际分销商补量；走心机、冲压件等认证到位后再放量。</p>
+<div class="twocol">
+<div class="card"><h3>为什么先东盟</h3><p>2025 年 1–9 月对越南出口 +34.2%、泰国 +19.5%，是增长最快的大流向。三星越南正在扶持本地供应商，VinFast、本田、雅马哈也已在海关线索里。越南出货在 CBAM 默认排放值上也比中国低（2,585 对 3,012）。</p></div>
+<div class="card"><h3>为什么欧美走分销</h3><p>欧盟对华紧固件反倾销税 22.1%–86.5%，加上 CBAM；美国有 232 关税和新 301 关税，规则变动快。直接做终端客户的合规成本太高，分销商（伍尔特、柏中、Fastenal、Optimas）能承担报关和库存，特耐专注供货。</p></div>
+<div class="card"><h3>为什么暂缓</h3><p>俄罗斯与中亚：增长快但结算、制裁风险高。墨西哥：2026 年起对华加征 5%–50%。印度：要 BIS 认证。三者先观察，有明确客户意向再投入。</p></div>
+</div>
+</section>
+
+<section class="sec" data-tab="pl">
+<div class="sec-h"><h2>市场 × 品类优先级</h2><span class="hint">P1 先做 · P2 并行准备 · P3 认证后放量</span></div>
+<div class="mx-wrap"><table class="mx" style="min-width:900px"><thead><tr><th>阶段</th><th>市场</th><th>主打品类</th><th>目标客户</th><th>渠道打法</th><th>前提条件</th></tr></thead><tbody>
+<tr class="top"><td><span class="etag go">P1 · 0–3 月</span></td><td class="nm"><b>越南 / 泰国</b></td><td>微型精密螺丝、防水 / 防盗、CD纹外观</td><td>三星越南及其 EMS 供应链；VinFast、本田、雅马哈的二级供应商</td><td>越南工厂就近直供；先报名三星本地供应商扶持项目</td><td>越南工厂可做品类与产能；原产地合规文件</td></tr>
+<tr class="top"><td><span class="etag go">P1 · 0–3 月</span></td><td class="nm"><b>国内</b></td><td>智能锁 / 安防螺丝；AI 服务器松不脱、防松件</td><td>安防摄像头、智能锁品牌；服务器与液冷机柜厂商</td><td>借团队行业人脉直接拜访；1688、阿里国际站接样品单</td><td>防水 IP 测试和防松可靠性数据</td></tr>
+<tr><td><span class="etag ok">P2 · 3–6 月</span></td><td class="nm"><b>德国 / 欧洲</b></td><td>防松垫圈、特殊螺钉、OEM 定制</td><td>伍尔特、柏中、Reyher、Emil Lux</td><td>供应商门户注册；2027-04 斯图加特紧固件展</td><td>反倾销单独税率评估；钢厂排放数据（CBAM）</td></tr>
+<tr><td><span class="etag ok">P2 · 3–6 月</span></td><td class="nm"><b>美国</b></td><td>同上，加微型精密件</td><td>Fastenal、Optimas、Kimball Midwest 等项目型分销商</td><td>做价格联动报价，优先从越南出货</td><td>7318 税号税率核实</td></tr>
+<tr><td><span class="etag pd">P3 · 6–12 月</span></td><td class="nm"><b>国内 + 越南</b></td><td>走心机精密件、冲压件</td><td>汽车 Tier1、连接器厂、电池与储能结构件厂（项目库线索 75 家）</td><td>先做连接器与储能，再进汽车</td><td>IATF 16949；走心机与冲压设备数量</td></tr>
+<tr><td><span class="etag pd">观察</span></td><td class="nm"><b>印度 / 俄罗斯与中亚 / 墨西哥 / 中东</b></td><td>按客户需求</td><td>有明确询盘的客户</td><td>只接单不主动投入</td><td>BIS 认证；结算方式</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="sec" data-tab="pl">
+<div class="sec-h"><h2>90 天行动计划</h2><span class="hint">数字为建议值，按你的人手调整</span></div>
+<div class="mx-wrap"><table class="mx" style="min-width:760px"><thead><tr><th>时间</th><th>动作</th><th>产出</th><th>衡量指标</th></tr></thead><tbody>
+<tr><td class="nm"><b>第 1–2 周</b></td><td>盘点特耐能力：越南工厂品类与产能、认证、走心机与冲压设备；整理样品册和报价体系</td><td>能力清单、中英越三语样品册</td><td>前提条件全部确认</td></tr>
+<tr><td class="nm"><b>第 2–4 周</b></td><td>越南：筛出三星、VinFast、本田、雅马哈的二级供应商名单；国内：列出安防、智能锁、服务器客户</td><td>越南 30 家、国内 30 家目标名单</td><td>名单入「客户」工作表</td></tr>
+<tr><td class="nm"><b>第 4–8 周</b></td><td>越南工厂接待拜访；国内上门；同步在柏中、伍尔特门户注册</td><td>拜访记录、送样</td><td>拜访 20 家，送样 8 家，门户注册 2 家</td></tr>
+<tr><td class="nm"><b>第 8–12 周</b></td><td>跟进样品验证；评估欧盟单独税率和 CBAM 数据；决定是否参加 2027-04 斯图加特展</td><td>试单、合规评估结论</td><td>试单 2 张，进入 1 家分销商供应商库</td></tr>
+</tbody></table></div>
+<div class="twocol" style="margin-top:12px">
+<div class="card"><h3>资源分配建议</h3><p>东盟与国内精密件 50%，国际分销商 30%，走心机与冲压认证准备 20%。</p></div>
+<div class="card"><h3>需要你确认的前提</h3><p>官网 tnhardware.cn 证书错误，打不开，以下按项目文件推断：约 100 台 CD纹设备、约 50 台防松设备、有越南工厂。还需确认：越南工厂能做哪些品类、现有认证（ISO 9001 / IATF 16949 / ISO 13485）、走心机与冲压设备数量。<span class="etag pd">待确认</span></p></div>
+</div>
+</section>
+
+<section class="sec" data-tab="sp">
+<div class="sec-h"><h2>细分赛道优先级</h2><span class="hint">来自「细分市场」工作表 · 匹配度待你校准</span></div>
+<div class="mx-wrap"><table class="mx"><thead><tr><th>行业</th><th>典型产品与材料</th><th>主要门槛</th><th>市场信号</th><th>建议</th></tr></thead><tbody>
+<tr class="top"><td class="nm"><b>消费电子 / 可穿戴</b><small>S01 S02</small></td><td>微型精密螺丝、CD纹；黑锌；自动锁付</td><td>品牌供应链准入与大客户认证</td><td>翔建主要市场含手机、穿戴；品固服务电脑与电子</td><td><span class="etag go">优先切入</span></td></tr>
+<tr class="top"><td class="nm"><b>智能硬件</b><small>S03 S04 S05</small></td><td>防松 / 防水 / 防盗螺丝</td><td>客户自有质量体系</td><td>1688 防水螺丝销量第一（5.8 万+）；与现有供应链重叠</td><td><span class="etag go">优先切入</span></td></tr>
+<tr><td class="nm"><b>新能源汽车 / 汽车</b><small>S08 S09</small></td><td>防松螺丝；锌镍；电池包冲压托盘</td><td>IATF 16949</td><td>品固、翔建均服务汽车；海关买家多为汽车/摩托车产业链</td><td><span class="etag pd">先做认证规划</span></td></tr>
+<tr><td class="nm"><b>机器人 / AI 眼镜</b><small>S06 S07</small></td><td>关节紧固件；铰链、微型螺丝</td><td>需验证</td><td>见《目标行业产品拆解》</td><td><span class="etag pd">验证中</span></td></tr>
+<tr><td class="nm"><b>医疗 · 船舶 · 航空航天</b></td><td>钛合金 / 316 / 高端合金</td><td>高洁净 / 高盐雾 / 行业资质</td><td>航空航天细分 2023 年约 129.9 亿元，复合增速 6.33%</td><td><span class="etag pd">观察，暂不进入</span></td></tr>
+</tbody></table></div>
+</section>
+
+<section class="sec" data-tab="ov">
+<div class="sec-h"><h2>市场规模与趋势</h2><span class="hint">出口额 · 亿美元 · 中国海关总署，Fastener World 整理</span></div>
+<div class="chart">
+<div class="crow"><span class="lb">2021</span><div class="tr"><div class="fl" style="width:83.1%"></div></div><span class="v">90.9</span></div>
+<div class="crow hi"><span class="lb">2022 峰值</span><div class="tr"><div class="fl" style="width:100%"></div></div><span class="v">109.4</span></div>
+<div class="crow"><span class="lb">2023</span><div class="tr"><div class="fl" style="width:83.6%"></div></div><span class="v">91.4</span></div>
+<div class="crow"><span class="lb">2024</span><div class="tr"><div class="fl" style="width:87.4%"></div></div><span class="v">95.6</span></div>
+<div class="crow"><span class="lb">2025</span><div class="tr"><div class="fl" style="width:91.8%"></div></div><span class="v">100.5</span></div>
+<p class="take"><b>读法：</b>出口额回升但未回到 2022 峰值；量增价跌，说明竞争压力在价格端，差异化工艺才是出路。</p>
+<span class="src">国内产值 2023 年 1513 亿元；2025 年约 1675 亿元为机构预测，仅作量级参考。 <span class="etag pd">第三方口径</span></span>
+</div>
+</section>
+
+<section class="sec" data-tab="cp">
+<div class="sec-h"><h2>重点客户与竞品</h2><span class="hint">品固与翔建要用完全不同的经营方式</span></div>
+<div class="mx-wrap"><table class="mx"><thead><tr><th>维度</th><th>品固 PINGOOD</th><th>翔建精工</th><th>对特耐的意义</th></tr></thead><tbody>
+<tr><td class="nm"><b>企业属性</b></td><td>塑胶机构件、配线器材、电子装配件平台型制造商</td><td>大规模精密螺丝、铆钉、车削件制造商</td><td>品固偏下游客户；翔建客户与竞品并存</td></tr>
+<tr><td class="nm"><b>产品重叠</b></td><td>较低，局部重叠于塑胶紧固件、金属端子</td><td>很高：微型螺丝、CD纹、防松、车削件、汽车紧固件</td><td>翔建采购不太可能集中在普通螺丝</td></tr>
+<tr><td class="nm"><b>主要市场</b></td><td>电脑、电子、汽车、工业电器、半导体设备配件</td><td>手机、穿戴、汽车、OA、医疗、无人机</td><td>都与特耐重点市场高度相关</td></tr>
+<tr><td class="nm"><b>开发模式</b></td><td>多语言官网、目录、展会、海外经销与 OEM</td><td>大客户认证、品牌供应链、技术授权</td><td>品固深挖份额；翔建做差异化外协</td></tr>
+</tbody></table></div>
+<p class="src">特耐企业介绍里的 Apple、Samsung、Huawei、Audi、BMW 等标识，尚无采购合同或供应商代码验证，暂不计入客户名单。 <span class="etag pd">待核实</span></p>
+</section>
+
+<section class="sec" data-tab="cu">
+<div class="sec-h"><h2>海关数据客户分布</h2><span class="hint">来自「客户」工作表 · 50 家 · 按国家/地区</span></div>
+<div class="twocol">
+<div class="chart" id="cust"></div>
+<div class="card"><h3>读数</h3><p>美国 14 家、德国 8 家最多；印度 6 家、越南 6 家、台湾 4 家次之。</p><p>德国多为 C 类件分销（伍尔特、Reyher 等），采购次数高；越南买家（三星、VinFast、本田）与特耐越南工厂地理匹配。</p><p class="src">国家以海关表为准；Würth Aviation、Siemens 原表标越南，暂记德国，待核。 <span class="etag pd">待核实</span></p></div>
+</div>
+</section>
+
+<section class="sec" id="scn" data-tab="sp">
+<div class="sec-h"><h2>应用场景卡片</h2><span class="hint">来自「细分市场」工作表 · 26 个场景 · S01–S09 按海关线索粗配，S10–S18 来自项目潜在客户库，S19–S26 为桌面调研新增</span></div>
+<div class="cards" id="scnCards"></div>
+</section>
+
+<section class="sec" id="cus" data-tab="cu">
+<div class="sec-h"><h2>潜在客户卡片</h2><span class="hint">来自「客户」工作表 · 50 家 · 分类、客户类型、行业标签为初判，待你校准</span></div>
+<div class="fbar">
+<div class="frow" id="tabs" role="tablist" aria-label="页签"></div>
+<div id="filt" style="display:grid;gap:8px">
+<div id="qrow" style="display:flex;gap:8px"><input type="search" id="q" placeholder="搜索公司、国家、产品" aria-label="搜索客户" style="flex:1;min-width:0"><button class="chip" id="ftog" aria-expanded="true" type="button" style="min-height:38px">收起筛选</button></div>
+<div id="frows" style="display:grid;gap:8px">
+<div class="frow" id="fCat"><span class="fl2">紧固件分类</span></div>
+<div class="frow" id="fType"><span class="fl2">客户类型</span></div>
+<div class="frow" id="fReg"><span class="fl2">区域</span></div>
+<div class="frow" id="fInd"><span class="fl2">应用行业</span></div>
+</div>
+</div>
+</div>
+<div class="cnt" id="cnt"></div>
+<div class="cards" id="cusCards"></div>
+</section>
+
+<section class="sec" id="geo" data-tab="geo">
+<div class="sec-h"><h2>国别市场开发潜力</h2><span class="hint">中国出口额 + 海关买家线索 · 潜力判断为初判</span></div>
+<div class="kpis" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+<div class="kpi"><span class="k">2023 全球紧固件进口</span><span class="v">475<small>亿美元</small></span><span class="d">主要进口国：美、德、墨、中、加</span></div>
+<div class="kpi hi"><span class="k">美国占全球进口</span><span class="v">14.1<small>%</small></span><span class="d">全球第一大进口市场</span></div>
+<div class="kpi"><span class="k">出口目的地 Top20</span><span class="v">71.8<small>%</small></span><span class="d">2024 年 1–10 月占出口额</span></div>
+</div>
+<div class="mx-wrap"><table class="mx"><thead><tr><th>国家</th><th>2024 出口额（百万美元）</th><th>2024 同比</th><th>2025 出口额（亿美元）</th><th>海关买家</th><th>潜力</th><th>判断与打法</th></tr></thead><tbody id="geoBody"></tbody></table></div>
+<p class="src">口径提醒：2024 列来自 Fastener World 五国对比表；2025 列来自另一篇，口径更宽（全球合计 122.9 亿美元，与上文 100.5 亿不同），两列不要相加或直接比较。“—”表示该来源没有给数。 <span class="etag pd">第三方口径</span></p>
+<div class="twocol"><div class="card"><h3>增长最快</h3><p>阿联酋 2025 年约 +30.5%，俄罗斯 2024 年 +28.3%，越南 2024 年 +21.5%。与特耐越南工厂地理匹配的只有越南。</p></div><div class="card"><h3>体量最大但承压</h3><p>美国仍是第一大目的地，但 2025 年约 −9.8%。有企业通过越南、泰国转运或当地设厂应对关税，这正是特耐越南工厂的用法。</p></div></div>
+<div class="sec-h" style="margin-top:26px"><h2>出口机会与风险雷达</h2><span class="hint">政策截至 2026-11 · 税率须按具体 HS 税号复核</span></div>
+<p class="use" style="background:var(--amber-soft);margin:0 0 12px;padding:10px 12px"><b>先看这一条：</b>美国 2026-07-24 起的新 301 关税对中国和越南同为 12.5%，用越南转口规避关税的差距缩小；是否还叠加原有对华 301（7.5%–25%）需按税号核实。越南工厂的价值更多在原产地合规之后的就近交付和东盟客户。<span class="etag pd">待核实</span></p>
+<div class="mx-wrap"><table class="mx" style="min-width:860px"><thead><tr><th>市场</th><th>政策与风险</th><th>对特耐的影响</th><th>应对</th><th>状态</th></tr></thead><tbody id="polBody"></tbody></table></div>
+<p class="src">状态“已核实”指已读到公开原文；“待核实”指只有标题或二手转述，或需按税号复核。</p>
+<div class="twocol" style="margin-top:12px"><div class="chart"><b>2025 年 1–9 月中国紧固件出口流向</b><span class="src">亿美元 · 全国出口额 +7.7%，数量 +10.9%，均价 −3.4%</span><div id="flowBars"></div></div>
+<div class="card"><h3>开发优先级（初判）</h3><p><b>第一梯队：</b>越南、泰国。增长快（+34.2%、+19.5%），电子与汽车集群集中，且特耐有越南工厂。三星越南正在扶持本地供应商，已延伸到北宁、胡志明市，并计划扩到太原、海防等地。</p><p><b>第二梯队：</b>德国与欧洲分销、美国分销、印度高精度件。德国涨 +15.3%，但有反倾销和 CBAM；印度进口 11.3 亿美元、中国占 24.6%，但要 BIS 认证。</p><p><b>观察：</b>俄罗斯与中亚、墨西哥、阿联酋、韩国。</p></div></div>
+</section>
+
+<section class="sec" id="chn" data-tab="ch">
+<div class="sec-h"><h2>渠道经销商情况</h2><span class="hint">海关数据分销商 17 家 · 平台与外企贸易商</span></div>
+<div class="twocol">
+<div class="chart"><b>海关记录：高强度螺栓交易次数</b><span class="src">编码 73181510，抗拉强度≥800 MPa、杆径>6mm</span><div id="distBars"></div></div>
+<div class="card"><h3>分销商读数</h3>
+<p>海关数据里的分销商共 17 家：美国 9 家、德国 7 家、日本 1 家。伍尔特、Reyher、Emil Lux 的采购次数最高。</p>
+<p>入口：柏中（Bossard 上海）可注册成为供应商，安普达网站有合作申请入口。</p>
+<p class="use" style="background:var(--amber-soft)"><b>初判：</b>这些分销商买的主要是大规格高强度螺栓与弹簧垫圈，和特耐的微型精密、CD纹错位。切入点更可能是防松垫圈、销类、特殊螺钉和 OEM 定制。 <span class="etag pd">待验证</span></p></div>
+</div>
+<div class="mx-wrap"><table class="mx"><thead><tr><th>平台 / 贸易商</th><th>类型</th><th>流量（项目表口径，K）</th><th>费用</th><th>备注</th></tr></thead><tbody id="pBody"></tbody></table></div>
+<p class="src">明细见数据底表「渠道」工作表（28 条）。流量、费用为项目表记录，未逐项复核。</p>
+</section>
+
+<section class="sec" data-tab="ch">
+<div class="sec-h"><h2>品类 × 渠道机会矩阵</h2><span class="hint">每个品类对应谁买、走什么渠道、怎么进</span></div>
+<div class="mx-wrap"><table class="mx" style="min-width:960px"><thead><tr><th>品类</th><th>主要买家与场景</th><th>首选渠道</th><th>进入方式与门槛</th><th>机会点</th><th>风险 / 待验证</th></tr></thead><tbody id="mxBody"></tbody></table></div>
+<div class="twocol" style="margin-top:12px"><div class="card"><h3>国际分销商怎么进</h3><p>柏中（Bossard）：在供应商门户注册，评估业绩与竞争力，再过质量检查、交付、批准和审核。伍尔特：有明确的新供应商批准流程，审核按风险在现场进行，只有批准的供应商才会被分到具体产品组。</p><p>美国方面，Fastenal、Optimas、Kimball Midwest 等多为“项目型供应商”，靠库存管理、自动售货和驻场补货服务客户，更看重稳定交付和价格联动。<span class="etag pd">供应商门槛细节待向对方确认</span></p></div>
+<div class="card"><h3>展会与线上</h3><p>Fastener Fair Global：2027-04-06 至 08，斯图加特。Fastener Fair 美国、墨西哥、印度另有场次，日期待查。</p><p>线上：阿里国际站、1688、百度爱采购用来获取询盘和样品单；线上单量大的 CD纹、防水螺丝适合先做样品单再转大客户。<span class="etag pd">待验证</span></p></div></div>
+<p class="src">矩阵为桌面调研的初判，客户线索数来自项目潜在客户库；“待验证”项需要访谈或试单确认。</p>
+</section>
+
+<section class="sec" data-tab="cp">
+<div class="sec-h"><h2>竞品与渠道</h2><span class="hint">「竞品」14 家 · 「渠道」28 条</span></div>
+<div class="cards">
+<div class="card"><h3>竞品梯队</h3><p>汽车类：天津山口、浙江华远、上海奥达科（卡特彼勒、三一重工优秀供应商）、苏州新凯。</p><p>铆接/压铆：广州科镁隆、东莞昕和精密。出口型：济南实达、上海上垫（70% 出口）。外资：STANLEY。</p></div>
+<div class="card"><h3>线上平台</h3><p>流量：阿里国际站 129800K、1688 35400K、百度爱采购 4800K、米思米 403.6K、震坤行 187.5K。</p><p>费用已知：爱采购 1 年 6980 元，易紧通 880 美元起/年，京东工业 0 元试运营。</p></div>
+<div class="card"><h3>外企 / 贸易商入口</h3><p>柏中（Bossard 上海）可注册成为供应商；安普达网站有合作申请入口；费博瑞服务西门子、通用电气、中国中车等。</p></div>
+</div>
+</section>
+
+<section class="sec" data-tab="ac">
+<div class="sec-h"><h2>能力进阶路线</h2><span class="hint">起止时间需结合特耐实际进展确认</span></div>
+<div class="ladder">
+<div class="step"><span class="p">0—3 个月</span><h3>产品与供应商调研</h3><p>摸清品类、价格、工艺；建立客户与竞品底表。</p></div>
+<div class="step"><span class="p">3—6 个月</span><h3>报价、打样、小订单</h3><p>先在消费电子、智能硬件跑通；每单记录国家、HS编码、Incoterm、账期、异常。</p></div>
+<div class="step"><span class="p">6—12 个月</span><h3>稳定客户与批量</h3><p>用半年交易记录复盘，决定是否推进汽车认证。</p></div>
+</div>
+</section>
+
+<section class="sec" data-tab="ac">
+<div class="sec-h"><h2>风险与待核实</h2><span class="hint">给老板前建议补齐</span></div>
+<ul class="risk">
+<li><span class="etag pd">缺口</span><span><b>特耐自身信息：</b>设备、认证、产能、起订量尚未写入，所以匹配度与优先级未定。</span></li>
+<li><span class="etag pd">口径</span><span><b>市场数据为第三方口径：</b>1513 亿产值、汽车占 58% 等未与原始报告交叉核对。</span></li>
+<li><span class="etag pd">样本</span><span><b>客户判断样本小：</b>深度判断只覆盖品固与翔建，其余 50 家只有海关线索，未接触。</span></li>
+<li><span class="etag pd">贸易</span><span><b>贸易环境：</b>对美国依赖仍高；南非已对中国、马来西亚螺栓螺丝启动反倾销调查。</span></li>
+</ul>
+</section>
+
+<section class="sec" data-tab="ac">
+<h2>来源</h2>
+<div class="srcs">
+<a href="https://fastener-world.com/en/article/9343.html">Fastener World：2025 年前 11 个月出口量</a>
+<a href="https://fastener-world.com/data/pdf_download/FW_217_E_325.pdf">Fastener World：2021—2025 年出口额序列</a>
+<a href="https://fastener-world.com/data/pdf_download/CFW_77_W_54.pdf">Fastener World：南非反倾销调查</a>
+<a href="https://www.chyxx.com/industry/1209354.html">智研咨询：2025 年中国紧固件行业</a>
+<a href="https://www.chyxx.com/industry/1217116.html">智研咨询：航空航天紧固件</a>
+<a href="https://www.thompsoncoburn.com/insights/80-june-16-2026-executive-order-adjusting-232-duties-on-certain-steel-aluminum-and-copper-products/">Thompson Coburn：2026-06 对 232 关税的调整</a>
+<a href="https://www.dorsey.com/newsresources/publications/client-alerts/2026/7/announced-section-301-tariffs">Dorsey：2026-07-24 起的新 301 关税</a>
+<a href="https://fastener-world.com/en/article/9410.html">Fastener World：Express Fasteners 诉海关 232 计税案</a>
+<a href="https://lovguiden.dk/en/det-offentlige/eur-lex-eu-tidende/2026-09-21-eu-aendrer-antidumpingafgift-paa-kinesiske-jern-og-staalbeslag">欧盟条例 2026/2089：对华紧固件反倾销税</a>
+<a href="https://fastener-world.com/en/article/9395.html">Fastener World：CBAM 与紧固件</a>
+<a href="https://www.foley.com/zh/insights/publications/2025/12/mexican-january-2026-tariff-tsunami-maquilas-arent-immune/">Foley：墨西哥 2026-01 关税上调</a>
+<a href="https://www.outlookbusiness.com/industry/fastener-traders-want-govt-to-roll-back-quality-control-order-amid-rising-cost-supply-disruptions">Outlook Business：印度紧固件 QCO</a>
+<a href="https://knnindia.co.in/news/newsdetails/economy/government-accepts-industry-demands-grants-three-year-qco-relief-to-select-cross-recessed-screws">KNN：印度对三类十字槽螺钉的 QCO 暂缓</a>
+<a href="https://indiaseatradenews.com/dgtr-terminates-anti-dumping-probe-on-imports-of-chinese-fasteners/">印度 DGTR 终止对华紧固件反倾销调查</a>
+<a href="https://m.chinabgao.com/info/1301079.html">观研天下：2025 年 1–9 月紧固件出口</a>
+<a href="https://www.chinabaogao.com/market/202604/788697.html">观研天下：紧固件 2025 年出口额与光伏需求</a>
+<a href="https://news.10jqka.com.cn/20260904/c679581174.shtml">同花顺：AI 液冷产业需求</a>
+<a href="https://www.anglera.com/blog/top-fasteners-distributors-2026">Anglera：2026 年北美紧固件分销商</a>
+<a href="https://www.bossard.com/au-en/about-us/supplier-portal">Bossard 供应商门户</a>
+<a href="https://www.wuerth-industrie.com/web/en/wuerthindustrie/qualitaetsmanagement_1/lieferantenmanagement/Lieferanten_Qualitaetssicherung.php">伍尔特工业：供应商管理</a>
+<a href="https://vir.com.vn/samsung-vietnam-to-deepen-cooperation-with-local-manufacturers-162444.html">VIR：三星越南深化本地供应商合作</a>
+<a href="https://www.fastenerfair.com/global/en-gb.html">Fastener Fair Global 2027</a>
+<span>项目底表：紧固件客户开发工作开展 · 目标行业产品拆解 · 螺丝细分市场全景地图（仅粘贴片段）</span>
+</div>
+</section>
+
+<footer>数据底表更新后，由 Claude 重画本页图表 · 生成于 2026-11-10</footer>
+</div>
+<script>
+var d=[["美国",14],["德国",8],["印度",6],["越南",6],["台湾",4],["日本",3],["墨西哥",2],["孟加拉",2],["其他（加拿大、阿根廷、马来西亚、俄罗斯、土耳其）",5]];
+var h="";d.forEach(function(r,i){h+='<div class="crow'+(i==0?' hi':'')+'"><span class="lb" style="font-size:12.5px">'+(r[0].length>6?'其他':r[0])+'</span><div class="tr"><div class="fl" style="width:'+(r[1]/14*100)+'%"></div></div><span class="v">'+r[1]+'</span></div>'});
+document.getElementById("cust").innerHTML=h;
+
+/* 客户：[编号,名称,国家,区域,类型,行业,采购/备注] */
+var C=[
+["K001","伍尔特 WURTH Industrie Service","德国","欧洲","分销商","通用分销","螺母、螺栓、垫圈、销；交易次数高"],
+["K002","Reyher","德国","欧洲","分销商","通用分销","螺栓、垫圈、螺母；交易次数高"],
+["K003","Emil Lux","德国","欧洲","分销商","通用分销","高强度螺栓、垫圈"],
+["K004","Keller & Kalmbach","德国","欧洲","分销商","汽车摩托","C类件管理：汽车、机械、铁路、农建机械"],
+["K005","Achilles Seibert","德国","欧洲","分销商","通用分销","特殊螺钉，与经认证的制造商合作"],
+["K006","Auger Autotechnik","德国","欧洲","分销商","汽车摩托","商用车售后零配件"],
+["K007","伍尔特航空航天","德国","欧洲","分销商","航空航天","原表国家标越南，待核"],
+["K008","西门子 Siemens","德国","欧洲","终端品牌","工业机械","工业自动化；原表国家标越南，待核"],
+["K009","Fastenal","美国","北美","分销商","通用分销","美国工业品 B2B 平台"],
+["K010","EFC International","美国","北美","分销商","汽车摩托","汽车、工业定制紧固件"],
+["K011","STANLEY Engineered Fastening","美国","北美","同行/竞合","通用分销","中国有办事处；同时是竞品"],
+["K012","Lindstrom Metric","美国","北美","分销商","通用分销","紧固件分销"],
+["K013","Endries International","美国","北美","分销商","通用分销","紧固件供应"],
+["K014","ITW Brands","美国","北美","终端品牌","建筑","建筑螺钉、木螺钉"],
+["K015","Interfast Group","美国","北美","分销商","建筑","幕墙紧固件"],
+["K016","Chun Yu Works USA","美国","北美","分销商","建筑","建筑紧固件"],
+["K017","Merchants Fastener","美国","北美","分销商","通用分销","不锈钢自攻、自钻螺钉"],
+["K018","Flowserve","美国","北美","终端品牌","工业机械","泵阀、机械设备"],
+["K019","All State Fastener","美国","北美","分销商","通用分销","紧固件解决方案"],
+["K020","Star Stainless Screw","美国","北美","分销商","通用分销","螺丝批发"],
+["K021","亚马逊 Amazon","美国","北美","平台","通用分销","电商平台"],
+["K022","日野美国工厂","美国","北美","终端品牌","汽车摩托","卡车制造"],
+["K023","卡特彼勒 Caterpillar SARL","加拿大","北美","终端品牌","工业机械","垫圈、无螺纹紧固件、自攻螺钉"],
+["K024","AGCO Argentina","阿根廷","拉美","终端品牌","工业机械","农业拖拉机；螺栓螺母采购量大"],
+["K025","Clavos Nacionales","墨西哥","拉美","平台","通用分销","工业品平台"],
+["K026","利乐 Tetra Pak","墨西哥","拉美","终端品牌","工业机械","垫圈、销、螺母；采购次数高"],
+["K027","Fischerwerke","马来西亚","东南亚","终端品牌","建筑","高强度螺栓、自攻螺钉"],
+["K028","SH Global","日本","东亚","分销商","通用分销","待补充资料"],
+["K029","日野自动车","日本","东亚","终端品牌","汽车摩托","汽车"],
+["K030","三菱商事","日本","东亚","平台","通用分销","综合商社"],
+["K031","CLAAS 俄罗斯","俄罗斯","其他","终端品牌","工业机械","农业机械；铆钉、垫圈、螺钉"],
+["K032","Hero MotoCorp","印度","南亚","终端品牌","汽车摩托","摩托车"],
+["K033","HMCL Niloy","孟加拉","南亚","终端品牌","汽车摩托","摩托车"],
+["K034","ACI Motors","孟加拉","南亚","终端品牌","汽车摩托","汽车、摩托车"],
+["K035","Bajaj Auto","印度","南亚","终端品牌","汽车摩托","摩托车"],
+["K036","Viraj Profiles","印度","南亚","同行/竞合","工业机械","印度制造商"],
+["K037","Simmonds Marshall","印度","南亚","终端品牌","汽车摩托","OEM 配套，供通用、菲亚特、本田、卡特彼勒"],
+["K038","Deepak Fasteners","印度","南亚","同行/竞合","通用分销","印度最大工业紧固件厂，Unbrako 品牌所有者"],
+["K039","Mitter Fasteners","印度","南亚","同行/竞合","通用分销","螺母、螺栓、冲压件；可作分工合作对象"],
+["K040","Sampa Otomotiv","土耳其","其他","终端品牌","汽车摩托","重型商用车零部件，2 万+ 种产品"],
+["K041","协凯 Sheh Kai","台湾","东亚","同行/竞合","建筑","建筑螺丝"],
+["K042","Boltun","台湾","东亚","同行/竞合","通用分销","铆螺母、冲压件"],
+["K043","Wyser International","台湾","东亚","同行/竞合","通用分销","螺栓、螺丝、冲压件"],
+["K044","Yow Chern","台湾","东亚","同行/竞合","建筑","建筑、家具、木工螺丝"],
+["K045","本田越南","越南","东南亚","终端品牌","汽车摩托","摩托车、汽车"],
+["K046","雅马哈越南","越南","东南亚","终端品牌","汽车摩托","摩托车"],
+["K047","三星电子越南","越南","东南亚","终端品牌","消费电子","自攻螺钉、紧固件；与特耐越南工厂地理匹配"],
+["K048","福特越南","越南","东南亚","终端品牌","汽车摩托","汽车"],
+["K049","BM Windows","越南","东南亚","终端品牌","建筑","铝玻璃幕墙"],
+["K050","VinFast","越南","东南亚","终端品牌","汽车摩托","螺母、垫圈、自攻螺钉"]];
+var S=[
+["S01","微型精密螺丝","消费电子 / 智能穿戴","M0.6–M1.6，手表、眼镜、手机、平板",["走心机","不锈钢/黑锌","PVD"],"1688 同类销量靠前","消费电子","高"],
+["S02","CD纹 / 外观螺丝","消费电子 / 智能穿戴","平头十字、梅花、太阳纹、彩色",["冷镦+CD纹","不锈钢/高速钢","外观件"],"单品销量 5000+ 级；特耐约 100 台 CD纹设备","消费电子","高"],
+["S03","防松 / 点胶螺丝","智能硬件 / 电子设备","硬盘、主板、机箱，点胶、涂胶",["点胶","不锈钢/黑锌","防松"],"特耐约 50 台防松设备","消费电子","高"],
+["S04","防水螺丝","智能安防 / 户外电子","带密封圈，O型圈，防漏",["冷镦+装配","不锈钢","IP 防护"],"1688 销量第一（5.8 万+）","消费电子","高"],
+["S05","防盗 / 松不脱螺丝","智能安防 / 服务器机柜","梅花带柱、机柜面板防掉落",["冷镦","不锈钢","防拆"],"机柜、电表箱需求","工业机械","中"],
+["S06","人形机器人关节","机器人","关节紧固件",["需验证"],"新兴赛道，暂无海关线索","机器人","中"],
+["S07","AI 眼镜铰链","AI 眼镜 / 可穿戴","铰链、微型螺丝",["走心机","冲压"],"新兴赛道，暂无海关线索","机器人","中"],
+["S08","电池包冲压托盘","新能源汽车","冲压托盘、紧固件",["冲压","IATF 16949"],"需验证","汽车摩托","中"],
+["S09","标准 / 异形紧固件","汽车 / 摩托车","螺栓、螺母、垫圈、铆接件",["冷镦/冲压"],"海关买家多为该产业链","汽车摩托","中"],
+["S10","走心机 · 汽车精密轴 / 阀芯","汽车 / 工业","阀芯、精密轴、传感器轴，公差 ±0.01mm",["走心机","高精度","IATF 16949"],"Bosch、Continental、Denso、ZF、比亚迪","汽车摩托","高",10],
+["S11","走心机 · 医疗骨科螺钉与器械件","医疗","骨科螺钉、植入物、手术器械小件",["走心机","钛合金","生物相容/高洁净"],"Stryker、J&J、Zimmer、迈瑞、威高","医疗","中高",14],
+["S12","走心机 · 连接器端子 / 插针","连接器 / 电子","精密端子、插针、轴类",["走心机","超高精度"],"TE、Molex、Amphenol、立讯：项目库标注高度匹配","消费电子","高",4],
+["S13","走心机 · 摄像头轴 / 精密车削件","消费电子 / 无人机","摄像头轴、铰链件、微型轴",["走心机","微型精密"],"长盈、科森、领益、安洁、大疆","消费电子","中",8],
+["S14","冲压 · 汽车车身 / 底盘结构件","汽车","车身冲压、结构件",["冲压","高强轻量","IATF 16949"],"特斯拉、比亚迪、华达、Gestamp、Benteler","汽车摩托","高",11],
+["S15","冲压 · 动力电池结构件","新能源","电池箱体、托盘、结构件",["冲压","高可靠","防松配套"],"科达利、祥鑫、震裕、东山精密","汽车摩托","高",5],
+["S16","冲压 · 储能液冷板与箱体","储能","液冷板、箱体、结构件",["冲压+CNC","防松","耐腐蚀"],"美捷金属（东莞，有越南基地）、恒创、纳百川","工业机械","中高",12],
+["S17","冲压 · 电子结构件","消费电子 / 笔电","笔记本结构件、连接器结构",["精密冲压"],"富士康、立讯、仁宝、广达、纬创、和硕","消费电子","中",6],
+["S18","冲压 · 家电结构件","家电","家电冲压结构件",["标准冲压"],"美的、格力、海尔、海信、TCL","工业机械","中",5],
+["S19","AI 服务器 · 机柜与液冷结构件","数据中心 / AI 服务器","机柜松不脱螺丝、液冷板固定件、服务器结构冲压件",["防松","松不脱","液冷"],"中国液冷数据中心市场 2025 年约 159.8 亿元，+45.2%","工业机械","高","d"],
+["S20","光伏 · 逆变器与支架紧固件","光伏 / 新能源","逆变器外壳、接线盒、支架耐腐蚀螺栓",["不锈钢","耐腐蚀","冲压"],"光伏支架带动耐腐蚀、耐高温紧固件需求（智研咨询）","工业机械","中","d"],
+["S21","电动工具 · 电机与电池包","电动工具 / 园林","电机端盖、电池包、工具外壳螺丝",["标准/异形","防松"],"线索待补","工业机械","中","d"],
+["S22","智能锁 · 安防硬件螺丝","智能安防 / 智能家居","智能锁、摄像头外壳的防水、防拆螺丝",["防水","防盗","CD纹外观"],"你在智能安防行业经验深，易切入","消费电子","高","d"],
+["S23","眼镜 · 钟表 · 穿戴微型螺丝","眼镜 / 钟表 / 穿戴","眼镜铰链螺丝、表壳螺丝、TWS 耳机",["微型精密","走心机","PVD"],"S01 的细分延伸，线索待补","消费电子","中","d"],
+["S24","无人机 · 低空飞行器","低空经济","机臂、云台微型轴、轻量化紧固件",["轻量化","钛/铝合金","走心机"],"低空经济刚进入场景化应用，线索待补","航空航天","中","d"],
+["S25","汽车电子 · 传感器与摄像头","汽车电子","ADAS 摄像头、雷达、传感器小件",["走心机","微型精密","IATF 16949"],"S10 的细分延伸，线索待补","汽车摩托","中","d"],
+["S26","充电桩 · 户外电气","新能源配套","充电桩外壳、接线端子，户外防水防腐",["防水","耐腐蚀"],"线索待补","工业机械","中","d"]];
+function cntBy(k){return C.filter(function(r){return r[5]===k}).length}
+var CAT={S01:"微型精密螺丝",S02:"外观/CD纹",S03:"防松·防水·防盗",S04:"防松·防水·防盗",S05:"防松·防水·防盗",S06:"新兴赛道",S07:"走心机",S08:"冲压件",S09:"标准/异形件",S10:"走心机",S11:"走心机",S12:"走心机",S13:"走心机",S14:"冲压件",S15:"冲压件",S16:"冲压件",S17:"冲压件",S18:"冲压件",S19:"防松·防水·防盗",S20:"标准/异形件",S21:"标准/异形件",S22:"防松·防水·防盗",S23:"微型精密螺丝",S24:"新兴赛道",S25:"微型精密螺丝",S26:"防松·防水·防盗"};
+var CATS=["微型精密螺丝","外观/CD纹","防松·防水·防盗","标准/异形件","走心机","冲压件","新兴赛道"];
+function catC(r){return /冲压/.test(r[6])?"冲压件":(r[5]==="消费电子"?"微型精密螺丝":"标准/异形件")}
+function renderS(){var sh="";S.filter(function(s){return (!F.ind||s[6]===F.ind)&&(!F.cat||CAT[s[0]]===F.cat)}).forEach(function(s){var n=cntBy(s[6]);
+ sh+='<div class="tc"><div class="top"><span class="tile">'+s[0]+'</span><div style="min-width:0"><h4>'+s[1]+'</h4><span class="sub">'+s[2]+'</span></div></div>'
+ +'<div class="tags">'+s[4].map(function(t){return '<span class="tag">'+t+'</span>'}).join('')+'</div>'
+ +'<p class="use"><b>用途 </b>'+s[3]+'</p>'
+ +'<div class="foot"><span>'+s[5]+'</span><span class="st">匹配度 待填</span></div>'
+ +'<div class="foot">'+(s[8]==='d'?'<span>桌面调研新增 · 客户线索待补</span>':'<span>'+(s[8]?'项目库线索 ':'同行业海关线索 ')+'<b style="color:var(--ink);font-family:var(--f-mono)">'+(s[8]||n)+'</b> 家</span>')+'<span>优先级 '+s[7]+'</span></div></div>'});
+document.getElementById("scnCards").innerHTML=sh||'<div class="card"><p>该行业下没有应用场景卡片。</p></div>'}
+
+var F={type:"",reg:"",ind:"",cat:"",q:""};
+function uniq(i){var o={};C.forEach(function(r){o[r[i]]=(o[r[i]]||0)+1});return Object.keys(o).sort(function(a,b){return o[b]-o[a]}).map(function(k){return [k,o[k]]})}
+function mkChips(id,i,key){var el=document.getElementById(id);
+ var all=document.createElement('button');all.className='chip';all.setAttribute('aria-pressed','true');all.innerHTML='全部 <i>'+C.length+'</i>';all.onclick=function(){F[key]='';sync()};el.appendChild(all);
+ uniq(i).forEach(function(p){var b=document.createElement('button');b.className='chip';b.setAttribute('aria-pressed','false');b.dataset.v=p[0];b.innerHTML=p[0]+' <i>'+p[1]+'</i>';b.onclick=function(){F[key]=(F[key]===p[0]?'':p[0]);sync()};el.appendChild(b)})}
+mkChips('fType',4,'type');mkChips('fReg',3,'reg');mkChips('fInd',5,'ind');
+(function(){var el=document.getElementById('fCat');var a=document.createElement('button');a.className='chip';a.setAttribute('aria-pressed','true');a.innerHTML='全部 <i>'+S.length+'</i>';a.onclick=function(){F.cat='';sync()};el.appendChild(a);
+ CATS.forEach(function(c){var n=S.filter(function(s){return CAT[s[0]]===c}).length;var b=document.createElement('button');b.className='chip';b.setAttribute('aria-pressed','false');b.dataset.v=c;b.innerHTML=c+' <i>'+n+'</i>';b.onclick=function(){F.cat=(F.cat===c?'':c);sync()};el.appendChild(b)})})();
+document.getElementById('ftog').onclick=function(){var r=document.getElementById('frows'),o=r.style.display==='none';r.style.display=o?'grid':'none';this.textContent=o?'收起筛选':'展开筛选';this.setAttribute('aria-expanded',String(o))};
+function press(id,key){var bs=document.getElementById(id).querySelectorAll('.chip');bs.forEach(function(b,j){b.setAttribute('aria-pressed',String(j===0?F[key]==='':b.dataset.v===F[key]))})}
+var cls={"分销商":"t-dist","同行/竞合":"t-peer","平台":"t-plat","终端品牌":""};
+function sync(){renderS();press('fCat','cat');press('fType','type');press('fReg','reg');press('fInd','ind');
+ var rows=C.filter(function(r){return (!F.type||r[4]===F.type)&&(!F.reg||r[3]===F.reg)&&(!F.ind||r[5]===F.ind)&&(!F.cat||catC(r)===F.cat)&&(!F.q||r.join(' ').toLowerCase().indexOf(F.q)>-1)});
+ document.getElementById('cnt').textContent='显示 '+rows.length+' / '+C.length+' 家';
+ document.getElementById('cusCards').innerHTML=rows.length?rows.map(function(r){return '<div class="tc '+cls[r[4]]+'"><div class="top"><span class="tile">'+r[0].slice(1)+'</span><div style="min-width:0"><h4>'+r[1]+'</h4><span class="sub">'+r[0]+' · '+r[2]+'</span></div></div>'
+ +'<div class="tags"><span class="tag">'+r[4]+'</span><span class="tag n">'+r[3]+'</span><span class="tag n">'+r[5]+'</span></div>'
+ +'<p class="use"><b>采购线索 </b>'+r[6]+'</p>'
+ +'<div class="foot"><span>来源：海关数据</span><span class="st">待开发</span></div></div>'}).join(''):'<div class="card"><p>海关线索里没有符合条件的客户。'+(F.cat==='走心机'||F.cat==='冲压件'?'该分类的线索来自项目潜在客户库，见上方应用场景卡片。':'')+'</p></div>'}
+document.getElementById('q').oninput=function(e){F.q=e.target.value.trim().toLowerCase();sync()};
+var G=[["美国",1357.7,"+10.0%","15.6（−9.8%）",14,"中","体量第一但 2025 回落、关税承压。打法：走分销商（Fastenal、Lindstrom 等），用越南工厂供货"],
+["俄罗斯",568.3,"+28.3%","—",1,"观察","增速快但仅 1 家线索（CLAAS），结算与地缘风险需评估"],
+["越南",518.7,"+21.5%","—",6,"高","增长 + 特耐越南工厂就近供货。打法：直供三星、VinFast、本田、雅马哈"],
+["德国",468.1,"+9.0%","4.3（0%）",8,"中","分销商集中（7 家）、采购次数高。打法：以防松垫圈、特殊螺钉切入伍尔特、Achilles Seibert"],
+["日本",336.3,"−1.7%","—",3,"低","下滑、品质门槛高，暂不重点投入"],
+["阿联酋",null,"—","7.7（+30.5%）",0,"观察","2025 增速最快，但没有客户线索，下游与转口比例待查"],
+["韩国",null,"—","5.7（+9.6%）",0,"观察","出口排名 Top6，暂无线索；现代 Mobis 在项目库靠汽车线进入"],
+["荷兰",null,"—","5.9（−6.3%）",0,"观察","无线索，待查是否为欧洲分销入口"],
+["印度",null,"—","—",6,"中","出口 Top9。买家多为摩托车与同行制造商，适合分工或摩托车线"],
+["墨西哥",null,"—","—",2,"观察","全球第三大进口国，但缺中国出口数；利乐采购次数高"]];
+var gh="";G.forEach(function(g){var cl={"高":"go","中":"ok","低":"pd","观察":"pd"}[g[5]];
+ gh+='<tr><td class="nm"><b>'+g[0]+'</b></td><td>'+(g[1]?'<div style="display:grid;grid-template-columns:56px 1fr;gap:6px;align-items:center"><span style="font-family:var(--f-mono)">'+g[1].toLocaleString()+'</span><div class="tr" style="height:8px;background:var(--bg)"><div class="fl" style="height:100%;width:'+(g[1]/1357.7*100)+'%;background:var(--blue)"></div></div></div>':'—')+'</td><td style="font-family:var(--f-mono)">'+g[2]+'</td><td style="font-family:var(--f-mono)">'+g[3]+'</td><td style="font-family:var(--f-mono)">'+g[4]+'</td><td><span class="etag '+cl+'">'+g[5]+'</span></td><td>'+g[6]+'</td></tr>'});
+document.getElementById('geoBody').innerHTML=gh;
+var DB=[["伍尔特",16634],["Reyher",10187],["Emil Lux",7199],["Achilles Seibert",3150]];
+document.getElementById('distBars').innerHTML=DB.map(function(r,i){return '<div class="crow'+(i==0?' hi':'')+'" style="grid-template-columns:110px minmax(0,1fr) 64px"><span class="lb">'+r[0]+'</span><div class="tr"><div class="fl" style="width:'+(r[1]/16634*100)+'%"></div></div><span class="v">'+r[1].toLocaleString()+'</span></div>'}).join('');
+var P=[["阿里国际站","综合 B2B","129,800","—","出口为主"],["1688","综合 B2B","35,400","—","同类商品已整理 92 条"],["百度爱采购","综合 B2B","4,800","1 年 6980 元","客户小出口同在"],["米思米","工业品平台","403.6","—","成立于 2003 年"],["震坤行","工业品平台","187.5","未看到费用",""],["苏州工品一号","工业品平台","55.4","不涉及费用","苏州本地"],["安普达（苏州）Optimas","外企贸易商","48.8","—","网站有合作申请入口"],["杭州易紧通","行业平台（出口）","25","880 美元起/年","侧重国外客户"],["京东工业","工业品平台","22.7","0 元试运营",""],["柏中（Bossard 上海）","外企贸易商","4.4","—","可注册成为供应商"]];
+document.getElementById('pBody').innerHTML=P.map(function(r){return '<tr><td class="nm"><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td style="font-family:var(--f-mono)">'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td></tr>'}).join('');
+document.querySelector('header.hero').after(document.querySelector('.fbar'));
+var POL=[["美国","232 钢铁衍生品关税 50%，海关按全额价值计征，引发诉讼（2026-03）。2026-07-24 起新增 301 关税，中国、越南均为 12.5%，232 商品除外。原对华 301 仍在，税率因税号而异。","成本高、规则变动快","先核实 7318 税号和钢含量计税口径；经分销商做价格联动合同","pd","待核实"],
+["欧盟","中国钢铁紧固件反倾销税：抽样企业 22.1%–48.8%，合作企业 39.6%，其余 86.5%，2027-02-18 到期，复审与否待定。CBAM 自 2026-01-01 起覆盖 7318，默认排放值中国 3,012、越南 2,585、印度 4,697（原文未注明单位）。","对华直发成本高；越南产默认值更低","争取单独税率，收集钢厂排放数据；越南出货需原产地合规","ok","已核实"],
+["越南","出口增长快；另有报道称美方核查中资工厂转口，原产地规则风险上升。三星越南在扶持本地供应商。","特耐越南工厂是核心筹码，但要过原产地关","保留完整工艺、采购和成本记录；先从电子客户的本地化需求切入","pd","待核实"],
+["墨西哥","2026-01-01 起对无自贸协定国家（含中国）提高关税 5%–50%，覆盖 1,463 个税号，其中钢铁 268 个、汽车零部件 74 个；IMMEX、PROSEC 企业可豁免。","直接出口墨西哥成本上升","跟汽车、电子客户走 IMMEX 渠道，或找当地分销","ok","已核实"],
+["印度","紧固件 QCO 要求 BIS 认证，海外工厂需现场检查；2026-06 对石膏板、刨花板、沉头木螺钉三类暂缓 3 年；对华反倾销调查 2025-02 终止。印度进口 11.3 亿美元，中国占 24.6%，多为电子、高端机械、汽车用高精度件。","高精度件有需求，但认证周期长","先拿到下游客户采购意向，再申请 BIS","ok","已核实"],
+["俄罗斯 / 中亚","2025 年 1–9 月吉尔吉斯斯坦 +88.6%、哈萨克斯坦 +57.4%；俄罗斯 2024 年 +28.3%。结算、制裁、转口风险高。","增长快但风险大","信用证或预付款，只做非敏感终端客户","pd","待核实"],
+["泰国","2025 年 1–9 月 2.91 亿美元，+19.5%，占 3.25%，汽车与电子集群。","东盟第二流向","与越南一并布局","ok","已核实"],
+["乌克兰","对华钢制紧固件反倾销措施复审（2025-09）。","市场小","观察","pd","待核实"]];
+document.getElementById("polBody").innerHTML=POL.map(function(r){return "<tr><td class=\"nm\"><b>"+r[0]+"</b></td><td>"+r[1]+"</td><td>"+r[2]+"</td><td>"+r[3]+"</td><td><span class=\"etag "+r[4]+"\">"+r[5]+"</span></td></tr>"}).join("");
+var FL=[["美国",11.71],["越南",5.52],["德国",4.19],["泰国",2.91]];
+document.getElementById("flowBars").innerHTML=FL.map(function(r,i){return '<div class="crow'+(i==1?' hi':'')+'"><span class="lb">'+r[0]+'</span><div class="tr"><div class="fl" style="width:'+(r[1]/11.71*100)+'%"></div></div><span class="v">'+r[1]+'</span></div>'}).join('');
+var MXC=[["微型精密螺丝（M0.6–1.6）","手机、穿戴、眼镜、平板品牌，及富士康、立讯、三星越南等代工厂","OEM、EMS 直供；电子元件分销","供应商准入审核、打样、量产；越南工厂靠近三星等客户","1688 同类销量靠前；越南电子产业扩张","价格战；良率决定毛利"],
+["CD纹 / 外观螺丝","消费电子品牌、笔电、穿戴","OEM 直供；阿里国际站、1688 线上","线上先做样品单，再转大客户；约 100 台 CD纹设备是壁垒","外观件可做差异化，单品线上销量 5000+ 级","订单分散、单价低"],
+["防松 / 点胶螺丝","硬盘、主板、服务器、汽车电子","OEM 直供；Optimas 一类方案型分销","约 50 台防松设备；需要可靠性数据","AI 服务器、数据中心增长","客户认证周期"],
+["防水 / 防盗 / 松不脱","安防摄像头、智能锁、户外电子、机柜、电表箱","品牌直供；1688 线上","带密封圈装配，IP 防护验证","你在智能安防行业经验深；1688 防水螺丝销量第一（5.8 万+）","低价同质化"],
+["走心机精密件","汽车 Tier1、医疗、连接器、无人机","直供；精密件分销","IATF 16949、医疗 ISO 13485 等认证门槛","项目库线索 36 家，连接器 4 家标注高度匹配","认证周期长，需核实特耐设备与认证"],
+["冲压件","电池箱体、储能、汽车结构、电子结构、家电","直供","IATF 16949、模具能力、PPAP","项目库线索 39 家；储能与动力电池","客户集中、议价强、投资重"],
+["标准 / 异形紧固件","汽车摩托、工业机械、建筑","国际分销商（伍尔特、柏中、Fastenal、Optimas）和贸易商","门户注册、质量评估、现场审核；留意反倾销、CBAM 合规","防松垫圈、特殊螺钉、OEM 定制","关税、反倾销、低价竞争"]];
+document.getElementById("mxBody").innerHTML=MXC.map(function(r){return "<tr><td class=\"nm\"><b>"+r[0]+"</b></td><td>"+r[1]+"</td><td>"+r[2]+"</td><td>"+r[3]+"</td><td>"+r[4]+"</td><td>"+r[5]+"</td></tr>"}).join("");
+var TABS=[["ov","总览"],["pl","开发规划"],["sp","细分赛道"],["cu","潜在客户"],["geo","国别市场"],["ch","渠道经销商"],["cp","竞品"],["ac","行动与风险"]];
+var tb=document.getElementById('tabs');TABS.forEach(function(t){var b=document.createElement('button');b.className='chip';b.type='button';b.setAttribute('role','tab');b.dataset.t=t[0];b.textContent=t[1];b.style.fontWeight='600';b.onclick=function(){showTab(t[0],true)};tb.appendChild(b)});
+function showTab(t,top){document.querySelectorAll('[data-tab]').forEach(function(e){e.style.display=e.dataset.tab===t?'':'none'});
+ document.querySelector('header.hero').style.display=t==='ov'?'':'none';
+ var f=(t==='sp'||t==='cu');document.getElementById('filt').style.display=f?'grid':'none';
+ document.getElementById('qrow').style.display=t==='cu'?'flex':'none';
+ ['fType','fReg'].forEach(function(id){document.getElementById(id).style.display=t==='cu'?'':'none'});
+ tb.querySelectorAll('.chip').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.t===t));b.setAttribute('aria-selected',String(b.dataset.t===t))});
+ try{history.replaceState(null,'','#'+t)}catch(e){}
+ if(top){window.scrollTo(0,0)}}
+var h0=(location.hash||'').slice(1);showTab(TABS.some(function(t){return t[0]===h0})?h0:'ov');
+sync();
+</script>
+</body></html>
+
+</body></html>

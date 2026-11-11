@@ -1,0 +1,509 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>出海总控台</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@700;900&display=swap">
+<style>
+/* 布局：信号工坊·智库报告。深海军蓝抬头带 + 粘性分区导航 + 白卡片，1px 描边分层，无阴影 */
+:root{
+  --canvas:#f4f6f7;--paper:#fff;--ink:#14232b;--ink-muted:#5b6b73;--line:#d9e1e5;
+  --navy:#0f2a3d;--on-navy:#fff;--on-navy-muted:#a9c4d3;
+  --signal-blue:#1f5fd1;--blue-soft:#e7eefb;--teal:#0a7a6e;--teal-soft:#e3f3f0;
+  --amber:#d98a1c;--amber-ink:#8a5300;--amber-soft:#fbf0dc;--coral:#d0532e;--slate:#8a9aa3;
+  --serif:"Noto Serif SC","Songti SC",serif;
+  --sans:"IBM Plex Sans","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --canvas:#0b1114;--paper:#121b20;--ink:#e8eef0;--ink-muted:#9aabb2;--line:#263239;
+  --navy:#16384f;--signal-blue:#6e9bf0;--blue-soft:#17284a;--teal:#3dbba9;--teal-soft:#123832;
+  --amber:#e6a84a;--amber-ink:#f0bc6a;--amber-soft:#3a2a12;--coral:#ef8461;--slate:#5f717a;
+  --on-navy-muted:#b4cddb;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --canvas:#0b1114;--paper:#121b20;--ink:#e8eef0;--ink-muted:#9aabb2;--line:#263239;
+  --navy:#16384f;--signal-blue:#6e9bf0;--blue-soft:#17284a;--teal:#3dbba9;--teal-soft:#123832;
+  --amber:#e6a84a;--amber-ink:#f0bc6a;--amber-soft:#3a2a12;--coral:#ef8461;--slate:#5f717a;
+  --on-navy-muted:#b4cddb;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--canvas);color:var(--ink);font:400 16px/1.75 var(--sans);-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--serif);font-weight:700;margin:0;text-wrap:balance;line-height:1.4}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--signal-blue)}
+:focus-visible{outline:2px solid var(--signal-blue);outline-offset:2px}
+.head{background:var(--navy);color:var(--on-navy);padding-block:24px}
+.head .eyebrow{font:500 12px/1.4 var(--mono);letter-spacing:.08em;color:var(--on-navy-muted);margin:0 0 8px}
+.head h1{font-size:28px;font-weight:900}
+.pilot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:16px}
+.pilot .combo{font:500 18px/1.5 var(--sans)}
+.pilot .hint{font-size:12px;color:var(--on-navy-muted)}
+.btn-ghost{background:transparent;border:1px solid var(--on-navy-muted);color:var(--on-navy);border-radius:4px;padding:6px 14px;min-height:36px;cursor:pointer;font-size:14px}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--paper);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav button{flex:none;background:none;border:0;border-bottom:3px solid transparent;padding:12px 14px 9px;min-height:48px;cursor:pointer;color:var(--ink-muted);font-size:15px;font-weight:500;white-space:nowrap}
+.nav button[aria-current="page"]{color:var(--ink);border-bottom-color:var(--signal-blue)}
+main{padding-block:32px 48px;display:flex;flex-direction:column;gap:32px}
+section.sec{display:flex;flex-direction:column;gap:32px;min-width:0}
+.blk{display:flex;flex-direction:column;gap:16px;min-width:0}
+.blk>h2{font-size:22px}
+.lede{font-size:14px;color:var(--ink-muted);margin:0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:24px;min-width:0}
+.sm{font-size:14px;line-height:1.7}
+.src{font-size:12px;color:var(--ink-muted);line-height:1.6}
+.mono{font-family:var(--mono)}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.grid2{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.tag{display:inline-block;border-radius:2px;padding:1px 8px;font-size:12px;font-weight:600;line-height:1.7;border:1px solid transparent;white-space:nowrap}
+.t-ok{color:var(--signal-blue);background:var(--blue-soft)}
+.t-ai{color:var(--ink-muted);background:var(--canvas);border-color:var(--line)}
+.t-sug{color:var(--teal);background:var(--teal-soft)}
+.t-chk{color:var(--amber-ink);background:var(--amber-soft)}
+.t-plain{color:var(--ink);background:var(--canvas);border-color:var(--line)}
+.btn{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:6px 14px;min-height:40px;cursor:pointer;font-size:14px;font-weight:500}
+.btn:hover{border-color:var(--slate)}
+.btn.pri{background:var(--navy);color:var(--on-navy);border-color:var(--navy)}
+.btn.sm2{min-height:32px;padding:2px 10px;font-size:13px}
+.btn.dng{color:var(--coral)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.row.sb{justify-content:space-between}
+.empty{border:1px dashed var(--line);border-radius:6px;padding:24px;background:var(--paper);color:var(--ink-muted);font-size:14px}
+.empty b{display:block;font:700 16px/1.6 var(--serif);color:var(--ink);margin-bottom:4px}
+.state{padding:16px;border:1px solid var(--line);border-radius:6px;background:var(--paper);font-size:14px;color:var(--ink-muted)}
+.state.err{border-color:var(--amber);background:var(--amber-soft);color:var(--amber-ink)}
+.pipe{display:flex;flex-direction:column;gap:12px}
+.pipe h3{font-size:17px}
+.pipe .big{font:300 48px/1 var(--mono);letter-spacing:-.02em}
+.pipe .big.na{font:400 20px/1.4 var(--sans);color:var(--amber-ink);letter-spacing:0}
+.kv{display:flex;justify-content:space-between;gap:8px;font-size:14px;border-top:1px solid var(--line);padding-top:8px}
+.kv span:first-child{color:var(--ink-muted)}
+.na-t{color:var(--amber-ink);font-weight:600}
+.todo,.job{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}
+.todo:first-child,.job:first-child{border-top:0}
+.todo input[type=checkbox]{width:22px;height:22px;margin-top:3px;flex:none;accent-color:var(--signal-blue)}
+.todo.done .tx{text-decoration:line-through;color:var(--ink-muted)}
+.todo .tx{flex:1;min-width:0}
+.job .jn{flex:1;min-width:0}
+.job .jm{font-size:13px;color:var(--ink-muted)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+table{border-collapse:collapse;width:100%}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:14px}
+th{font-size:12px;font-weight:600;color:var(--ink-muted);background:var(--canvas);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.cell{display:block;width:100%;min-width:130px;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:12px;cursor:pointer;min-height:84px}
+.cell.sel{border-color:var(--signal-blue);background:var(--blue-soft)}
+.cell.pilotc{background:var(--amber-soft);border-color:var(--amber)}
+.cell .n{font:300 28px/1.2 var(--mono)}
+.cell .l{font-size:12px;color:var(--ink-muted)}
+.mx td,.mx th{padding:8px}
+.card.mc{display:flex;flex-direction:column;gap:12px}
+.mc h3{font-size:18px}
+.mc ol{margin:0;padding-left:20px;font-size:15px;line-height:1.7}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.seg button{background:var(--paper);border:0;border-right:1px solid var(--line);padding:4px 12px;min-height:36px;min-width:40px;cursor:pointer;font-size:14px}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--navy);color:var(--on-navy)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.filters{display:flex;flex-wrap:wrap;gap:8px 16px}
+.filters label{font-size:12px;color:var(--ink-muted);display:flex;flex-direction:column;gap:2px}
+select,input[type=text],input[type=number],input[type=date],input[type=url],textarea{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:8px 10px;min-height:40px;width:100%}
+.filters select{width:auto;min-width:110px}
+textarea{min-height:88px;resize:vertical;line-height:1.6}
+.fld{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.fld label{font-size:13px;color:var(--ink-muted)}
+.dl{display:grid;grid-template-columns:5em 1fr;gap:4px 12px;font-size:14px;margin:0}
+.dl dt{color:var(--ink-muted)}
+.dl dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.step{display:flex;gap:4px;flex-wrap:wrap}
+.step span{font-size:12px;padding:0 8px;border:1px solid var(--line);border-radius:2px;color:var(--ink-muted)}
+.step span.on{background:var(--navy);color:var(--on-navy);border-color:var(--navy)}
+.step span.past{background:var(--blue-soft);color:var(--signal-blue);border-color:transparent}
+.wk{font:500 13px/1.4 var(--mono);color:var(--ink-muted);letter-spacing:.04em;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.three h4{margin:0 0 4px;font-size:12px;color:var(--ink-muted);letter-spacing:.06em}
+.three p{margin:0;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+.links{display:flex;flex-direction:column;gap:8px}
+.links a{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.links a:first-child{border-top:0}
+.links a span:last-child{color:var(--signal-blue);font-size:14px}
+.ov{position:fixed;inset:0;z-index:50;background:rgba(10,20,26,.55);display:flex;align-items:flex-end;justify-content:center;padding:0}
+.ov[hidden]{display:none!important}
+.modal{background:var(--paper);border:1px solid var(--line);border-radius:6px 6px 0 0;width:100%;max-width:560px;max-height:92%;overflow-y:auto;padding:24px 16px;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.modal h2{font-size:20px;margin-bottom:16px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--navy);color:var(--on-navy);padding:10px 16px;border-radius:4px;font-size:14px;max-width:calc(100% - 32px)}
+.toast.bad{background:var(--amber-soft);color:var(--amber-ink);border:1px solid var(--amber)}
+.foot{border-top:1px solid var(--line);padding-block:24px;font-size:12px;color:var(--ink-muted)}
+@media (min-width:700px){.ov{align-items:center;padding:24px}.modal{border-radius:6px;padding:24px}.card{padding:24px}}
+@media (max-width:699px){.card{padding:16px}.three{grid-template-columns:1fr}.head h1{font-size:24px}.grid,.grid2{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="head"><div class="wrap">
+  <p class="eyebrow">出海总控台 · 个人调度中枢</p>
+  <h1>制造业出海，一页调度</h1>
+  <div class="pilot" id="pilot"></div>
+</div></header>
+<nav class="nav" aria-label="分区"><div class="wrap" id="nav"></div></nav>
+<main class="wrap" id="main"></main>
+<footer class="foot"><div class="wrap">所有记录保存在看板数据库中。缺数据一律写「待补」，不编造数字。</div></footer>
+<div class="ov" id="ov" hidden><div class="modal" id="modal" role="dialog" aria-modal="true"></div></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+var CATS=['智能家居硬件','紧固件','箱包'],PLATS=['LinkedIn','Meta','TikTok','Google','其他'];
+var PIPES=['市场扫描','素材库','内容生产','供应链与选品','发布与归档'];
+var TAGS=['已核实','AI归纳','建议','待核'],STAT=['继续追','停','未定'],VERD=['可借鉴','不适合','未定'];
+var CST=['选题','草稿','待发','已发','已复盘'],FORMS=['图文','轮播','视频脚本'];
+var DIMS=[['demand','需求热度'],['competition','竞争强度'],['margin','毛利空间'],['compliance','合规门槛'],['logistics','物流难度'],['content','内容可表达性']];
+var TABS=[['overview','总览'],['matrix','市场矩阵'],['assets','素材库'],['calendar','内容日历'],['sourcing','选品表'],['review','复盘与规则库']];
+var COLLS=['settings','pipelines','jobs','todos','market_cards','assets','content','skus','reviews','rules'];
+var S={},ready={},errs={},slow=false,db=null,dbFail=false;
+var ui={tab:'overview',cell:null,aPlat:'',aCat:'',aVer:'',cStat:''};
+COLLS.forEach(function(c){S[c]=[]});
+var $=function(i){return document.getElementById(i)};
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function byId(c,id){return S[c].filter(function(x){return x.id===id})[0]}
+function setting(id,def){var d=byId('settings',id);return d?Object.assign({},def,d):def}
+function pilot(){return setting('pilot',{category:'紧固件',country:'美国',platform:'LinkedIn',confirmed:false})}
+function countries(){var d=byId('settings','countries');return d&&d.list&&d.list.length?d.list:['美国']}
+function weights(){var w={};var d=byId('settings','weights')||{};DIMS.forEach(function(x){w[x[0]]=d[x[0]]==null?1:Number(d[x[0]])});return w}
+function tagCls(t){return t==='已核实'?'t-ok':t==='AI归纳'?'t-ai':t==='建议'?'t-sug':'t-chk'}
+function tag(t,c){return '<span class="tag '+(c||tagCls(t))+'">'+esc(t)+'</span>'}
+function na(t){return '<span class="na-t">待补'+(t?'：'+esc(t):'')+'</span>'}
+function toast(m,bad){var t=$('toast');t.textContent=m;t.className='toast'+(bad?' bad':'');t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){t.hidden=true},bad?5000:2200)}
+async function run(fn,ok){try{await fn();if(ok)toast(ok);return true}catch(e){toast('保存失败：'+((e&&(e.message||e.code))||'未知错误')+'。请稍后重试。',true);return false}}
+function coll(c){return db.collection(c)}
+function today(){return new Date().toISOString().slice(0,10)}
+
+/* ---------- 通用表单弹窗 ---------- */
+var form=null;
+function openForm(o){
+  form=o;o.armed=false;
+  var v=o.values||{};
+  var h='<h2>'+esc(o.title)+'</h2>'+(o.note?'<p class="lede" style="margin-bottom:16px">'+esc(o.note)+'</p>':'');
+  o.fields.forEach(function(f){
+    var val=v[f.key]==null?(f.def==null?'':f.def):v[f.key];
+    h+='<div class="fld"><label for="f_'+f.key+'">'+esc(f.label)+'</label>';
+    if(f.type==='select'){h+='<select id="f_'+f.key+'">'+(f.blank?'<option value="">'+esc(f.blank)+'</option>':'')+f.options.map(function(op){return '<option'+(String(op)===String(val)?' selected':'')+'>'+esc(op)+'</option>'}).join('')+'</select>'}
+    else if(f.type==='textarea'){h+='<textarea id="f_'+f.key+'">'+esc(val)+'</textarea>'}
+    else{h+='<input id="f_'+f.key+'" type="'+(f.type||'text')+'" value="'+esc(val)+'"'+(f.type==='number'?' inputmode="decimal" step="any"':'')+(f.ph?' placeholder="'+esc(f.ph)+'"':'')+'>'}
+    h+='</div>';
+  });
+  h+='<div class="row sb" style="margin-top:8px"><div class="row"><button class="btn pri" data-act="m-save">保存</button><button class="btn" data-act="m-close">取消</button></div>'+(o.onDelete?'<button class="btn dng" data-act="m-del">删除</button>':'')+'</div>';
+  $('modal').innerHTML=h;$('ov').hidden=false;
+  var first=$('modal').querySelector('input,select,textarea');if(first&&!o.noFocus)setTimeout(function(){try{first.focus({preventScroll:true})}catch(e){}},30);
+}
+function closeForm(){$('ov').hidden=true;form=null}
+function collect(){var out={};form.fields.forEach(function(f){var el=$('f_'+f.key);var s=el.value.trim();if(f.type==='number'){out[f.key]=s===''?null:Number(s)}else out[f.key]=s});return out}
+async function saveForm(){
+  var vals=collect();
+  for(var i=0;i<form.fields.length;i++){var f=form.fields[i];if(f.req&&!vals[f.key]){toast('请先填写：'+f.label,true);return}
+    if(f.type==='number'&&vals[f.key]!=null&&isNaN(vals[f.key])){toast(f.label+' 需要是数字',true);return}}
+  var ok=await run(function(){return form.onSave(vals)},'已保存');
+  if(ok)closeForm();
+}
+
+/* ---------- 渲染 ---------- */
+function gate(cs,fn){
+  if(dbFail)return '<div class="state err">数据库当前不可用（可能未登录或无权限）。刷新页面，或确认你已登录后再试。</div>';
+  for(var i=0;i<cs.length;i++)if(errs[cs[i]])return '<div class="state err">读取「'+cs[i]+'」失败：'+esc(errs[cs[i]].message||errs[cs[i]].code||'未知错误')+'。请刷新页面重试。</div>';
+  var wait=cs.filter(function(c){return !ready[c]});
+  if(wait.length)return '<div class="state">'+(slow?'数据暂时连不上，仍在重试。已显示的内容可能不是最新的。':'正在读取数据…')+'</div>';
+  return fn();
+}
+function empty(t,d){return '<div class="empty"><b>'+esc(t)+'</b>'+d+'</div>'}
+function sortBy(a,k,dir){return a.slice().sort(function(x,y){var p=x[k]==null?0:x[k],q=y[k]==null?0:y[k];return dir==='desc'?(q>p?1:q<p?-1:0):(p>q?1:p<q?-1:0)})}
+
+function vOverview(){
+  return '<section class="sec">'+gate(['pipelines'],function(){
+    var ps=sortBy(S.pipelines,'order');
+    var nRun=ps.filter(function(p){return p.lastRun}).length;
+    var h='<div class="blk"><h2>'+(nRun?'五条流水线中 '+nRun+' 条已有运行记录':'五条流水线尚未运行，需先确认试点组合')+'</h2>';
+    if(!ps.length)h+=empty('流水线数据待补','流水线记录由看板数据库的 pipelines 集合提供，当前为空。');
+    else h+='<div class="grid">'+ps.map(function(p){
+      return '<div class="card pipe"><div><h3>'+esc(p.name)+'</h3><div class="src">填充：'+esc(p.feeds||'待补')+'</div></div>'+
+      (p.newCount==null?'<div class="big na">待补</div>':'<div class="big">'+esc(p.newCount)+'</div>')+
+      '<div class="src" style="margin-top:-8px">本次新增条数</div>'+
+      '<div class="kv"><span>上次运行</span><span>'+(p.lastRun?'<span class="mono">'+esc(p.lastRun)+'</span>':na())+'</span></div>'+
+      '<div class="kv"><span>待批注</span><span>'+(p.pendingCount==null?na():'<span class="mono">'+esc(p.pendingCount)+' 条</span>')+'</span></div></div>';
+    }).join('')+'</div>';
+    return h+'</div>';
+  })+
+  gate(['todos'],function(){
+    var ts=sortBy(S.todos,'order');var open=ts.filter(function(t){return !t.done}).length;
+    var h='<div class="blk"><h2>今天有 '+open+' 件事要你做</h2><div class="card">';
+    if(!ts.length)h+=empty('清单为空','暂无待办。可在下方添加，定时任务也会往这里写。');
+    else h+=ts.map(function(t){return '<div class="todo'+(t.done?' done':'')+'"><input type="checkbox" id="td_'+esc(t.id)+'" data-act="todo" data-id="'+esc(t.id)+'"'+(t.done?' checked':'')+' aria-label="完成"><label class="tx" for="td_'+esc(t.id)+'">'+esc(t.text)+'</label><button class="btn sm2" data-act="todo-del" data-id="'+esc(t.id)+'" aria-label="删除">删除</button></div>'}).join('');
+    h+='<div class="row" style="margin-top:12px"><button class="btn" data-act="todo-add">添加一条</button></div></div></div>';
+    return h;
+  })+
+  gate(['jobs'],function(){
+    var js=sortBy(S.jobs,'order');var nc=js.filter(function(j){return /^未创建/.test(j.status||'')}).length;
+    var h='<div class="blk"><h2>'+(js.length?'七个定时任务中 '+nc+' 个尚未创建':'定时任务清单待补')+'</h2><div class="card">';
+    if(!js.length)h+=empty('任务列表为空','定时任务记录由 jobs 集合提供。');
+    else h+=js.map(function(j){return '<div class="job"><div class="jn"><div>'+esc(j.name)+'</div><div class="jm">'+esc(j.schedule)+'（北京时间） · 流水线：'+esc(j.pipeline||'待补')+(j.note?' · '+esc(j.note):'')+'</div></div>'+tag(j.status||'待补',/^未创建/.test(j.status||'')?'t-chk':'t-plain')+'</div>'}).join('');
+    return h+'</div></div>';
+  })+
+  '<div class="blk"><h2>相关资料</h2><div class="card"><div class="links">'+
+  [['出海情报工具雷达','https://claude.ai/code/artifact/d618a5b5-6109-4aec-9ac2-964ab271e847'],['出海自动化工作台','https://claude.ai/code/artifact/fddaa012-0e7e-4612-95a4-d1d795a61c03'],['落地方案文档','https://claude.ai/artifact/Lqm1Wvzy2XojXWm7BnosAy']].map(function(l){return '<a href="'+l[1]+'" target="_blank" rel="noopener"><span>'+l[0]+'</span><span>打开</span></a>'}).join('')+
+  '</div></div></div></section>';
+}
+
+function cellCards(cat,co){return S.market_cards.filter(function(c){return c.category===cat&&c.country===co})}
+function vMatrix(){
+  return '<section class="sec">'+gate(['market_cards','settings'],function(){
+    var cs=countries(),p=pilot();
+    if(!ui.cell)ui.cell={cat:p.category,country:p.country};
+    var total=S.market_cards.length;
+    var h='<div class="blk"><h2>'+(total?'已有 '+total+' 张市场卡片，按品类和国别归档':'市场矩阵还是空的，先从试点格子开始')+'</h2><p class="lede">点格子查看该格的市场卡片。琥珀色格子是当前试点组合。</p>';
+    h+='<div class="tbl"><table class="mx"><thead><tr><th>品类 \\ 国别</th>'+cs.map(function(c){return '<th>'+esc(c)+'</th>'}).join('')+'</tr></thead><tbody>';
+    CATS.forEach(function(cat){
+      h+='<tr><th scope="row" style="background:var(--paper);color:var(--ink);font-size:14px">'+esc(cat)+'</th>';
+      cs.forEach(function(co){
+        var arr=cellCards(cat,co),go=arr.filter(function(x){return x.status==='继续追'}).length;
+        var sel=ui.cell.cat===cat&&ui.cell.country===co,isP=p.category===cat&&p.country===co;
+        h+='<td><button class="cell'+(sel?' sel':'')+(isP?' pilotc':'')+'" data-act="cell" data-cat="'+esc(cat)+'" data-co="'+esc(co)+'"><div class="n">'+arr.length+'</div><div class="l">'+(arr.length?'继续追 '+go+' 张':'待补')+(isP?' · 试点':'')+'</div></button></td>';
+      });
+      h+='</tr>';
+    });
+    h+='</tbody></table></div><div class="row"><button class="btn" data-act="country-add">新增国别</button></div></div>';
+    var arr=sortBy(cellCards(ui.cell.cat,ui.cell.country),'createdAt','desc');
+    h+='<div class="blk"><div class="row sb"><h2>'+esc(ui.cell.cat)+' × '+esc(ui.cell.country)+'</h2><button class="btn pri" data-act="mc-add">新增卡片</button></div>';
+    if(!arr.length)h+=empty('这一格还没有市场卡片','由「市场扫描」流水线填充（每周一 07:40），也可以手动新增。每张卡片需要一句结论、三条依据、证据标签和来源行。');
+    else h+='<div class="grid2">'+arr.map(mcCard).join('')+'</div>';
+    return h+'</div>';
+  })+'</section>';
+}
+function mcCard(c){
+  var ev=(c.evidence||[]).filter(Boolean);
+  return '<article class="card mc"><div class="row sb"><h3>'+esc(c.title||'待补：结论')+'</h3></div>'+
+  (ev.length?'<ol>'+ev.map(function(e){return '<li>'+esc(e)+'</li>'}).join('')+'</ol>':'<div class="sm">'+na('三条依据')+'</div>')+
+  '<div class="row">'+tag(c.tag||'待核')+'</div>'+
+  '<div class="src">来源：'+esc(c.source||'待补')+' · '+esc(c.year||'待补')+' · 口径：'+esc(c.basis||'待补')+'</div>'+
+  '<div class="row"><span class="src">评分</span><span class="seg" role="group" aria-label="评分">'+[1,2,3,4,5].map(function(n){return '<button data-act="mc-score" data-id="'+esc(c.id)+'" data-v="'+n+'" aria-pressed="'+(c.score===n)+'">'+n+'</button>'}).join('')+'</span></div>'+
+  '<div class="row"><span class="src">状态</span><span class="seg" role="group" aria-label="状态">'+STAT.map(function(s){return '<button data-act="mc-stat" data-id="'+esc(c.id)+'" data-v="'+s+'" aria-pressed="'+(c.status===s)+'">'+s+'</button>'}).join('')+'</span></div>'+
+  '<div class="row"><button class="btn sm2" data-act="mc-edit" data-id="'+esc(c.id)+'">编辑</button></div></article>';
+}
+
+function vAssets(){
+  return '<section class="sec">'+gate(['assets'],function(){
+    var all=S.assets;
+    var list=all.filter(function(a){return (!ui.aPlat||a.platform===ui.aPlat)&&(!ui.aCat||a.category===ui.aCat)&&(!ui.aVer||a.verdict===ui.aVer)});
+    var h='<div class="blk"><div class="row sb"><h2>'+(all.length?'素材库共 '+all.length+' 条，'+all.filter(function(a){return a.verdict==='可借鉴'}).length+' 条可借鉴':'素材库还是空的')+'</h2><button class="btn pri" data-act="as-add">新增素材</button></div>'+
+    '<div class="filters">'+sel('aPlat','平台',PLATS)+sel('aCat','品类',CATS)+sel('aVer','判定',VERD)+'</div>';
+    if(!all.length)h+=empty('素材库待补','由「素材库」流水线填充（周二、周五 07:45 抓取并拆解），也可以手动新增。每条素材要拆出钩子、结构、卖点、视觉和行动号召，并给出判定与原因。');
+    else if(!list.length)h+=empty('没有符合筛选条件的素材','调整上面的筛选，或清空筛选。');
+    else h+='<div class="grid2">'+sortBy(list,'createdAt','desc').map(function(a){
+      return '<article class="card mc"><h3>'+esc(a.title||'待补：标题')+'</h3><div class="row">'+tag(a.platform||'待补','t-plain')+tag(a.category||'待补','t-plain')+tag(a.verdict||'未定',a.verdict==='可借鉴'?'t-ok':a.verdict==='不适合'?'t-ai':'t-chk')+'</div>'+
+      '<dl class="dl">'+[['钩子',a.hook],['结构',a.structure],['卖点',a.sellingPoint],['视觉',a.visual],['行动号召',a.cta],['所属模板',a.template],['判定原因',a.reason]].map(function(r){return '<dt>'+r[0]+'</dt><dd>'+(r[1]?esc(r[1]):na())+'</dd>'}).join('')+'</dl>'+
+      (a.url?'<div class="src"><a href="'+esc(a.url)+'" target="_blank" rel="noopener">查看原链接</a></div>':'<div class="src">链接：待补</div>')+
+      '<div class="row"><button class="btn sm2" data-act="as-edit" data-id="'+esc(a.id)+'">编辑</button></div></article>';
+    }).join('')+'</div>';
+    return h+'</div>';
+  })+'</section>';
+}
+function sel(k,label,opts){return '<label>'+label+'<select data-act="filter" data-k="'+k+'" id="flt_'+k+'"><option value="">全部</option>'+opts.map(function(o){return '<option'+(ui[k]===o?' selected':'')+'>'+o+'</option>'}).join('')+'</select></label>'}
+
+function weekStart(s){if(!s)return null;var d=new Date(s+'T00:00:00');if(isNaN(d))return null;var w=(d.getDay()+6)%7;d.setDate(d.getDate()-w);return d}
+function fmt(d){return (d.getMonth()+1)+'月'+d.getDate()+'日'}
+function vCalendar(){
+  return '<section class="sec">'+gate(['content'],function(){
+    var all=S.content;
+    var list=all.filter(function(c){return !ui.cStat||c.status===ui.cStat});
+    var h='<div class="blk"><div class="row sb"><h2>'+(all.length?'内容日历共 '+all.length+' 条，'+all.filter(function(c){return c.status==='待发'}).length+' 条待发':'内容日历还是空的')+'</h2><button class="btn pri" data-act="ct-add">新增选题</button></div>'+
+    '<div class="chips">'+[''].concat(CST).map(function(s){return '<button class="btn sm2" style="'+(ui.cStat===s?'background:var(--navy);color:var(--on-navy);border-color:var(--navy)':'')+'" data-act="cfilter" data-v="'+s+'">'+(s||'全部')+'</button>'}).join('')+'</div>'+
+    '<p class="lede">流转：选题 → 草稿 → 待发 → 已发 → 已复盘。每条内容发布前必须由 Simon 确认，点「确认已发布」即视为你已确认。</p>';
+    if(!all.length)h+=empty('内容日历待补','由「内容生产」流水线填充选题与初稿（周三 07:50），「发布与归档」负责发布提醒（工作日 08:30）。已发内容在这里回填曝光、互动、询盘数。');
+    else if(!list.length)h+=empty('这个状态下没有内容','换一个状态看看。');
+    else{
+      var groups={},order=[];
+      list.forEach(function(c){var w=weekStart(c.plannedDate);var k=w?w.getTime():'none';if(!groups[k]){groups[k]={w:w,items:[]};order.push(k)}groups[k].items.push(c)});
+      order.sort(function(a,b){return a==='none'?1:b==='none'?-1:a-b});
+      order.forEach(function(k){var g=groups[k];var lab=g.w?fmt(g.w)+' – '+fmt(new Date(g.w.getTime()+6*864e5)):'未排期';
+        h+='<div class="blk"><div class="wk">'+lab+'</div><div class="grid2">'+sortBy(g.items,'plannedDate').map(ctCard).join('')+'</div></div>'});
+    }
+    return h+'</div>';
+  })+'</section>';
+}
+function ctCard(c){
+  var i=CST.indexOf(c.status);if(i<0)i=0;var nxt=CST[i+1];
+  var pub=i>=3;
+  return '<article class="card mc"><h3>'+esc(c.title||'待补：标题')+'</h3>'+
+  '<div class="step">'+CST.map(function(s,j){return '<span class="'+(j===i?'on':j<i?'past':'')+'">'+s+'</span>'}).join('')+'</div>'+
+  '<dl class="dl"><dt>渠道</dt><dd>'+(c.channel?esc(c.channel):na())+'</dd><dt>品类</dt><dd>'+(c.category?esc(c.category):na())+'</dd><dt>形式</dt><dd>'+(c.format?esc(c.format):na())+'</dd><dt>计划日期</dt><dd class="mono">'+(c.plannedDate?esc(c.plannedDate):'待补')+'</dd></dl>'+
+  (c.body?'<div class="sm" style="white-space:pre-wrap;overflow-wrap:anywhere;border-top:1px solid var(--line);padding-top:8px">'+esc(c.body)+'</div>':'<div class="sm">正文：'+na()+'</div>')+
+  (pub?'<dl class="dl"><dt>链接</dt><dd>'+(c.link?'<a href="'+esc(c.link)+'" target="_blank" rel="noopener">查看</a>':na())+'</dd><dt>曝光</dt><dd class="mono">'+(c.impressions==null?'待补':esc(c.impressions))+'</dd><dt>互动</dt><dd class="mono">'+(c.engagements==null?'待补':esc(c.engagements))+'</dd><dt>询盘数</dt><dd class="mono">'+(c.inquiries==null?'待补':esc(c.inquiries))+'</dd></dl>':'')+
+  '<div class="row">'+(nxt?'<button class="btn pri sm2" data-act="ct-next" data-id="'+esc(c.id)+'">'+(c.status==='待发'?'确认已发布':'推进为：'+nxt)+'</button>':'')+(pub?'<button class="btn sm2" data-act="ct-fill" data-id="'+esc(c.id)+'">回填数据</button>':'')+'<button class="btn sm2" data-act="ct-edit" data-id="'+esc(c.id)+'">编辑</button></div></article>';
+}
+
+function skuTotal(s,w){var sw=0,t=0;for(var i=0;i<DIMS.length;i++){var k=DIMS[i][0],v=s.scores&&s.scores[k];if(!v)return null;sw+=w[k];t+=w[k]*v}return sw>0?t/sw:null}
+function vSourcing(){
+  return '<section class="sec">'+gate(['skus','settings'],function(){
+    var w=weights();
+    var rows=S.skus.map(function(s){return {s:s,t:skuTotal(s,w)}}).sort(function(a,b){return a.t==null?(b.t==null?0:1):b.t==null?-1:b.t-a.t});
+    var h='<div class="blk"><div class="row sb"><h2>'+(rows.length?'选品表共 '+rows.length+' 个 SKU，按加权总分排序':'选品表还是空的')+'</h2><button class="btn pri" data-act="sku-add">新增 SKU</button></div>'+
+    '<p class="lede">六项各 1–5 分，5 分一律表示对我们更有利：竞争强度 5 = 竞争小，合规门槛 5 = 门槛低，物流难度 5 = 好运。总分为加权平均，满分 5。有一项未打分则总分显示「待补」。</p>'+
+    '<div class="card"><h3 style="font-size:16px;margin-bottom:12px">维度权重（0–10，默认各项 1）</h3><div class="wgrid">'+DIMS.map(function(d){return '<div class="fld" style="margin:0"><label for="w_'+d[0]+'">'+d[1]+'</label><input id="w_'+d[0]+'" type="number" inputmode="decimal" min="0" max="10" step="0.5" value="'+w[d[0]]+'" data-act="weight" data-k="'+d[0]+'"></div>'}).join('')+'</div></div>';
+    if(!rows.length)h+=empty('选品表待补','由「供应链与选品」流水线填充（隔周周四 07:40 刷新评分）。先提供试点工厂的产品资料与照片，才能建立第一批 SKU。');
+    else h+='<div class="tbl"><table style="min-width:980px"><thead><tr><th class="num">#</th><th>SKU</th><th>品类</th><th>工厂</th><th class="num">报价</th><th class="num">起订量</th>'+DIMS.map(function(d){return '<th class="num">'+d[1]+'</th>'}).join('')+'<th class="num">加权总分</th><th>备注</th><th></th></tr></thead><tbody>'+rows.map(function(r,i){var s=r.s;
+      return '<tr><td class="num">'+(i+1)+'</td><td>'+esc(s.name)+'</td><td>'+(s.category?esc(s.category):'待补')+'</td><td>'+(s.factory?esc(s.factory):'待补')+'</td><td class="num">'+(s.price?esc(s.price):'待补')+'</td><td class="num">'+(s.moq?esc(s.moq):'待补')+'</td>'+DIMS.map(function(d){var v=s.scores&&s.scores[d[0]];return '<td class="num">'+(v||'待补')+'</td>'}).join('')+'<td class="num"><b>'+(r.t==null?'待补':r.t.toFixed(2))+'</b></td><td style="min-width:140px;overflow-wrap:anywhere">'+(s.notes?esc(s.notes):'')+'</td><td><button class="btn sm2" data-act="sku-edit" data-id="'+esc(s.id)+'">编辑</button></td></tr>'}).join('')+'</tbody></table></div>';
+    return h+'</div>';
+  })+'</section>';
+}
+
+function vReview(){
+  return '<section class="sec">'+gate(['reviews'],function(){
+    var rs=sortBy(S.reviews,'week','desc');
+    var h='<div class="blk"><div class="row sb"><h2>'+(rs.length?'已有 '+rs.length+' 次周复盘':'还没有周复盘')+'</h2><button class="btn pri" data-act="rv-add">新增复盘</button></div>';
+    if(!rs.length)h+=empty('周复盘待补','由「周复盘」任务填充（周日 20:40），每周写下保留、停止、尝试三件事。也可以手动新增。');
+    else h+=rs.map(function(r){return '<article class="card mc"><div class="row sb"><h3 class="mono" style="font-family:var(--mono);font-size:16px">'+esc(r.week||'待补')+'</h3><button class="btn sm2" data-act="rv-edit" data-id="'+esc(r.id)+'">编辑</button></div><div class="three">'+[['保留',r.keep],['停止',r.stop],['尝试',r.try_]].map(function(x){return '<div><h4>'+x[0]+'</h4><p>'+(x[1]?esc(x[1]):'待补')+'</p></div>'}).join('')+'</div>'+(r.note?'<div class="sm" style="border-top:1px solid var(--line);padding-top:8px">'+esc(r.note)+'</div>':'')+'</article>'}).join('');
+    return h+'</div>';
+  })+
+  gate(['rules'],function(){
+    var rs=sortBy(S.rules,'order');
+    var h='<div class="blk"><div class="row sb"><h2>'+(rs.length?'现行 '+rs.length+' 条规则，所有流水线都要遵守':'规则库还是空的')+'</h2><button class="btn pri" data-act="rl-add">新增规则</button></div>';
+    if(!rs.length)h+=empty('规则库待补','每次你修正 AI 的输出，都应沉淀为一条规则，写明适用的流水线和来源。');
+    else h+='<div class="card">'+rs.map(function(r){return '<div class="todo"><div class="tx"><div>'+esc(r.text)+'</div><div class="src">适用：'+esc(r.pipeline||'待补')+' · 来源：'+esc(r.source||'待补')+' · <span class="mono">'+esc(r.date||'待补')+'</span></div></div><button class="btn sm2" data-act="rl-edit" data-id="'+esc(r.id)+'">编辑</button></div>'}).join('')+'</div>';
+    return h+'</div>';
+  })+'</section>';
+}
+
+var VIEWS={overview:vOverview,matrix:vMatrix,assets:vAssets,calendar:vCalendar,sourcing:vSourcing,review:vReview};
+var pending=false;
+function render(){if(pending)return;pending=true;requestAnimationFrame(function(){pending=false;draw()})}
+function draw(){
+  var ae=document.activeElement;if(ae&&ae.closest&&ae.closest('#main')&&ae.tagName==='INPUT'&&ae.type==='number'&&ae.id.indexOf('w_')===0&&document.hasFocus())return;
+  var p=pilot();
+  $('pilot').innerHTML='<div class="combo">试点组合：'+esc(p.category)+' × '+esc(p.country)+' × '+esc(p.platform)+'</div><button class="btn-ghost" data-act="pilot-edit">修改</button><span class="hint">'+(p.confirmed?'已确认':'默认值，待你确认')+'</span>';
+  $('nav').innerHTML=TABS.map(function(t){return '<button data-act="tab" data-v="'+t[0]+'"'+(ui.tab===t[0]?' aria-current="page"':'')+'>'+t[1]+'</button>'}).join('');
+  var y=window.scrollY;$('main').innerHTML=VIEWS[ui.tab]();
+}
+function setTab(t){if(!VIEWS[t])t='overview';ui.tab=t;try{history.replaceState(null,'','#'+t)}catch(e){}render();window.scrollTo(0,0)}
+
+/* ---------- 表单定义 ---------- */
+function fCard(c,defCat,defCo){
+  c=c||{};var ev=c.evidence||[];
+  openForm({title:c.id?'编辑市场卡片':'新增市场卡片',values:{category:c.category||defCat,country:c.country||defCo,title:c.title,e1:ev[0],e2:ev[1],e3:ev[2],tag:c.tag||'待核',source:c.source,year:c.year,basis:c.basis,score:c.score,status:c.status||'未定'},
+  fields:[{key:'category',label:'品类',type:'select',options:CATS},{key:'country',label:'国别',type:'select',options:countries()},{key:'title',label:'一句结论（标题写结论，不写话题）',req:1},{key:'e1',label:'依据 1'},{key:'e2',label:'依据 2'},{key:'e3',label:'依据 3'},{key:'tag',label:'证据标签',type:'select',options:TAGS},{key:'source',label:'来源',ph:'待补：来源'},{key:'year',label:'年份',ph:'待补：年份'},{key:'basis',label:'口径',ph:'待补：口径'},{key:'score',label:'评分 1–5',type:'select',options:[1,2,3,4,5],blank:'未打分'},{key:'status',label:'状态',type:'select',options:STAT}],
+  onSave:function(v){var d={category:v.category,country:v.country,title:v.title,evidence:[v.e1,v.e2,v.e3],tag:v.tag,source:v.source,year:v.year,basis:v.basis,score:v.score?Number(v.score):null,status:v.status};
+    if(c.id)return coll('market_cards').doc(c.id).update(d);d.createdAt=Date.now();return coll('market_cards').doc().set(d)},
+  onDelete:c.id?function(){return coll('market_cards').doc(c.id).delete()}:null});
+}
+function fAsset(a){
+  a=a||{};
+  openForm({title:a.id?'编辑素材':'新增素材',values:a,
+  fields:[{key:'title',label:'标题',req:1},{key:'platform',label:'平台',type:'select',options:PLATS},{key:'category',label:'品类',type:'select',options:CATS},{key:'url',label:'链接',type:'url'},{key:'hook',label:'钩子',type:'textarea'},{key:'structure',label:'结构',type:'textarea'},{key:'sellingPoint',label:'卖点',type:'textarea'},{key:'visual',label:'视觉',type:'textarea'},{key:'cta',label:'行动号召'},{key:'template',label:'所属模板'},{key:'verdict',label:'判定',type:'select',options:VERD,def:'未定'},{key:'reason',label:'原因',type:'textarea'}],
+  onSave:function(v){if(a.id)return coll('assets').doc(a.id).update(v);v.createdAt=Date.now();return coll('assets').doc().set(v)},
+  onDelete:a.id?function(){return coll('assets').doc(a.id).delete()}:null});
+}
+function fContent(c){
+  c=c||{};
+  openForm({title:c.id?'编辑内容':'新增选题',values:c,
+  fields:[{key:'title',label:'标题',req:1},{key:'status',label:'状态',type:'select',options:CST,def:'选题'},{key:'channel',label:'渠道',ph:'例如 LinkedIn'},{key:'category',label:'品类',type:'select',options:CATS},{key:'format',label:'形式',type:'select',options:FORMS},{key:'plannedDate',label:'计划发布日期',type:'date'},{key:'body',label:'正文',type:'textarea'},{key:'link',label:'发布链接',type:'url'},{key:'impressions',label:'曝光',type:'number'},{key:'engagements',label:'互动',type:'number'},{key:'inquiries',label:'询盘数',type:'number'}],
+  onSave:function(v){if(c.id)return coll('content').doc(c.id).update(v);v.createdAt=Date.now();return coll('content').doc().set(v)},
+  onDelete:c.id?function(){return coll('content').doc(c.id).delete()}:null});
+}
+function fSku(s){
+  s=s||{};var sc=s.scores||{};var vals={name:s.name,category:s.category,factory:s.factory,price:s.price,moq:s.moq,notes:s.notes};
+  DIMS.forEach(function(d){vals['sc_'+d[0]]=sc[d[0]]});
+  var fields=[{key:'name',label:'SKU 名称',req:1},{key:'category',label:'品类',type:'select',options:CATS},{key:'factory',label:'工厂'},{key:'price',label:'报价',ph:'含币种与单位，如 待补'},{key:'moq',label:'起订量'}];
+  DIMS.forEach(function(d){fields.push({key:'sc_'+d[0],label:d[1]+'（1–5，5 = 对我们更有利）',type:'select',options:[1,2,3,4,5],blank:'待补'})});
+  fields.push({key:'notes',label:'备注',type:'textarea'});
+  openForm({title:s.id?'编辑 SKU':'新增 SKU',values:vals,fields:fields,
+  onSave:function(v){var scores={};DIMS.forEach(function(d){scores[d[0]]=v['sc_'+d[0]]?Number(v['sc_'+d[0]]):null});
+    var d={name:v.name,category:v.category,factory:v.factory,price:v.price,moq:v.moq,notes:v.notes,scores:scores};
+    if(s.id)return coll('skus').doc(s.id).update(d);d.createdAt=Date.now();return coll('skus').doc().set(d)},
+  onDelete:s.id?function(){return coll('skus').doc(s.id).delete()}:null});
+}
+function fReview(r){
+  r=r||{};
+  openForm({title:r.id?'编辑周复盘':'新增周复盘',values:{week:r.week,keep:r.keep,stop:r.stop,try_:r.try_,note:r.note},
+  fields:[{key:'week',label:'周次',ph:'例如 2026-W46',req:1},{key:'keep',label:'保留',type:'textarea'},{key:'stop',label:'停止',type:'textarea'},{key:'try_',label:'尝试',type:'textarea'},{key:'note',label:'备注',type:'textarea'}],
+  onSave:function(v){if(r.id)return coll('reviews').doc(r.id).update(v);v.createdAt=Date.now();return coll('reviews').doc().set(v)},
+  onDelete:r.id?function(){return coll('reviews').doc(r.id).delete()}:null});
+}
+function fRule(r){
+  r=r||{};
+  openForm({title:r.id?'编辑规则':'新增规则',values:{text:r.text,pipeline:r.pipeline,source:r.source,date:r.date||today()},
+  fields:[{key:'text',label:'规则内容',type:'textarea',req:1},{key:'pipeline',label:'适用流水线',type:'select',options:['全部流水线'].concat(PIPES)},{key:'source',label:'来源于哪次修正',ph:'例如 2026-11-10 对市场卡片的修正'},{key:'date',label:'日期',type:'date'}],
+  onSave:function(v){if(r.id)return coll('rules').doc(r.id).update(v);v.order=Date.now();return coll('rules').doc().set(v)},
+  onDelete:r.id?function(){return coll('rules').doc(r.id).delete()}:null});
+}
+
+/* ---------- 事件 ---------- */
+document.addEventListener('click',function(e){
+  var el=e.target.closest('[data-act]');if(!el)return;
+  var a=el.dataset.act,id=el.dataset.id,v=el.dataset.v;
+  if(a==='filter'||a==='weight'||(a==='todo'))return;
+  if(!db&&a!=='tab'&&a!=='m-close'&&a!=='cell'&&a!=='cfilter'){toast('数据库不可用，暂时不能保存。',true);return}
+  switch(a){
+  case 'tab':setTab(v);break;
+  case 'm-close':closeForm();break;
+  case 'm-save':saveForm();break;
+  case 'm-del':
+    if(!form.armed){form.armed=true;el.textContent='再点一次确认删除';break}
+    var f=form;run(function(){return f.onDelete()},'已删除').then(function(ok){if(ok)closeForm()});break;
+  case 'pilot-edit':var p=pilot();
+    openForm({title:'修改试点组合',note:'试点组合决定各流水线先跑哪一格。',values:p,fields:[{key:'category',label:'品类',type:'select',options:CATS},{key:'country',label:'国别',type:'select',options:countries()},{key:'platform',label:'渠道',type:'select',options:PLATS}],
+      onSave:function(x){return coll('settings').doc('pilot').set({category:x.category,country:x.country,platform:x.platform,confirmed:true})}});break;
+  case 'cell':ui.cell={cat:el.dataset.cat,country:el.dataset.co};render();break;
+  case 'country-add':openForm({title:'新增国别',fields:[{key:'name',label:'国别名称',req:1,ph:'例如 德国'}],onSave:function(x){var l=countries().slice();if(l.indexOf(x.name)>=0)throw new Error('该国别已存在');l.push(x.name);return coll('settings').doc('countries').set({list:l})}});break;
+  case 'mc-add':fCard(null,ui.cell.cat,ui.cell.country);break;
+  case 'mc-edit':fCard(byId('market_cards',id));break;
+  case 'mc-score':run(function(){return coll('market_cards').doc(id).update({score:Number(v)})});break;
+  case 'mc-stat':run(function(){return coll('market_cards').doc(id).update({status:v})});break;
+  case 'as-add':fAsset(null);break;
+  case 'as-edit':fAsset(byId('assets',id));break;
+  case 'cfilter':ui.cStat=v;render();break;
+  case 'ct-add':fContent(null);break;
+  case 'ct-edit':fContent(byId('content',id));break;
+  case 'ct-next':var c=byId('content',id);var nx=CST[CST.indexOf(c.status)+1];if(nx)run(function(){return coll('content').doc(id).update({status:nx})},'已推进为：'+nx);break;
+  case 'ct-fill':var cc=byId('content',id);
+    openForm({title:'回填发布数据',note:'没有数据的项留空，页面会显示「待补」。',values:cc,fields:[{key:'link',label:'发布链接',type:'url'},{key:'impressions',label:'曝光',type:'number'},{key:'engagements',label:'互动',type:'number'},{key:'inquiries',label:'询盘数',type:'number'}],onSave:function(x){return coll('content').doc(id).update(x)}});break;
+  case 'sku-add':fSku(null);break;
+  case 'sku-edit':fSku(byId('skus',id));break;
+  case 'rv-add':fReview(null);break;
+  case 'rv-edit':fReview(byId('reviews',id));break;
+  case 'rl-add':fRule(null);break;
+  case 'rl-edit':fRule(byId('rules',id));break;
+  case 'todo-add':openForm({title:'添加待办',fields:[{key:'text',label:'要做的事',req:1}],onSave:function(x){return coll('todos').doc().set({text:x.text,done:false,order:Date.now()})}});break;
+  case 'todo-del':run(function(){return coll('todos').doc(id).delete()});break;
+  }
+});
+document.addEventListener('change',function(e){
+  var el=e.target.closest('[data-act]');if(!el)return;var a=el.dataset.act;
+  if(a==='filter'){ui[el.dataset.k]=el.value;render()}
+  else if(a==='todo'){if(!db)return;var chk=el.checked;run(function(){return coll('todos').doc(el.dataset.id).update({done:chk})})}
+  else if(a==='weight'){if(!db){toast('数据库不可用，暂时不能保存。',true);return}
+    var n=Number(el.value);if(el.value===''||isNaN(n)||n<0||n>10){toast('权重需要是 0–10 的数字',true);render();return}
+    var w=weights();w[el.dataset.k]=n;run(function(){return coll('settings').doc('weights').set(w)},'权重已保存')}
+});
+$('ov').addEventListener('click',function(e){if(e.target===$('ov'))closeForm()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&form)closeForm()});
+window.addEventListener('hashchange',function(){var t=location.hash.slice(1);if(VIEWS[t]&&t!==ui.tab){ui.tab=t;render()}});
+
+/* ---------- 启动 ---------- */
+var h0=location.hash.slice(1);if(VIEWS[h0])ui.tab=h0;
+draw();
+var timer=setTimeout(function(){slow=true;render()},10000);
+(async function(){
+  var c=window.claude;
+  try{db=c&&c.use?await c.use('db'):null}catch(e){db=null}
+  if(!db){dbFail=true;clearTimeout(timer);render();return}
+  COLLS.forEach(function(name){
+    try{coll(name).onSnapshot(function(snap){
+      S[name]=snap.docs.map(function(d){return Object.assign({id:d.id},d.data())});
+      if(!snap.metadata.fromCache||snap.docs.length||true)ready[name]=true;
+      delete errs[name];
+      if(COLLS.every(function(n){return ready[n]})){slow=false;clearTimeout(timer)}
+      render();
+    },function(err){errs[name]=err;render()})}catch(e){errs[name]=e;render()}
+  });
+})();
+})();
+</script>
+
+</body></html>

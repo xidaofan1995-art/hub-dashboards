@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>智能硬件产品经理 · 开发流程交付件看板</title>
+<style>
+:root{--bg:#f6f5f1;--card:#fff;--tx:#1d1d1b;--mu:#6b6a64;--bd:#e2e0d8;--ac:#2f6f5e;--ac2:#e6f1ed;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181a;--card:#222426;--tx:#ececE8;--mu:#9a9a94;--bd:#33353a;--ac:#6fc4ab;--ac2:#1f3530}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.55 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+header{padding:16px 16px 8px}
+h1{font-size:18px;margin:0 0 4px}
+.sub{color:var(--mu);font-size:12px}
+.bar{height:6px;background:var(--bd);border-radius:3px;margin:10px 0 2px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ac);transition:width .25s}
+.board{display:flex;gap:12px;overflow-x:auto;padding:8px 16px 16px;align-items:flex-start}
+.col{flex:0 0 272px;max-width:85vw}
+.ch{position:sticky;top:0;padding:8px 10px;border-radius:8px;background:var(--ac2);margin-bottom:8px}
+.ch b{display:block;font-size:14px}
+.ch span{font-size:11px;color:var(--mu)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px;margin-bottom:8px}
+.top{display:flex;gap:8px;align-items:flex-start;cursor:pointer}
+.top input{margin-top:3px;accent-color:var(--ac)}
+.top .t{flex:1;font-weight:600}
+.chap{font-size:11px;color:var(--mu);font-weight:400;display:block}
+.det{display:none;margin-top:8px;border-top:1px dashed var(--bd);padding-top:8px;font-size:13px}
+.card.open .det{display:block}
+.det p{margin:0 0 6px}
+.det em{font-style:normal;color:var(--ac);font-weight:600}
+.done .t{text-decoration:line-through;color:var(--mu)}
+.gate{font-size:12px;border:1px dashed var(--ac);color:var(--ac);border-radius:8px;padding:6px 8px}
+.note{padding:0 16px 20px;color:var(--mu);font-size:12px}
+</style>
+</head>
+<body>
+<header>
+<h1>智能硬件 PM · 开发流程交付件看板</h1>
+<div class="sub">点击卡片展开「要求 / 方法」，勾选标记已掌握或已完成。章节号对应知识库 22 章题库。</div>
+<div class="bar"><i id="pb"></i></div>
+<div class="sub" id="pt"></div>
+</header>
+<div class="board" id="b"></div>
+<div class="note">说明：交付件清单按行业通用流程（IPD/NPDP、EVT-DVT-PVT-MP）整理，章节归属依据知识库目录；具体要求可再对照各章原题答案校准。</div>
+<script>
+const D=[
+{n:"1 市场与需求",g:"闸口：需求评审（MRD 通过）",c:"01·03",k:[
+["市场调研报告","01","要求：市场规模、增速、竞品、细分机会有数据来源。","方法：TAM/SAM/SOM、竞品拆解、PEST、行业报告+访谈交叉验证。"],
+["用户画像与场景地图","01·03","要求：明确核心用户、使用场景、痛点与替代方案。","方法：访谈、问卷、JTBD、用户旅程图、同理心地图。"],
+["需求池与优先级","03","要求：每条需求有来源、场景、价值、优先级。","方法：Kano、RICE/MoSCoW、价值-成本矩阵、需求漏斗。"],
+["MRD 市场需求文档","03","要求：目标客群、卖点、目标价、销量预估、上市窗口。","方法：从需求池收敛，对齐销售与市场，经评审后冻结。"]]},
+{n:"2 概念与立项",g:"闸口：立项评审（Charter）",c:"02·10",k:[
+["产品概念书","02","要求：一句话定位、核心体验、差异化、关键规格草案。","方法：概念测试、原型草图、价值主张画布。"],
+["技术可行性评估","02","要求：关键技术、方案选型、风险、成熟度（TRL）。","方法：芯片/传感器/算法选型对比，PoC 验证，研发预评估。"],
+["商业论证与项目章程","10","要求：成本、毛利、投入、回收期、里程碑、资源。","方法：BP/ROI/NPV 测算，敏感性分析，组合优先级排序。"]]},
+{n:"3 设计开发 EVT/DVT",g:"闸口：设计冻结评审",c:"04·18·22",k:[
+["PRD 产品需求文档","04","要求：功能、性能、体验指标可验证，版本范围清晰。","方法：用户故事+验收标准，软硬件需求分层，变更需走评审。"],
+["软硬件协同方案","18","要求：架构、接口、OTA、云端、App 分工明确。","方法：系统框图、接口定义文档、联调计划、版本兼容矩阵。"],
+["BOM 与目标成本","04·05","要求：BOM 完整，成本 ≤ 目标，关键件有替代料。","方法：Target Costing、DFM/DFX 评审、成本拆解。"],
+["EVT/DVT 验证报告","04","要求：功能、结构、可靠性问题闭环，遗留问题可控。","方法：问题清单跟踪、阶段出口标准、设计评审。"]]},
+{n:"4 供应链与量产 PVT/MP",g:"闸口：量产放行",c:"05·17",k:[
+["供应商评估与 AVL","05","要求：认证过的供应商、交期、质量、产能、价格。","方法：供应商打分卡、审厂、双源策略。"],
+["关键物料与备料计划","05·17","要求：长周期料、缺货风险、安全库存有计划。","方法：S&OP、MRP、风险物料清单、供应链韧性预案。"],
+["PVT 试产报告","04·05","要求：良率、节拍、工装、直通率达到出口标准。","方法：试产复盘、不良 Pareto、ECN 变更管理。"],
+["量产放行评审","05","要求：质量、产能、物流、售后均就绪。","方法：放行检查表（Checklist）、首批出货跟踪。"]]},
+{n:"5 测试·认证·合规",g:"闸口：认证齐备",c:"06·15·19",k:[
+["测试计划与用例","06","要求：覆盖功能、性能、兼容、可靠性与场景测试。","方法：测试矩阵、Alpha/Beta、缺陷分级与出口标准。"],
+["可靠性测试报告","06","要求：高低温、跌落、老化、防水等符合规格。","方法：按规格设计试验、失效分析（FA）。"],
+["认证与合规清单","15","要求：目标市场准入认证、数据隐私合规齐备。","方法：按市场列清单（安规、EMC、无线、隐私），预留认证周期。"],
+["ESG 与可持续要求","19","要求：材料、能耗、回收、碳足迹有披露。","方法：绿色设计、供应链 ESG 审核。"]]},
+{n:"6 上市",g:"闸口：上市就绪评审",c:"07",k:[
+["GTM 上市计划","07","要求：目标人群、渠道、节奏、预算、KPI 明确。","方法：GTM 画布、发布节奏倒排、种子用户测试。"],
+["定价与渠道策略","07","要求：价格带、毛利、渠道利润、促销规则。","方法：成本加成+竞争+价值定价，渠道分层。"],
+["售后与客服体系","07·21","要求：保修政策、备件、FAQ、响应 SLA。","方法：售后流程设计、故障分级、客服培训。"]]},
+{n:"7 运营·迭代·风险",g:"持续：版本评审与风险复盘",c:"08·09·12·13·14·21",k:[
+["数据看板与反馈闭环","08·13","要求：激活、留存、故障率、NPS 等指标可追踪。","方法：北极星指标、漏斗与队列分析、用户反馈分级。"],
+["版本迭代路线图","13·14","要求：版本目标、范围、节奏与资源匹配。","方法：数据驱动优先级、OTA 与硬件改款分层规划。"],
+["风险登记册与应急预案","09·12","要求：风险有概率、影响、负责人与应对措施。","方法：FMEA、风险矩阵、危机决策流程。"],
+["召回预案与法规应对","21","要求：触发条件、流程、沟通口径、责任分工明确。","方法：召回分级、追溯体系、监管沟通演练。"]]}
+];
+const X=[["角色分工 RACI","11·20","产品、研发、硬件、供应链、质量、市场、售后职责边界。"],["资源协调与优先级","10","资源冲突时用价值、风险、依赖排序，并对齐干系人。"]];
+let S={};try{S=JSON.parse(localStorage.getItem("pmb")||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem("pmb",JSON.stringify(S))}catch(e){}};
+const b=document.getElementById("b");let total=0;
+D.forEach((c,ci)=>{
+const col=document.createElement("div");col.className="col";
+col.innerHTML=`<div class="ch"><b>${c.n}</b><span>题库章节 ${c.c}</span></div>`;
+c.k.forEach((k,ki)=>{total++;const id=ci+"-"+ki;
+const d=document.createElement("div");d.className="card"+(S[id]?" done":"");
+d.innerHTML=`<div class="top"><input type="checkbox" ${S[id]?"checked":""}><div class="t">${k[0]}<span class="chap">第 ${k[1]} 章</span></div></div><div class="det"><p><em>${k[2].slice(0,2)}</em>${k[2].slice(2)}</p><p><em>${k[3].slice(0,2)}</em>${k[3].slice(2)}</p></div>`;
+const cb=d.querySelector("input");
+cb.onclick=e=>{e.stopPropagation();S[id]=cb.checked;d.classList.toggle("done",cb.checked);save();upd()};
+d.querySelector(".top").onclick=()=>d.classList.toggle("open");
+col.appendChild(d)});
+const g=document.createElement("div");g.className="gate";g.textContent=c.g;col.appendChild(g);
+b.appendChild(col)});
+const xc=document.createElement("div");xc.className="col";
+xc.innerHTML=`<div class="ch"><b>贯穿全程</b><span>协作与决策</span></div>`+X.map(x=>`<div class="card"><div class="t" style="font-weight:600">${x[0]}<span class="chap">第 ${x[1]} 章</span></div><div class="det" style="display:block"><p>${x[2]}</p></div></div>`).join("");
+b.appendChild(xc);
+function upd(){const n=Object.values(S).filter(Boolean).length;document.getElementById("pb").style.width=(n/total*100)+"%";document.getElementById("pt").textContent=`已完成 ${n} / ${total}`}
+upd();
+</script>
+</body>
+</html>

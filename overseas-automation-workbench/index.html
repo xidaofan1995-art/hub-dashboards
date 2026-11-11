@@ -1,0 +1,745 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>出海自动化工作台</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+/* Layout: port-office console — a narrow manifest rail on the left, working desk on the right, buyer time zones as a strip across the top */
+:root{
+  --bg:#ECEFED; --surface:#F8FAF9; --surface-2:#E2E7E4; --ink:#13202A; --muted:#58676F; --line:#C9D1CE;
+  --accent:#D9480F; --accent-ink:#FFFFFF; --sea:#1D5C86; --sea-soft:#D6E4EE;
+  --ok:#2F7D4F; --warn:#9A6512; --bad:#B42318; --ok-soft:#DCEFE3; --warn-soft:#F5E8CF; --bad-soft:#F7DEDB; --acc-soft:#F8DDD0;
+  --f-display:"Barlow Condensed","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --f-body:"Noto Sans SC","PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1519; --surface:#151F25; --surface-2:#1C2830; --ink:#E4EAED; --muted:#93A3AB; --line:#2A3740;
+  --accent:#FF7A3D; --accent-ink:#1A0E07; --sea:#6AB0DB; --sea-soft:#1B3242;
+  --ok:#5CC48A; --warn:#E3B04B; --bad:#F2766B; --ok-soft:#173527; --warn-soft:#3A2E14; --bad-soft:#3D1D1A; --acc-soft:#3E2112;
+  color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0E1519; --surface:#151F25; --surface-2:#1C2830; --ink:#E4EAED; --muted:#93A3AB; --line:#2A3740;
+  --accent:#FF7A3D; --accent-ink:#1A0E07; --sea:#6AB0DB; --sea-soft:#1B3242;
+  --ok:#5CC48A; --warn:#E3B04B; --bad:#F2766B; --ok-soft:#173527; --warn-soft:#3A2E14; --bad-soft:#3D1D1A; --acc-soft:#3E2112;
+  color-scheme:dark }
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.6}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--sea)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+.app{display:grid;grid-template-columns:212px minmax(0,1fr);min-height:100vh;
+  padding-left:max(0px, env(safe-area-inset-left,0px));padding-right:max(0px, env(safe-area-inset-right,0px))}
+.rail{background:var(--ink);color:var(--bg);padding:22px 16px;display:flex;flex-direction:column;gap:22px;position:sticky;top:0;height:100vh}
+.brand{display:flex;flex-direction:column;gap:2px}
+.brand b{font-family:var(--f-display);font-size:26px;letter-spacing:.02em;line-height:1.05}
+.brand span{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;opacity:.65;text-transform:uppercase}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:var(--r);color:inherit;text-decoration:none;opacity:.78}
+.nav a:hover{opacity:1;background:color-mix(in srgb,var(--bg) 10%,transparent)}
+.nav a[aria-current="page"]{opacity:1;background:var(--accent);color:var(--accent-ink);font-weight:500}
+.nav a small{font-family:var(--f-mono);font-size:11px;opacity:.75}
+.rail-foot{margin-top:auto;display:flex;flex-direction:column;gap:6px;font-size:12px;opacity:.8}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--muted);margin-right:6px;vertical-align:middle}
+.dot.on{background:var(--ok)} .dot.warn{background:var(--warn)}
+
+.main{min-width:0;padding-block:20px 48px;padding-left:max(16px, 28px);padding-right:max(16px, env(safe-area-inset-right,0px), 28px);display:flex;flex-direction:column;gap:22px}
+.clocks{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin}
+.clock{flex:0 0 auto;display:flex;flex-direction:column;gap:0;padding:6px 10px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);min-width:92px}
+.clock .c-city{font-size:11.5px;color:var(--muted)}
+.clock .c-time{font-family:var(--f-mono);font-size:15px;font-weight:500}
+.clock .c-st{font-size:10.5px;letter-spacing:.04em}
+.clock.open{border-color:var(--ok);background:var(--ok-soft)} .clock.open .c-st{color:var(--ok)}
+.clock .c-st{color:var(--muted)}
+
+.page-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.page-head h1{font-family:var(--f-display);font-weight:700;font-size:38px;line-height:1;margin:0;letter-spacing:.01em;text-wrap:balance}
+.page-head p{margin:6px 0 0;color:var(--muted);max-width:62ch}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);padding:7px 13px;border-radius:var(--r);cursor:pointer;white-space:nowrap;text-decoration:none;color:var(--ink)}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:500}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.ghost{background:transparent}
+.btn.sm{padding:4px 9px;font-size:12.5px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.danger{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 40%,var(--line))}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.panel-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.panel-h h2{margin:0;font-size:15px;font-weight:700}
+.panel-b{padding:14px 16px}
+
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.kpi{padding:14px 16px;border-left:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
+.kpi:first-child{border-left:0}
+.kpi .k-l{font-size:12px;color:var(--muted)}
+.kpi .k-v{font-family:var(--f-display);font-weight:600;font-size:34px;line-height:1.05;font-variant-numeric:tabular-nums}
+.kpi .k-s{font-size:11.5px;color:var(--muted)}
+.kpi.hot .k-v{color:var(--accent)}
+
+.pipe{display:flex;height:30px;border-radius:4px;overflow:hidden;background:var(--surface-2)}
+.pipe span{display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:11.5px;color:#fff;min-width:0;overflow:hidden}
+.pipe-legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:12.5px;color:var(--muted)}
+.pipe-legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+.grid-2{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:18px;align-items:start}
+.routine{list-style:none;margin:0;padding:0}
+.routine li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 16px;border-top:1px solid var(--line)}
+.routine li:first-child{border-top:0}
+.routine input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+.routine .r-t{font-weight:500}
+.routine .r-d{font-size:12.5px;color:var(--muted)}
+.routine li.done .r-t{text-decoration:line-through;color:var(--muted)}
+.progress{height:4px;background:var(--surface-2);border-radius:2px;overflow:hidden;width:120px}
+.progress i{display:block;height:100%;background:var(--accent);transition:width .3s}
+
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;padding:1px 8px;border-radius:999px;white-space:nowrap;font-weight:500}
+.st-new{background:var(--surface-2);color:var(--muted)}
+.st-contacted{background:var(--sea-soft);color:var(--sea)}
+.st-replied{background:var(--warn-soft);color:var(--warn)}
+.st-quoting{background:var(--acc-soft);color:var(--accent)}
+.st-won{background:var(--ok-soft);color:var(--ok)}
+.st-lost{background:var(--bad-soft);color:var(--bad)}
+.tag-ex{font-family:var(--f-mono);font-size:10px;padding:0 5px;border:1px dashed var(--muted);border-radius:3px;color:var(--muted);margin-left:6px;vertical-align:1px}
+.due{color:var(--bad);font-weight:500}
+
+.follow-list{list-style:none;margin:0;padding:0}
+.follow-list li{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:10px 16px;border-top:1px solid var(--line)}
+.follow-list li:first-child{border-top:0}
+.follow-list .f-who{min-width:0}
+.follow-list .f-who b{font-weight:500}
+.follow-list .f-meta{font-size:12px;color:var(--muted)}
+.empty{padding:22px 16px;color:var(--muted);font-size:13px}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.toolbar .grow{flex:1 1 200px;min-width:0}
+input[type=text],input[type=email],input[type=number],input[type=date],input[type=search],select,textarea{
+  width:100%;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:7px 10px}
+textarea{resize:vertical;min-height:84px;line-height:1.55}
+select{cursor:pointer}
+.toolbar select{width:auto}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{text-align:left;padding:9px 12px;border-top:1px solid var(--line);vertical-align:middle}
+th{font-size:11.5px;font-weight:500;color:var(--muted);letter-spacing:.04em;border-top:0;background:var(--surface-2)}
+td .co{font-weight:500}
+td .sub{font-size:12px;color:var(--muted)}
+td select{padding:3px 6px;font-size:12.5px;width:auto}
+.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.row-acts{display:flex;gap:6px;justify-content:flex-end}
+
+.flows{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.flow-card{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:11px 13px;cursor:pointer;display:flex;flex-direction:column;gap:3px}
+.flow-card:hover{border-color:var(--ink)}
+.flow-card[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.flow-card .fc-stage{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.flow-card b{font-size:14.5px}
+.flow-card span{font-size:12.5px;color:var(--muted);line-height:1.45}
+.workbench{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:18px;align-items:start}
+.form{display:flex;flex-direction:column;gap:12px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:12.5px;font-weight:500}
+.field .hint{font-size:11.5px;color:var(--muted)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.check{display:flex;align-items:center;gap:8px;font-size:13px}
+.out{min-height:320px;max-height:70vh;overflow:auto;padding:16px 18px;line-height:1.7}
+.out h4{margin:14px 0 4px;font-size:14.5px}
+.out h4:first-child{margin-top:0}
+.out p{margin:0 0 8px}
+.out ul{margin:0 0 8px;padding-left:20px}
+.out hr{border:0;border-top:1px dashed var(--line);margin:12px 0}
+.out .placeholder{color:var(--muted)}
+.out-acts{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:1px solid var(--line)}
+.note{font-size:12.5px;color:var(--muted)}
+.note.err{color:var(--bad)}
+
+.lib{display:flex;flex-direction:column}
+.lib-item{border-top:1px solid var(--line)}
+.lib-item:first-child{border-top:0}
+.lib-item summary{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:11px 16px;cursor:pointer;list-style:none}
+.lib-item summary::-webkit-details-marker{display:none}
+.lib-item summary b{font-weight:500;flex:1 1 220px;min-width:0}
+.lib-item .lib-body{padding:0 16px 14px}
+.lib-item .lib-body .out{min-height:0;max-height:none;padding:12px 14px;background:var(--bg);border-radius:var(--r);border:1px solid var(--line)}
+
+.play{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.phase{display:flex;flex-direction:column}
+.phase .ph-n{font-family:var(--f-display);font-weight:700;font-size:40px;line-height:1;color:var(--accent)}
+.phase h3{margin:4px 0 2px;font-size:16px}
+.phase p{margin:0 0 10px;font-size:13px;color:var(--muted)}
+.phase ul{margin:0;padding-left:18px;font-size:13px}
+.phase li{margin-bottom:5px}
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:0}
+.links a{display:flex;flex-direction:column;padding:10px 16px;border-top:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.links a:hover b{color:var(--accent)}
+.links a b{font-weight:500}
+.links a span{font-size:12px;color:var(--muted)}
+.flowmap{font-family:var(--f-mono);font-size:12.5px;line-height:1.9;overflow-x:auto;white-space:pre;padding:14px 16px;margin:0;background:var(--bg);border-radius:var(--r);border:1px solid var(--line)}
+
+.lines-edit{display:flex;flex-direction:column;gap:14px}
+.line-block{border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+
+dialog{border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);padding:0;width:min(560px,calc(100vw - 32px))}
+dialog::backdrop{background:rgba(10,16,20,.45)}
+dialog form{padding:18px;display:flex;flex-direction:column;gap:12px}
+dialog h3{margin:0;font-size:17px}
+.dlg-acts{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.dlg-acts .left{margin-right:auto}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:var(--r);font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}
+.toast.show{opacity:1}
+
+@media (max-width: 980px){
+  .grid-2,.workbench{grid-template-columns:minmax(0,1fr)}
+  .play{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width: 760px){
+  .app{grid-template-columns:minmax(0,1fr);align-content:start}
+  .rail{position:static;height:auto;padding:14px max(16px, env(safe-area-inset-left,0px)) 10px max(16px, env(safe-area-inset-right,0px));gap:10px}
+  .rail-foot{display:none}
+  .brand{flex-direction:row;align-items:baseline;gap:10px}
+  .nav{flex-direction:row;overflow-x:auto;gap:4px;padding-bottom:4px}
+  .nav a{flex:0 0 auto}
+  .nav a small{display:none}
+  .main{padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi:nth-child(3){border-left:0}
+  .kpi:nth-child(n+3){border-top:1px solid var(--line)}
+  .row{grid-template-columns:minmax(0,1fr)}
+  .page-head h1{font-size:32px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="app">
+  <aside class="rail">
+    <div class="brand"><b>出海工作台</b><span>OPC · Export Desk</span></div>
+    <nav class="nav" id="nav">
+      <a href="#today" data-v="today">今日作战 <small id="nav-due"></small></a>
+      <a href="#leads" data-v="leads">潜客管道 <small id="nav-leads"></small></a>
+      <a href="#flows" data-v="flows">AI 工作流 <small>7</small></a>
+      <a href="#library" data-v="library">素材库 <small id="nav-lib"></small></a>
+      <a href="#playbook" data-v="playbook">自动化蓝图</a>
+      <a href="#profile" data-v="profile">我的业务</a>
+    </nav>
+    <div class="rail-foot">
+      <div><span class="dot" id="store-dot"></span><span id="store-label">连接存储中…</span></div>
+      <div id="ai-label"><span class="dot"></span>AI：首次运行时授权</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="clocks" id="clocks" aria-label="买家所在时区"></div>
+    <section id="view"></section>
+  </main>
+</div>
+
+<dialog id="lead-dlg">
+  <form id="lead-form" method="dialog">
+    <h3 id="lead-dlg-title">新增潜客</h3>
+    <div class="row">
+      <div class="field"><label for="lf-company">公司</label><input type="text" id="lf-company" required placeholder="如 Müller Befestigungstechnik GmbH"></div>
+      <div class="field"><label for="lf-country">国家/地区</label><input type="text" id="lf-country" placeholder="德国"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label for="lf-contact">联系人 / 职位</label><input type="text" id="lf-contact" placeholder="Jonas Weber · Purchasing Manager"></div>
+      <div class="field"><label for="lf-email">邮箱</label><input type="email" id="lf-email" placeholder="name@company.com"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label for="lf-line">业务线</label><select id="lf-line"></select></div>
+      <div class="field"><label for="lf-stage">阶段</label><select id="lf-stage"></select></div>
+    </div>
+    <div class="row">
+      <div class="field"><label for="lf-source">来源</label><input type="text" id="lf-source" placeholder="海关数据 / LinkedIn / 展会 / 询盘"></div>
+      <div class="field"><label for="lf-value">预估年采购额 (USD)</label><input type="number" id="lf-value" min="0" step="1000" placeholder="50000"></div>
+    </div>
+    <div class="field"><label for="lf-next">下次跟进日期</label><input type="date" id="lf-next"></div>
+    <div class="field"><label for="lf-notes">备注</label><textarea id="lf-notes" placeholder="需求、已发资料、对方关注点…"></textarea></div>
+    <div class="dlg-acts">
+      <button type="button" class="btn danger left" id="lf-del" hidden>删除</button>
+      <button type="button" class="btn ghost" id="lf-cancel">取消</button>
+      <button type="submit" class="btn primary" id="lf-save">保存</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ================= 常量与默认数据 ================= */
+const STAGES=[["new","新线索","#7C8B93"],["contacted","已触达","#2B6E9C"],["replied","已回复","#B07A1C"],["quoting","报价/打样","#D9480F"],["won","成交","#2F7D4F"],["lost","搁置","#A2524A"]];
+const STAGE_NAME=Object.fromEntries(STAGES.map(s=>[s[0],s[1]]));
+const DEFAULT_PROFILE={
+  company:"",me:"",signature:"",
+  lines:[
+    {id:"fastener",name:"精密螺丝 / 紧固件",products:"精密螺丝、非标定制紧固件",strengths:"工厂直供，可按图定制；振动盘筛选、盐雾测试",moq:"",certs:""},
+    {id:"security",name:"智能安防硬件",products:"智能摄像头、智能门锁",strengths:"",moq:"",certs:""},
+    {id:"hub",name:"Type-C 扩展坞",products:"六合一 Type-C 扩展坞（X-32036）",strengths:"",moq:"",certs:""}
+  ]
+};
+const ZONES=[["洛杉矶","America/Los_Angeles"],["纽约","America/New_York"],["圣保罗","America/Sao_Paulo"],["伦敦","Europe/London"],["柏林","Europe/Berlin"],["迪拜","Asia/Dubai"],["孟买","Asia/Kolkata"],["悉尼","Australia/Sydney"]];
+const ROUTINE=[
+  {id:"intel",t:"看一眼目标市场",d:"用「买家市场调研」盘一个国家或一类买家",flow:"research"},
+  {id:"prospect",t:"新增 5 个潜客",d:"从海关数据、LinkedIn、展商名录里挑，录进潜客管道",view:"leads"},
+  {id:"outreach",t:"给新线索发开发信",d:"每封改一句个性化开头，挑对方工作时间发",flow:"coldmail"},
+  {id:"follow",t:"清空今日跟进",d:"",view:"today"},
+  {id:"content",t:"发 1 条 LinkedIn 内容",d:"工厂实拍、工艺细节、出货现场",flow:"social"},
+  {id:"review",t:"记录回复与询盘",d:"更新阶段，写好下次跟进日期",view:"leads"}
+];
+
+/* ================= 工具函数 ================= */
+const $=s=>document.querySelector(s);
+const h=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const today=()=>new Date().toLocaleDateString("sv-SE");
+const addDays=(d,n)=>{const x=new Date((d||today())+"T12:00:00");x.setDate(x.getDate()+n);return x.toLocaleDateString("sv-SE")};
+const fmtMoney=v=>v?("$"+Number(v).toLocaleString("en-US")):"—";
+function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("show"),2200)}
+async function copyText(text){
+  try{await navigator.clipboard.writeText(text);toast("已复制")}
+  catch(e){const ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();
+    let ok=false;try{ok=document.execCommand("copy")}catch(_){} ta.remove();toast(ok?"已复制":"复制失败，请手动选中文本")}
+}
+function md(t){
+  const lines=h(t).split("\n");let out="",list=false;
+  for(const raw of lines){
+    const l=raw.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
+    const li=l.match(/^\s*(?:[-*•]|\d+[.)、])\s+(.*)/);
+    if(li){if(!list){out+="<ul>";list=true}out+="<li>"+li[1]+"</li>";continue}
+    if(list){out+="</ul>";list=false}
+    const hd=l.match(/^#{1,4}\s+(.*)/);
+    if(hd)out+="<h4>"+hd[1]+"</h4>";
+    else if(/^\s*-{3,}\s*$/.test(l))out+="<hr>";
+    else if(l.trim())out+="<p>"+l+"</p>";
+  }
+  if(list)out+="</ul>";return out;
+}
+
+/* ================= 存储：云端 db，退化为本浏览器 ================= */
+const state={leads:{},library:{},profile:null,daily:{done:{}},mode:"pending"};
+const LS_KEY="export-desk-v1";
+let db=null;
+function profile(){const p=state.profile||{};return {...DEFAULT_PROFILE,...p,lines:(p.lines&&p.lines.length)?p.lines:DEFAULT_PROFILE.lines}}
+function lineName(id){return (profile().lines.find(l=>l.id===id)||{}).name||"未分类"}
+function setStore(mode,label){state.mode=mode;$("#store-dot").className="dot "+(mode==="cloud"?"on":mode==="local"?"warn":"");$("#store-label").textContent=label}
+function loadLocal(){
+  try{const raw=localStorage.getItem(LS_KEY);if(raw){const d=JSON.parse(raw);state.leads=d.leads||{};state.library=d.library||{};state.profile=d.profile||null;state.daily=(d.daily&&d.daily[today()])||{done:{}};state._dailyAll=d.daily||{}}}catch(e){}
+}
+function saveLocal(){
+  try{const all=state._dailyAll||{};all[today()]=state.daily;localStorage.setItem(LS_KEY,JSON.stringify({leads:state.leads,library:state.library,profile:state.profile,daily:all}))}catch(e){}
+}
+async function save(kind,id,data){
+  if(kind==="leads"||kind==="library")state[kind][id]=data;
+  if(kind==="profile")state.profile=data;
+  if(kind==="daily")state.daily=data;
+  render();
+  if(state.mode==="cloud"){
+    const path=kind==="profile"?"config/profile":kind==="daily"?"daily/"+today():kind+"/"+id;
+    try{await db.doc(path).set(data)}catch(e){toast(e&&e.code==="quota_exceeded"?"存储已满，请删除一些旧记录":"保存失败，请稍后再试")}
+  }else saveLocal();
+}
+async function remove(kind,id){
+  delete state[kind][id];render();
+  if(state.mode==="cloud"){try{await db.doc(kind+"/"+id).delete()}catch(e){toast("删除失败，请稍后再试")}}
+  else saveLocal();
+}
+function snapMap(snap){const m={};snap.docs.forEach(d=>{m[d.id]=d.data()});return m}
+async function initStore(){
+  if(!window.claude||!window.claude.use){loadLocal();setStore("local","仅保存在本浏览器");render();return}
+  let got=false;
+  try{db=await window.claude.use("db")}catch(e){db=null}
+  if(!db){loadLocal();setStore("local","仅保存在本浏览器");render();return}
+  setStore("cloud","云端同步中…");
+  const timer=setTimeout(()=>{if(!got)setStore("cloud","云端暂时连不上，稍后自动重试")},10000);
+  const ok=s=>{if(!s.metadata.fromCache){got=true;clearTimeout(timer);setStore("cloud","已云端同步")}};
+  const fail=e=>{clearTimeout(timer);if(e&&e.code==="revoked"){setStore("local","存储不可用")}else setStore("cloud","同步中断，刷新页面可恢复")};
+  db.collection("leads").onSnapshot(s=>{state.leads=snapMap(s);ok(s);render()},fail);
+  db.collection("library").onSnapshot(s=>{state.library=snapMap(s);ok(s);render()},fail);
+  db.doc("config/profile").onSnapshot(s=>{state.profile=s.exists?s.data():null;ok(s);render()},fail);
+  db.doc("daily/"+today()).onSnapshot(s=>{state.daily=s.exists?s.data():{done:{}};ok(s);render()},fail);
+}
+
+/* ================= AI（sample） ================= */
+let samplePromise=null;
+function getSample(){if(!window.claude||!window.claude.use)return Promise.resolve(null);return samplePromise||(samplePromise=window.claude.use("sample").catch(()=>null))}
+const ERR={not_granted:"未授权 Claude，可以点「复制提示词」到 Claude 对话里用。",sampling_disabled:"当前账号无法调用 Claude，可复制提示词手动使用。",rate_limited:"调用太频繁或已达用量上限，过一会儿再试。",session_expired:"登录已过期，请重新登录 claude.ai。",refused:"这次请求没有生成内容，换个说法再试。",empty_completion:"没有生成内容，简化一下输入再试。",prompt_too_large:"输入太长，请删减后再试。",invalid_json:"解析失败，再试一次。"};
+const errMsg=e=>ERR[e&&e.code]||"生成中断，可以重试。";
+
+/* ================= AI 工作流定义 ================= */
+function ctx(lineId){
+  const p=profile();const l=p.lines.find(x=>x.id===lineId)||p.lines[0]||{};
+  const f=(k,v)=>v?`${k}：${v}\n`:"";
+  return `【我的背景】中国深圳的出口商/工厂，一人公司模式运营。\n${f("公司",p.company)}${f("业务线",l.name)}${f("主营产品",l.products)}${f("核心优势",l.strengths)}${f("MOQ",l.moq)}${f("认证",l.certs)}${f("我的名字",p.me)}${f("邮件签名",p.signature)}`;
+}
+const FLOWS=[
+  {id:"research",stage:"情报",name:"买家市场调研",desc:"一个国家或一类买家：谁在买、去哪找、看重什么",
+   fields:[{id:"market",label:"目标市场",ph:"如：德国 / 中东 / 美国五金分销商"},{id:"buyer",label:"想找的买家类型（可选）",ph:"进口商、分销商、品牌方、OEM 工厂…"},{id:"q",label:"特别想知道的（可选）",ph:"如：当地常用标准、价格带、旺季",type:"textarea"}],
+   build:v=>`${ctx(v.line)}\n请为我做一份「${v.market||"目标市场"}」的出海买家调研${v.buyer?`，重点买家类型：${v.buyer}`:""}。${v.q?`\n我特别想知道：${v.q}`:""}\n\n用中文输出，结构：\n## 市场概况（3-5 条，给出判断而非空话）\n## 主要买家类型与画像（每类：他们是谁、采购决策人职位、采购关注点）\n## 去哪找这些买家（具体渠道 + 可直接复制的搜索关键词，英文/当地语言各给几组，含 LinkedIn 职位关键词与 Google 搜索语法）\n## 进口门槛（相关标准/认证/关税或合规要点）\n## 切入建议（我的差异化卖点怎么讲）\n## 本周行动清单（5 条，可执行）\n\n你无法联网，凡涉及具体数字或政策，请标注「需核实」。`},
+  {id:"coldmail",stage:"触达",name:"开发信",desc:"三种切入角度的英文开发信，短、具体、带退订句",
+   fields:[{id:"company",label:"对方公司",ph:"Müller Befestigungstechnik GmbH"},{id:"country",label:"国家",ph:"Germany"},{id:"contact",label:"联系人 / 职位",ph:"Jonas Weber, Purchasing Manager"},{id:"hook",label:"个性化切入点",ph:"如：他们官网在招工程师 / 刚参加 Fastener Fair / 产品线里有不锈钢螺丝",type:"textarea"}],
+   build:v=>`${ctx(v.line)}\n请给下面这位海外买家写 B2B 冷开发信：\n公司：${v.company||"（未填）"}\n国家：${v.country||"（未填）"}\n联系人：${v.contact||"（未填）"}\n个性化切入点：${v.hook||"（无，请根据公司类型合理推断并说明假设）"}\n\n要求：\n- 写 3 个版本，角度分别是：A 痛点/降本，B 工艺能力/质量证明，C 低门槛样品邀约\n- 每版给英文 Subject（≤7 词，不用感叹号、不像广告）和正文（≤110 词），口吻像真人业务员，不要堆形容词\n- 正文第一句必须关于对方而不是我们；结尾只提一个轻量 CTA\n- 每封末尾加一行简短退订说明（满足 GDPR/CAN-SPAM 习惯）\n- 最后用中文写 3 条发送建议（发送时间按对方时区、跟进节奏、需要准备的附件）`},
+  {id:"followup",stage:"跟进",name:"跟进序列",desc:"对方没回或回了一半时，三封节奏递进的跟进",
+   fields:[{id:"company",label:"对方公司 / 联系人",ph:"Müller GmbH · Jonas"},{id:"last",label:"上次沟通内容",ph:"如：10/20 发了开发信+产品目录，对方已读未回",type:"textarea"},{id:"goal",label:"这轮想达成",ph:"拿到图纸询价 / 约视频会议 / 寄样"}],
+   build:v=>`${ctx(v.line)}\n帮我写一组英文跟进邮件。\n对象：${v.company||"（未填）"}\n上次沟通：${v.last||"（未填）"}\n目标：${v.goal||"推进到报价或寄样"}\n\n输出 3 封，分别用于第 3 天、第 7 天、第 14 天：\n- 每封给 Subject 和 ≤80 词正文\n- 每封带一个新信息（案例、工艺细节、行业动态、样品政策），不要只说"just following up"\n- 第 3 封是体面的收尾信（break-up email），给对方一个简单的回复选项\n最后用中文说明：如果对方回复"价格太高"或"已有供应商"，下一步怎么接。`},
+  {id:"inquiry",stage:"跟进",name:"询盘分析与回复",desc:"粘贴询盘：判断真假与优先级，写回复，列出要问工厂的问题",extract:true,
+   fields:[{id:"text",label:"询盘原文",ph:"把邮件或平台询盘整段粘贴进来",type:"textarea",rows:8}],
+   build:v=>`${ctx(v.line)}\n下面是我收到的一条询盘：\n"""\n${v.text||"（未填）"}\n"""\n\n请用中文先做判断，再写回复：\n## 询盘评估（真实度、买家类型推测、优先级 高/中/低，各一句理由；列出可疑信号）\n## 信息缺口（报价前还需要对方提供什么：图纸、材质、表面处理、数量、贸易条款 FOB/CIF/DDP、目的港等）\n## 英文回复（≤150 词，先感谢并复述需求，再问关键缺口问题，给出预计报价时间）\n## 需要向工厂确认的问题（清单）`},
+  {id:"social",stage:"内容",name:"LinkedIn 内容",desc:"不露脸也能做：工厂、工艺、出货现场的帖子 + 拍摄清单",
+   fields:[{id:"topic",label:"主题",ph:"如：盐雾测试 / 振动盘全检 / 一批货出柜"},{id:"type",label:"类型",type:"select",opts:["工厂实拍","工艺知识","客户案例","行业观点","出货动态"]},{id:"noface",label:"不出镜",type:"check",def:true}],
+   build:v=>`${ctx(v.line)}\n帮我写一条 LinkedIn 帖子，面向海外采购和工程师。\n主题：${v.topic||"（未填）"}\n类型：${v.type}\n${v.noface?"限制：我不出镜，画面只拍产品、设备和生产过程。\n":""}\n输出：\n## 英文帖子（开头一句要能让采购停下来；150-220 词；分短段；结尾一个问题引导评论；3-5 个话题标签）\n## 配图/视频拍摄清单（5 个镜头，每个写清楚拍什么、角度、时长）\n## 中文要点（这条帖子想让买家记住的一件事）`},
+  {id:"listing",stage:"内容",name:"B2B 产品详情页",desc:"阿里国际站 / 独立站 / Amazon 的标题、关键词、卖点、FAQ",
+   fields:[{id:"product",label:"产品",ph:"如：M3 不锈钢十字盘头螺丝"},{id:"specs",label:"参数",ph:"材质、规格、表面处理、标准、包装…",type:"textarea"},{id:"platform",label:"平台",type:"select",opts:["阿里巴巴国际站","独立站 (Google SEO)","Amazon","Made-in-China / Global Sources"]}],
+   build:v=>`${ctx(v.line)}\n为「${v.product||"产品"}」写 ${v.platform} 产品详情页（英文），参数：\n${v.specs||"（未填，请列出需要我补充的参数）"}\n\n输出：\n## 标题（3 个备选，符合该平台的长度与关键词习惯）\n## 关键词（核心词 5 个 + 长尾词 10 个）\n## 卖点 Bullets（5 条，参数化表达，避免空洞形容词）\n## 详情描述（结构化：Applications / Specifications 表格用文本列出 / Quality Control / Packaging & Shipping）\n## FAQ（6 条，覆盖 MOQ、打样、交期、付款、定制、认证）\n## 中文提醒（该平台上这类产品常见的违规或减分点）`},
+  {id:"negotiate",stage:"成交",name:"砍价与异议回复",desc:"对方压价、比价、拖延时，三种策略的回复",
+   fields:[{id:"msg",label:"对方原话",ph:"粘贴买家的回复",type:"textarea"},{id:"floor",label:"我的底线 / 可让步项",ph:"如：单价最多降 3%；可延长账期；MOQ 可减半"}],
+   build:v=>`${ctx(v.line)}\n买家这样回复我：\n"""\n${v.msg||"（未填）"}\n"""\n我的底线/可让步：${v.floor||"（未填）"}\n\n请用中文先分析对方真实意图（1-3 句），然后给 3 种策略的英文回复：\nA 守价值：不降价，换成讲成本构成和质量风险\nB 有条件让步：用量、账期、规格换价格\nC 推进成交：给截止时间或小单试单方案\n每版 ≤120 词。最后用中文提醒我哪些话不要说。`}
+];
+const flowById=id=>FLOWS.find(f=>f.id===id);
+
+/* ================= 视图状态 ================= */
+const ui={view:"today",flow:"research",vals:{},output:"",outState:"idle",outNote:"",ctl:null,leadQ:"",leadLine:"",leadStage:"",libKind:"",editId:null};
+
+/* ================= 渲染 ================= */
+function render(){
+  const v=ui.view;
+  document.querySelectorAll("#nav a").forEach(a=>{if(a.dataset.v===v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  const leads=Object.entries(state.leads);
+  const due=leads.filter(([,l])=>l.next&&l.next<=today()&&!["won","lost"].includes(l.stage));
+  $("#nav-due").textContent=due.length?due.length+" 待跟进":"";
+  $("#nav-leads").textContent=leads.length||"";
+  $("#nav-lib").textContent=Object.keys(state.library).length||"";
+  const el=$("#view");
+  // 保留工作流输入焦点：工作流页面只在切换时整体重绘
+  if(v==="flows"&&el.dataset.v==="flows"){updateFlowOutput();return}
+  el.dataset.v=v;
+  el.innerHTML=({today:viewToday,leads:viewLeads,flows:viewFlows,library:viewLibrary,playbook:viewPlaybook,profile:viewProfile}[v]||viewToday)(leads,due);
+  bind[v]&&bind[v]();
+}
+
+function viewToday(leads,due){
+  const d=new Date();const wk=["日","一","二","三","四","五","六"][d.getDay()];
+  const weekStart=addDays(today(),-((d.getDay()+6)%7));
+  const newWeek=leads.filter(([,l])=>l.created&&new Date(l.created).toLocaleDateString("sv-SE")>=weekStart).length;
+  const reached=leads.filter(([,l])=>l.stage!=="new").length;
+  const engaged=leads.filter(([,l])=>["replied","quoting","won"].includes(l.stage)).length;
+  const rate=reached?Math.round(engaged/reached*100)+"%":"—";
+  const pipeVal=leads.filter(([,l])=>["replied","quoting"].includes(l.stage)).reduce((s,[,l])=>s+(+l.value||0),0);
+  const counts=STAGES.map(s=>[s,leads.filter(([,l])=>l.stage===s[0]).length]);
+  const total=leads.length||1;
+  const doneMap=(state.daily&&state.daily.done)||{};
+  const doneN=ROUTINE.filter(r=>doneMap[r.id]).length;
+  const openZones=ZONES.filter(z=>zoneInfo(z[1]).open).map(z=>z[0]);
+  return `
+  <div class="page-head"><div><div class="eyebrow">${today()} · 周${wk}</div><h1>今日作战</h1>
+    <p>${openZones.length?`现在正处于工作时间：${openZones.join("、")}。开发信挑这些地方先发。`:"主要市场都已下班，适合做调研、写内容、整理潜客。"}</p></div>
+    <button class="btn primary" data-act="new-lead">+ 新增潜客</button></div>
+
+  <div class="kpis">
+    <div class="kpi"><span class="k-l">潜客总数</span><span class="k-v">${leads.length}</span><span class="k-s">本周新增 ${newWeek}</span></div>
+    <div class="kpi ${due.length?"hot":""}"><span class="k-l">今日待跟进</span><span class="k-v">${due.length}</span><span class="k-s">含已逾期</span></div>
+    <div class="kpi"><span class="k-l">回复率</span><span class="k-v">${rate}</span><span class="k-s">已回复及以后 ÷ 已触达</span></div>
+    <div class="kpi"><span class="k-l">在谈金额</span><span class="k-v">${pipeVal?"$"+(pipeVal>=1e6?(pipeVal/1e6).toFixed(1)+"M":Math.round(pipeVal/1000)+"K"):"—"}</span><span class="k-s">已回复 + 报价/打样，年采购预估</span></div>
+  </div>
+
+  <div class="panel"><div class="panel-h"><h2>管道分布</h2><a class="btn sm ghost" href="#leads">打开潜客管道 →</a></div>
+    <div class="panel-b">${leads.length?`<div class="pipe">${counts.filter(c=>c[1]).map(([s,n])=>`<span style="width:${n/total*100}%;background:${s[2]}" title="${s[1]} ${n}">${n}</span>`).join("")}</div>
+    <div class="pipe-legend">${counts.map(([s,n])=>`<span><i style="background:${s[2]}"></i>${s[1]} ${n}</span>`).join("")}</div>`:`<div class="note">还没有潜客。点右上角「新增潜客」，或者先去 AI 工作流做一份市场调研。</div>`}</div></div>
+
+  <div class="grid-2">
+    <div class="panel"><div class="panel-h"><h2>每日例行 · ${doneN}/${ROUTINE.length}</h2><div class="progress"><i style="width:${doneN/ROUTINE.length*100}%"></i></div></div>
+      <ul class="routine">${ROUTINE.map(r=>{const done=!!doneMap[r.id];const d=r.id==="follow"?(due.length?`今天有 ${due.length} 个到期，见右侧列表`:"今天没有到期跟进"):r.d;
+        return `<li class="${done?"done":""}"><input type="checkbox" id="rt-${r.id}" data-rt="${r.id}" ${done?"checked":""} aria-label="${h(r.t)}">
+        <label for="rt-${r.id}"><div class="r-t">${h(r.t)}</div><div class="r-d">${h(d)}</div></label>
+        ${r.flow?`<button class="btn sm" data-goflow="${r.flow}">去做</button>`:r.view&&r.view!=="today"?`<a class="btn sm" href="#${r.view}">去做</a>`:"<span></span>"}</li>`}).join("")}</ul></div>
+
+    <div class="panel"><div class="panel-h"><h2>待跟进</h2><span class="note">到期日 ≤ 今天</span></div>
+      ${due.length?`<ul class="follow-list">${due.sort((a,b)=>a[1].next.localeCompare(b[1].next)).map(([id,l])=>`<li>
+        <div class="f-who"><b>${h(l.company)}</b>${l.example?'<span class="tag-ex">示例</span>':""}<div class="f-meta">${l.country?h(l.country)+" · ":""}<span class="chip st-${l.stage}">${STAGE_NAME[l.stage]||""}</span> · <span class="${l.next<today()?"due":""}">${l.next<today()?"逾期 ":""}${l.next}</span></div></div>
+        <div class="row-acts"><button class="btn sm" data-follow="${id}">写跟进</button><button class="btn sm ghost" data-snooze="${id}">+3天</button></div></li>`).join("")}</ul>`
+      :`<div class="empty">没有到期的跟进。给潜客设好「下次跟进日期」，到期会出现在这里。</div>`}</div>
+  </div>`;
+}
+
+function viewLeads(leads){
+  const p=profile();
+  const q=ui.leadQ.toLowerCase();
+  const rows=leads.filter(([,l])=>(!ui.leadLine||l.line===ui.leadLine)&&(!ui.leadStage||l.stage===ui.leadStage)&&(!q||[l.company,l.contact,l.country,l.email,l.notes].join(" ").toLowerCase().includes(q)))
+    .sort((a,b)=>(a[1].next||"9999").localeCompare(b[1].next||"9999"));
+  return `
+  <div class="page-head"><div><div class="eyebrow">Pipeline</div><h1>潜客管道</h1><p>一行一个买家。阶段和下次跟进日期是自动化的抓手：到期的会自动进入「今日作战」。</p></div>
+    <button class="btn primary" data-act="new-lead">+ 新增潜客</button></div>
+  <div class="toolbar">
+    <input type="search" class="grow" id="lq" placeholder="搜索公司、联系人、国家、备注" value="${h(ui.leadQ)}">
+    <select id="ll" aria-label="业务线"><option value="">全部业务线</option>${p.lines.map(l=>`<option value="${h(l.id)}" ${ui.leadLine===l.id?"selected":""}>${h(l.name)}</option>`).join("")}</select>
+    <select id="ls" aria-label="阶段"><option value="">全部阶段</option>${STAGES.map(s=>`<option value="${s[0]}" ${ui.leadStage===s[0]?"selected":""}>${s[1]}</option>`).join("")}</select>
+  </div>
+  <div class="panel">${rows.length?`<div class="table-wrap"><table>
+    <thead><tr><th>公司 / 联系人</th><th>国家</th><th>业务线</th><th>阶段</th><th>下次跟进</th><th class="num">预估年采购</th><th></th></tr></thead>
+    <tbody>${rows.map(([id,l])=>`<tr>
+      <td><div class="co">${h(l.company)}${l.example?'<span class="tag-ex">示例</span>':""}</div><div class="sub">${h(l.contact||"")}${l.source?" · "+h(l.source):""}</div></td>
+      <td>${h(l.country||"—")}</td>
+      <td><span class="sub">${h(lineName(l.line))}</span></td>
+      <td><select data-stage="${id}" aria-label="阶段">${STAGES.map(s=>`<option value="${s[0]}" ${l.stage===s[0]?"selected":""}>${s[1]}</option>`).join("")}</select></td>
+      <td class="mono ${l.next&&l.next<=today()&&!["won","lost"].includes(l.stage)?"due":""}">${h(l.next||"—")}</td>
+      <td class="num">${fmtMoney(l.value)}</td>
+      <td><div class="row-acts"><button class="btn sm" data-mail="${id}">写开发信</button><button class="btn sm ghost" data-edit="${id}">编辑</button></div></td>
+    </tr>`).join("")}</tbody></table></div>`
+    :`<div class="empty">${leads.length?"没有符合筛选条件的潜客。":"还没有潜客。点「新增潜客」录入第一个；询盘可以在 AI 工作流 →「询盘分析与回复」里一键提取。"}</div>`}</div>`;
+}
+
+function flowFormHTML(f){
+  const p=profile();const v=ui.vals[f.id]||{};
+  const lineSel=`<div class="field"><label for="fv-line">业务线</label><select id="fv-line" data-fv="line">${p.lines.map(l=>`<option value="${h(l.id)}" ${(v.line||p.lines[0].id)===l.id?"selected":""}>${h(l.name)}</option>`).join("")}</select><span class="hint">产品、优势会从「我的业务」自动带入提示词</span></div>`;
+  return lineSel+f.fields.map(x=>{
+    const val=v[x.id]??(x.def??"");
+    if(x.type==="textarea")return `<div class="field"><label for="fv-${x.id}">${h(x.label)}</label><textarea id="fv-${x.id}" data-fv="${x.id}" rows="${x.rows||4}" placeholder="${h(x.ph||"")}">${h(val)}</textarea></div>`;
+    if(x.type==="select")return `<div class="field"><label for="fv-${x.id}">${h(x.label)}</label><select id="fv-${x.id}" data-fv="${x.id}">${x.opts.map(o=>`<option ${val===o?"selected":""}>${h(o)}</option>`).join("")}</select></div>`;
+    if(x.type==="check")return `<label class="check"><input type="checkbox" id="fv-${x.id}" data-fv="${x.id}" ${val?"checked":""}> ${h(x.label)}</label>`;
+    return `<div class="field"><label for="fv-${x.id}">${h(x.label)}</label><input type="text" id="fv-${x.id}" data-fv="${x.id}" placeholder="${h(x.ph||"")}" value="${h(val)}"></div>`;
+  }).join("");
+}
+function flowVals(f){
+  const p=profile();const v={...(ui.vals[f.id]||{})};
+  if(!v.line)v.line=p.lines[0].id;
+  f.fields.forEach(x=>{if(v[x.id]===undefined){v[x.id]=x.type==="select"?x.opts[0]:(x.def??"")}});
+  return v;
+}
+function viewFlows(){
+  const f=flowById(ui.flow);
+  return `
+  <div class="page-head"><div><div class="eyebrow">Workflows</div><h1>AI 工作流</h1><p>选一个流程，填几项，Claude 直接产出可用的稿子。产出可以复制、存进素材库；也能把提示词复制到任何 AI 工具里用。</p></div></div>
+  <div class="flows">${FLOWS.map(x=>`<button class="flow-card" data-flow="${x.id}" aria-pressed="${x.id===ui.flow}"><span class="fc-stage">${x.stage}</span><b>${h(x.name)}</b><span>${h(x.desc)}</span></button>`).join("")}</div>
+  <div class="workbench">
+    <div class="panel"><div class="panel-h"><h2>${h(f.name)}</h2><span class="note">${h(f.stage)}</span></div>
+      <div class="panel-b"><form class="form" id="flow-form">${flowFormHTML(f)}
+        <div class="toolbar"><button type="submit" class="btn primary" id="run">生成</button>
+        <button type="button" class="btn" id="copy-prompt">复制提示词</button>
+        ${f.extract?`<button type="button" class="btn" id="extract">提取为潜客</button>`:""}</div>
+      </form></div></div>
+    <div class="panel"><div class="panel-h"><h2>产出</h2><span class="note" id="out-note"></span></div>
+      <div class="out" id="out"></div>
+      <div class="out-acts"><button class="btn sm" id="stop" hidden>停止</button><button class="btn sm" id="copy-out">复制全文</button><button class="btn sm" id="save-out">存入素材库</button></div></div>
+  </div>`;
+}
+function updateFlowOutput(){
+  const out=$("#out");if(!out)return;
+  if(ui.outState==="thinking"&&!ui.output)out.innerHTML=`<p class="placeholder">Claude 正在思考…（首次使用会先请你授权）</p>`;
+  else if(ui.output)out.innerHTML=md(ui.output);
+  else out.innerHTML=`<p class="placeholder">填好左边，点「生成」。产出会实时出现在这里。</p>`;
+  const busy=ui.outState==="thinking"||ui.outState==="streaming";
+  $("#stop").hidden=!busy;$("#run").disabled=busy;
+  $("#copy-out").disabled=$("#save-out").disabled=!ui.output||busy;
+  const n=$("#out-note");n.textContent=ui.outNote;n.className="note"+(ui.outState==="error"?" err":"");
+}
+
+function viewLibrary(){
+  const items=Object.entries(state.library).filter(([,x])=>!ui.libKind||x.kind===ui.libKind).sort((a,b)=>(b[1].created||0)-(a[1].created||0));
+  const kinds=[...new Set(Object.values(state.library).map(x=>x.kind))];
+  return `
+  <div class="page-head"><div><div class="eyebrow">Library</div><h1>素材库</h1><p>存下来的开发信、帖子、调研和回复模板。好用的版本反复改着用。</p></div>
+    <select id="lk" aria-label="类型" style="width:auto"><option value="">全部类型</option>${kinds.map(k=>`<option value="${h(k)}" ${ui.libKind===k?"selected":""}>${h((flowById(k)||{}).name||k)}</option>`).join("")}</select></div>
+  <div class="panel">${items.length?`<div class="lib">${items.map(([id,x])=>`<details class="lib-item"><summary><b>${h(x.title)}</b><span class="chip st-contacted">${h((flowById(x.kind)||{}).name||x.kind)}</span><span class="note">${h(lineName(x.line))} · ${new Date(x.created).toLocaleDateString("sv-SE")}</span></summary>
+    <div class="lib-body"><div class="out">${md(x.content)}</div><div class="toolbar" style="margin-top:10px"><button class="btn sm" data-libcopy="${id}">复制</button><button class="btn sm danger" data-libdel="${id}">删除</button></div></div></details>`).join("")}</div>`
+    :`<div class="empty">素材库是空的。在 AI 工作流里生成内容后，点「存入素材库」。</div>`}</div>`;
+}
+
+function viewPlaybook(){
+  const L=(href,t,s)=>`<a href="${href}" target="_blank" rel="noopener"><b>${t} ↗</b><span>${s}</span></a>`;
+  return `
+  <div class="page-head"><div><div class="eyebrow">Blueprint</div><h1>自动化蓝图</h1><p>一人公司做出海，按三步升级：先把流程跑顺，再把重复动作交给工具，最后串成智能体。这个工作台是第一步。</p></div></div>
+  <div class="play">
+    <div class="panel panel-b phase"><span class="ph-n">1</span><h3>人 + AI 跑通流程</h3><p>现在。每天 1-2 小时，把节奏固定下来。</p>
+      <ul><li>本页：潜客管道 + 每日例行 + 7 个 AI 工作流</li><li>每周目标：新增 25 个潜客，发 25 封开发信，2 条内容</li><li>记录哪个切入角度回复率最高，存进素材库</li><li>指标：回复率 &gt; 5% 再考虑放量</li></ul></div>
+    <div class="panel panel-b phase"><span class="ph-n">2</span><h3>工具接管重复动作</h3><p>回复率稳定后。找人、找邮箱、发信交给 SaaS。</p>
+      <ul><li>找买家：海关数据看谁在进口同类货</li><li>找邮箱：Apollo / Hunter 批量查，并做邮箱验证</li><li>发信：独立发信域名 + 预热 2-3 周，再用序列工具自动跟进</li><li>每天单域名发送量先控制在 30-50 封</li></ul></div>
+    <div class="panel panel-b phase"><span class="ph-n">3</span><h3>串成智能体</h3><p>有稳定询盘后。用 n8n 把各环节接起来，人只做判断。</p>
+      <ul><li>新询盘自动解析、打分、写入 CRM、生成回复草稿</li><li>每日潜客自动抓取与富化，生成个性化开头</li><li>内容日历自动排期发布</li><li>关键动作（报价、发信）保留人工确认</li></ul></div>
+  </div>
+  <div class="panel"><div class="panel-h"><h2>第 3 步的询盘智能体长这样</h2><span class="note">n8n 流程示意</span></div><div class="panel-b">
+<pre class="flowmap">Gmail / 阿里国际站 新询盘
+   │
+   ▼
+[AI 解析]  提取公司、国家、产品、数量、贸易条款
+   │
+   ▼
+[AI 打分]  真实度 + 优先级 ──── 低 ──▶ 模板回复，进培育序列
+   │ 高 / 中
+   ▼
+[写入 CRM]  阶段 = 已回复，下次跟进 = +2 天
+   │
+   ▼
+[生成回复草稿] ──▶ 推送到手机 ──▶ 你确认后发送</pre></div></div>
+  <div class="panel"><div class="panel-h"><h2>工具清单</h2><span class="note">按环节</span></div>
+    <div class="links">
+      ${L("https://www.importyeti.com","ImportYeti","美国海关提单，免费查谁在进口同类货")}
+      ${L("https://www.apollo.io","Apollo.io","B2B 联系人库，找采购决策人和邮箱")}
+      ${L("https://hunter.io","Hunter","按域名查邮箱、验证邮箱有效性")}
+      ${L("https://www.linkedin.com/sales","LinkedIn Sales Navigator","按行业、职位、地区精准找人")}
+      ${L("https://instantly.ai","Instantly","多域名发信、预热、自动跟进序列")}
+      ${L("https://n8n.io","n8n","开源自动化，可自托管，串联 AI 与各系统")}
+      ${L("https://www.make.com","Make","可视化自动化，上手比 n8n 快")}
+      ${L("https://www.alibaba.com","阿里巴巴国际站","B2B 平台询盘主阵地")}
+      ${L("https://www.globalsources.com","Global Sources","电子、安防类买家集中")}
+      ${L("https://www.made-in-china.com","Made-in-China","工业品、五金类流量稳定")}
+      ${L("https://claude.ai","Claude","长文写作、调研、询盘分析；本页 AI 即调用它")}
+      ${L("https://github.com/n8n-io/n8n","n8n GitHub","社区模板与工作流示例")}
+    </div></div>`;
+}
+
+function viewProfile(){
+  const p=profile();
+  return `
+  <div class="page-head"><div><div class="eyebrow">Profile</div><h1>我的业务</h1><p>这里填一次，所有 AI 工作流都会自动带上。写得越具体（工艺、产能、认证、交期），开发信越不像模板。</p></div></div>
+  <form class="form" id="pf">
+    <div class="panel panel-b form">
+      <div class="row"><div class="field"><label for="pf-company">公司名（英文）</label><input type="text" id="pf-company" value="${h(p.company)}" placeholder="Shenzhen XX Precision Hardware Co., Ltd."></div>
+      <div class="field"><label for="pf-me">我的名字（英文）</label><input type="text" id="pf-me" value="${h(p.me)}" placeholder="Leo Xi"></div></div>
+      <div class="field"><label for="pf-sig">邮件签名</label><textarea id="pf-sig" rows="3" placeholder="Leo Xi | Sales Director&#10;WhatsApp: +86 …">${h(p.signature)}</textarea></div>
+    </div>
+    <div class="lines-edit">${p.lines.map((l,i)=>`<div class="line-block" data-li="${i}">
+      <div class="row"><div class="field"><label for="pl-name-${i}">业务线名称</label><input type="text" id="pl-name-${i}" data-k="name" value="${h(l.name)}"></div>
+      <div class="field"><label for="pl-products-${i}">主营产品</label><input type="text" id="pl-products-${i}" data-k="products" value="${h(l.products)}"></div></div>
+      <div class="field"><label for="pl-strengths-${i}">核心优势</label><textarea id="pl-strengths-${i}" data-k="strengths" rows="2" placeholder="工艺、设备、产能、检测、交期、客户案例…">${h(l.strengths)}</textarea></div>
+      <div class="row"><div class="field"><label for="pl-moq-${i}">MOQ</label><input type="text" id="pl-moq-${i}" data-k="moq" value="${h(l.moq)}" placeholder="如 10,000 pcs"></div>
+      <div class="field"><label for="pl-certs-${i}">认证</label><input type="text" id="pl-certs-${i}" data-k="certs" value="${h(l.certs)}" placeholder="ISO 9001 / IATF 16949 / CE / FCC / RoHS"></div></div>
+    </div>`).join("")}</div>
+    <div class="toolbar"><button type="submit" class="btn primary">保存</button><button type="button" class="btn" id="add-line">+ 添加业务线</button></div>
+  </form>`;
+}
+
+/* ================= 事件绑定 ================= */
+const bind={
+  today(){},
+  leads(){
+    const lq=$("#lq");lq.addEventListener("input",()=>{ui.leadQ=lq.value;clearTimeout(bind._q);bind._q=setTimeout(()=>{const pos=lq.selectionStart;render();const n=$("#lq");n.focus();n.setSelectionRange(pos,pos)},200)});
+    $("#ll").onchange=e=>{ui.leadLine=e.target.value;render()};
+    $("#ls").onchange=e=>{ui.leadStage=e.target.value;render()};
+  },
+  flows(){
+    const f=flowById(ui.flow);
+    const form=$("#flow-form");
+    form.addEventListener("input",e=>{const k=e.target.dataset.fv;if(!k)return;ui.vals[f.id]={...flowVals(f),[k]:e.target.type==="checkbox"?e.target.checked:e.target.value}});
+    form.addEventListener("change",e=>{const k=e.target.dataset.fv;if(!k)return;ui.vals[f.id]={...flowVals(f),[k]:e.target.type==="checkbox"?e.target.checked:e.target.value}});
+    form.onsubmit=e=>{e.preventDefault();runFlow()};
+    $("#copy-prompt").onclick=()=>copyText(f.build(flowVals(f)));
+    $("#stop").onclick=()=>ui.ctl&&ui.ctl.abort();
+    $("#copy-out").onclick=()=>copyText(ui.output);
+    $("#save-out").onclick=()=>{const v=flowVals(f);const title=f.name+" · "+(v.company||v.market||v.topic||v.product||new Date().toLocaleDateString("sv-SE"));
+      save("library",uid(),{kind:f.id,title,line:v.line,content:ui.output,created:Date.now()});toast("已存入素材库")};
+    if($("#extract"))$("#extract").onclick=extractLead;
+    updateFlowOutput();
+  },
+  library(){$("#lk").onchange=e=>{ui.libKind=e.target.value;render()}},
+  profile(){
+    const form=$("#pf");
+    const collect=()=>{const p=profile();return {company:$("#pf-company").value.trim(),me:$("#pf-me").value.trim(),signature:$("#pf-sig").value.trim(),
+      lines:[...form.querySelectorAll(".line-block")].map((b,i)=>{const o={id:(p.lines[i]&&p.lines[i].id)||uid()};b.querySelectorAll("[data-k]").forEach(x=>o[x.dataset.k]=x.value.trim());return o})}};
+    form.onsubmit=e=>{e.preventDefault();save("profile",null,collect());toast("已保存")};
+    $("#add-line").onclick=()=>{const p=collect();p.lines.push({id:uid(),name:"新业务线",products:"",strengths:"",moq:"",certs:""});state.profile=p;render()};
+  }
+};
+
+async function runFlow(){
+  const f=flowById(ui.flow);const prompt=f.build(flowVals(f));
+  ui.ctl=new AbortController();ui.output="";ui.outState="thinking";ui.outNote="";updateFlowOutput();
+  try{
+    const s=await getSample();
+    if(!s){ui.outState="error";ui.outNote="这里无法直接调用 Claude。点「复制提示词」，粘贴到 Claude 对话中使用。";updateFlowOutput();return}
+    const r=await s(prompt,{signal:ui.ctl.signal,cache:false,onText:({text})=>{ui.output=text;ui.outState="streaming";if(ui.view==="flows")updateFlowOutput()}});
+    ui.output=r.text;ui.outState="done";ui.outNote=r.truncated?"内容被截断了，可以减少输入后重试":"已完成";
+    $("#ai-label").innerHTML='<span class="dot on"></span>AI：已连接 Claude';
+  }catch(e){
+    if(e&&e.text)ui.output=e.text;
+    if(e&&e.code==="refused")ui.output="";
+    ui.outState=e&&e.code==="cancelled"?"done":"error";ui.outNote=e&&e.code==="cancelled"?"已停止":errMsg(e);
+  }
+  if(ui.view==="flows")updateFlowOutput();
+}
+
+async function extractLead(){
+  const f=flowById("inquiry");const v=flowVals(f);
+  if(!v.text.trim()){toast("先粘贴询盘原文");return}
+  const btn=$("#extract");btn.disabled=true;btn.textContent="提取中…";
+  try{
+    const s=await getSample();if(!s)throw {code:"not_granted"};
+    const r=await s.json(`从下面的询盘中提取买家信息。只回复一个 JSON 对象：{"company":string,"contact":string,"email":string,"country":string,"interest":string}。interest 用中文概括需求（产品、数量、条款）。找不到的字段填空字符串。\n\n询盘：\n${v.text.slice(0,6000)}`,{modelTier:"quick"});
+    openLead(null,{company:r.company||"",contact:r.contact||"",email:r.email||"",country:r.country||"",line:v.line,stage:"replied",source:"询盘",notes:r.interest||"",next:addDays(today(),1)});
+  }catch(e){toast(errMsg(e))}
+  finally{btn.disabled=false;btn.textContent="提取为潜客"}
+}
+
+/* 全局点击委托 */
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-act],[data-goflow],[data-follow],[data-snooze],[data-mail],[data-edit],[data-flow],[data-libcopy],[data-libdel]");if(!t)return;
+  const d=t.dataset;
+  if(d.act==="new-lead")openLead(null);
+  else if(d.goflow){ui.flow=d.goflow;location.hash="flows";go()}
+  else if(d.flow){if(ui.flow!==d.flow){ui.flow=d.flow;ui.output="";ui.outState="idle";ui.outNote="";$("#view").dataset.v="";render()}}
+  else if(d.snooze){const l=state.leads[d.snooze];save("leads",d.snooze,{...l,next:addDays(today(),3),updated:Date.now()});toast("已顺延到 "+addDays(today(),3))}
+  else if(d.follow||d.mail){const id=d.follow||d.mail;const l=state.leads[id];
+    ui.flow=d.follow?"followup":"coldmail";
+    ui.vals[ui.flow]=d.follow?{line:l.line,company:[l.company,l.contact].filter(Boolean).join(" · "),last:l.notes||""}:{line:l.line,company:l.company,country:l.country,contact:l.contact,hook:l.notes||""};
+    ui.output="";ui.outState="idle";ui.outNote="";$("#view").dataset.v="";location.hash="flows";go()}
+  else if(d.edit)openLead(d.edit);
+  else if(d.libcopy)copyText(state.library[d.libcopy].content);
+  else if(d.libdel){if(t.dataset.armed){remove("library",d.libdel);toast("已删除")}else{t.dataset.armed="1";t.textContent="确认删除";setTimeout(()=>{if(t.isConnected){delete t.dataset.armed;t.textContent="删除"}},3000)}}
+});
+document.addEventListener("change",e=>{
+  if(e.target.dataset.rt){const done={...((state.daily&&state.daily.done)||{})};done[e.target.dataset.rt]=e.target.checked;save("daily",null,{done})}
+  if(e.target.dataset.stage){const id=e.target.dataset.stage;save("leads",id,{...state.leads[id],stage:e.target.value,updated:Date.now()});toast("阶段已更新")}
+});
+
+/* 潜客弹窗 */
+const dlg=$("#lead-dlg");
+function openLead(id,prefill){
+  ui.editId=id;const p=profile();
+  const l=id?state.leads[id]:{line:p.lines[0].id,stage:"new",next:addDays(today(),2),...(prefill||{})};
+  $("#lead-dlg-title").textContent=id?"编辑潜客":"新增潜客";
+  $("#lf-line").innerHTML=p.lines.map(x=>`<option value="${h(x.id)}">${h(x.name)}</option>`).join("");
+  $("#lf-stage").innerHTML=STAGES.map(s=>`<option value="${s[0]}">${s[1]}</option>`).join("");
+  for(const k of ["company","country","contact","email","line","stage","source","value","next","notes"])$("#lf-"+k).value=l[k]??"";
+  const del=$("#lf-del");del.hidden=!id;del.textContent="删除";delete del.dataset.armed;
+  try{dlg.showModal()}catch(e){dlg.setAttribute("open","")}
+}
+$("#lf-cancel").onclick=()=>dlg.close();
+$("#lead-form").addEventListener("submit",e=>{
+  e.preventDefault();
+  const o={};for(const k of ["company","country","contact","email","line","stage","source","value","next","notes"])o[k]=$("#lf-"+k).value.trim();
+  if(!o.company){$("#lf-company").focus();return}
+  o.value=o.value?Number(o.value):0;
+  const prev=ui.editId?state.leads[ui.editId]:null;
+  const id=ui.editId||uid();
+  save("leads",id,{...(prev||{}),...o,example:prev?!!prev.example:false,created:prev?prev.created:Date.now(),updated:Date.now()});
+  dlg.close();toast(prev?"已保存":"已新增潜客");
+});
+$("#lf-del").onclick=e=>{const b=e.target;if(b.dataset.armed){remove("leads",ui.editId);dlg.close();toast("已删除")}else{b.dataset.armed="1";b.textContent="确认删除"}};
+
+/* 时区条 */
+function zoneInfo(tz){
+  const parts=Object.fromEntries(new Intl.DateTimeFormat("en-GB",{timeZone:tz,hour:"2-digit",minute:"2-digit",weekday:"short",hour12:false}).formatToParts(new Date()).map(p=>[p.type,p.value]));
+  const hr=+parts.hour%24;const wkd=!["Sat","Sun"].includes(parts.weekday);
+  return {time:parts.hour.replace("24","00")+":"+parts.minute,open:wkd&&hr>=9&&hr<18,weekend:!wkd,hr};
+}
+function renderClocks(){
+  $("#clocks").innerHTML=ZONES.map(([c,tz])=>{const z=zoneInfo(tz);return `<div class="clock ${z.open?"open":""}"><span class="c-city">${c}</span><span class="c-time">${z.time}</span><span class="c-st">${z.open?"工作中":z.weekend?"周末":z.hr<9?"未上班":"已下班"}</span></div>`}).join("");
+}
+
+/* 路由 */
+const VIEWS=["today","leads","flows","library","playbook","profile"];
+function go(){const v=location.hash.slice(1);ui.view=VIEWS.includes(v)?v:"today";render();window.scrollTo(0,0)}
+window.addEventListener("hashchange",go);
+
+renderClocks();setInterval(renderClocks,30000);
+go();
+initStore();
+getSample().then(s=>{if(!s)$("#ai-label").innerHTML='<span class="dot"></span>AI：不可用，可复制提示词'});
+</script>
+
+</body></html>
