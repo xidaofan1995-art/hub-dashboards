@@ -1,34 +1,160 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F6F6F4">
 <title>看板中心 · Hub Dashboards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4f6f8;--sf:#fff;--ink:#16222e;--mu:#5b6b7a;--ln:#dfe5ea;--ac:#0f766e}
-@media(prefers-color-scheme:dark){:root{--bg:#10171d;--sf:#18222b;--ink:#e6edf3;--mu:#93a4b3;--ln:#2b3946;--ac:#38b2a6}}
+:root{
+  --bg:#F6F6F4; --panel:#FFFFFF; --line:#E5E5E1; --line2:#EEEEEA;
+  --ink:#111318; --ink2:#4B5058; --ink3:#868B93;
+  --accent:#3355FF; --accent2:#7B5CFF; --green:#0E9384;
+  --shadow:0 1px 2px rgba(17,19,24,.04),0 6px 16px rgba(17,19,24,.05);
+  --shadow-lg:0 2px 6px rgba(17,19,24,.06),0 18px 40px rgba(17,19,24,.12);
+  --f-ui:Inter,"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0F1115; --panel:#16191F; --line:#262B33; --line2:#20242B;
+    --ink:#E9ECF1; --ink2:#B4BAC4; --ink3:#828995;
+    --accent:#7D93FF; --accent2:#A48CFF; --green:#3FCB93;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 16px rgba(0,0,0,.25);
+    --shadow-lg:0 2px 6px rgba(0,0,0,.35),0 18px 40px rgba(0,0,0,.4); color-scheme:dark }
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "PingFang SC","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif;padding:max(20px,env(safe-area-inset-top)) 16px 40px}
-main{max-width:720px;margin:0 auto}
-h1{font-size:22px;margin:8px 0 4px}
-p.sub{color:var(--mu);margin:0 0 20px;font-size:13px}
-h2{font-size:13px;color:var(--ac);letter-spacing:.08em;margin:24px 0 8px}
-a.card{display:block;background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:14px 16px;margin-bottom:10px;color:inherit;text-decoration:none}
-a.card:active,a.card:hover{border-color:var(--ac)}
-a.card b{display:block;font-size:16px}
-a.card span{display:block;color:var(--mu);font-size:13px;margin-top:2px}
-</style></head><body><main>
-<h1>看板中心</h1>
-<p class="sub">个人工作看板合集 · 点击卡片打开</p>
+html,body{margin:0;padding:0;background:var(--bg)}
+body{color:var(--ink);font-family:var(--f-ui);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 20px 48px}
+/* header */
+header{animation:rise .6s cubic-bezier(.22,.8,.3,1) both}
+.eyebrow{font-size:12px;letter-spacing:.14em;color:var(--accent);font-weight:700}
+h1{font-size:30px;line-height:1.25;margin:8px 0 6px;letter-spacing:-.02em}
+.sub{color:var(--ink2);font-size:14px;margin:0}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--ink2)}
+.stat b{color:var(--ink);font-weight:700}
+.stat .new{color:var(--accent);font-weight:700}
+/* sections */
+section{margin-top:34px}
+.sec-h{display:flex;align-items:baseline;gap:10px;margin-bottom:14px;animation:rise .6s cubic-bezier(.22,.8,.3,1) both;animation-delay:.08s}
+.sec-h h2{font-size:16px;color:var(--green);margin:0;letter-spacing:.02em}
+.sec-h span{font-size:12px;color:var(--ink3)}
+.sec-h::after{content:"";flex:1;height:1px;background:var(--line);align-self:center}
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);position:relative;
+  animation:rise .6s cubic-bezier(.22,.8,.3,1) both;animation-delay:var(--d,0s);
+  transition:transform .35s cubic-bezier(.22,.8,.3,1),box-shadow .35s,border-color .35s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
+.thumb{position:relative;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#DCE3FF,#EDE5FF 55%,#DDF3F0)}
+.thumb .mono{position:absolute;inset:0;display:grid;place-items:center;font-size:64px;font-weight:700;color:rgba(255,255,255,.85)}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.22,.8,.3,1)}
+.card:hover .thumb img{transform:scale(1.06)}
+.badge{position:absolute;top:10px;left:10px;z-index:2;background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:.06em;padding:3px 9px;border-radius:999px;box-shadow:0 2px 8px rgba(51,85,255,.4);animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(51,85,255,.35)}55%{box-shadow:0 0 0 6px rgba(51,85,255,0)}}
+.body{padding:14px 16px 15px;display:flex;flex-direction:column;gap:6px;flex:1}
+.body h3{font-size:15.5px;margin:0;line-height:1.4;letter-spacing:-.01em}
+.body p{margin:0;font-size:12.5px;color:var(--ink2);line-height:1.6;flex:1}
+.go{margin-top:8px;display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--accent)}
+.go i{font-style:normal;transition:transform .3s}
+.card:hover .go i{transform:translateX(4px)}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--ink3);line-height:1.8;animation:rise .6s both;animation-delay:.3s}
+footer b{color:var(--ink2)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (max-width:640px){
+  .wrap{padding:28px 14px 36px}
+  h1{font-size:24px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .card{border-radius:13px}
+  .body{padding:10px 11px 11px}
+  .body h3{font-size:13.5px}
+  .body p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:11.5px}
+  .go{font-size:11.5px}
+  .thumb .mono{font-size:44px}
+  section{margin-top:26px}
+}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">HUB DASHBOARDS</div>
+    <h1>看板中心</h1>
+    <p class="sub">个人工作看板合集 · 点击卡片打开</p>
+    <div class="stats">
+      <span class="stat"><b>11</b> 个看板</span>
+      <span class="stat"><b>2</b> 个分组</span>
+      <span class="stat"><span class="new">2 个新增</span></span>
+      <span class="stat">更新于 2026-11-14</span>
+    </div>
+  </header>
 
-<h2>制造业出海</h2>
-<a class="card" href="fastener-market-map/"><b>紧固件市场全景图</b><span>紧固件行业市场地图与格局</span></a>
-<a class="card" href="overseas-control-tower/"><b>出海总控台</b><span>流水线状态、市场矩阵、素材库、内容日历、选品评分与规则库</span></a>
-<a class="card" href="overseas-automation-workbench/"><b>出海自动化工作台</b><span>潜客管道、每日例行、7 个 AI 工作流、素材库与升级蓝图</span></a>
-<a class="card" href="overseas-intel-radar/"><b>出海情报工具雷达</b><span>出海情报类工具对照与筛选</span></a>
+  <section>
+    <div class="sec-h"><h2>制造业出海</h2><span>市场 · 流水线 · 工具</span></div>
+    <div class="grid">
+      <a class="card" style="--d:.05s" href="fastener-market-map/">
+        <div class="thumb"><span class="mono">紧</span><img src="https://img.myloview.com/posters/screw-bolt-for-furniture-on-white-background-isolated-furniture-fittings-concept-700-221897093.jpg" alt="精密螺丝特写" loading="lazy" onerror="this.remove()"></div>
+        <div class="body"><h3>紧固件市场全景图</h3><p>紧固件行业市场地图与格局</p><span class="go">打开看板 <i>→</i></span></div>
+      </a>
+      <a class="card" style="--d:.1s" href="overseas-control-tower/">
+        <div class="thumb"><span class="mono">总</span><img src="https://ey.com/adobe/dynamicmedia/deliver/dm-aid--2319279c-65ca-494f-8deb-2d6a208ddc69/ey-aerial-view-of-container-ships-harborside.jpg?preferwebp=true&amp;quality=85&amp;width=700" alt="集装箱港口航拍" loading="lazy" onerror="this.remove()"></div>
+        <div class="body"><h3>出海总控台</h3><p>流水线状态、市场矩阵、素材库、内容日历、选品评分与规则库</p><span class="go">打开看板 <i>→</i></span></div>
+      </a>
+      <a class="card" style="--d:.15s" href="overseas-automation-workbench/">
+        <div class="thumb"><span class="mono">自</span><img src="https://cdn.shopify.com/s/files/1/0873/6240/4634/files/industrial_automation_1.jpg?v=1737444116" alt="工厂机械臂" loading="lazy" onerror="this.remove()"></div>
+        <div class="body"><h3>出海自动化工作台</h3><p>潜客管道、每日例行、7 个 AI 工作流、素材库与升级蓝图</p><span class="go">打开看板 <i>→</i></span></div>
+      </a>
+      <a class="card" style="--d:.2s" href="overseas-intel-radar/">
+        <div class="thumb"><span class="mono">雷</span><img src="https://s7d1.scene7.com/is/image/dxcdemo/data-analytics-offering-image-1050x650?$landscape_desktop$" alt="数据分析仪表盘" loading="lazy" onerror="this.remove()"></div>
+        <div class="body"><h3>出海情报工具雷达</h3><p>出海情报类工具对照与筛选</p><span class="go">打开看板 <i>→</i></span></div>
+      </a>
+      <a class="card" style="--d:.25s" href="mfg-export-ai-automation/">
+        <div class="thumb"><span class="mono">播</span><img src="https://denzongfilms.com/wp-content/uploads/2026/06/podcast-02-1200x780.jpg" alt="播客录音话筒" loading="lazy" onerror="this.remove()"><span class="badge">NEW</span></div>
+        <div class="body"><h3>制造业出海 AI 自动化全流程</h3><p>播客系列第一期《先画一张地图》可视化网站 · 8 大版块探索地图</p><span class="go">打开看板 <i>→</i></span></div>
+      </a>
+    </div>
+  </section>
 
-<h2>智能硬件</h2>
-<a class="card" href="hw-learning-board.html"><b>智能硬件学习看板</b><span>22 章 720 题，含 AI 原生智能家居硬件、交付物模板与贯通项目拓展页</span></a>
-<a class="card" href="hw-product-library.html"><b>AI硬件产品库看板</b><span>300 个 AI 硬件概念、24 个场景，含 NPDP 式筛选评分与开发流程交付物</span></a>
-<a class="card" href="hw-pm-deliverables-board/"><b>智能硬件PM开发流程交付件看板</b><span>产品经理开发流程各阶段交付件</span></a>
-<a class="card" href="hw-boards-collection/"><b>智能硬件看板合集</b><span>AI 硬件场景库（970 场景）+ 需求与机会扫描</span></a>
-<a class="card" href="triz-300-concepts/"><b>TRIZ 方法论与 300 个智能硬件概念分析</b><span>TRIZ 方法论应用于 300 个智能硬件概念</span></a>
-</main></body></html>
+  <section>
+    <div class="sec-h"><h2>智能硬件</h2><span>学习 · 产品库 · 开发流程</span></div>
+    <div class="grid">
+      <a class="card" style="--d:.05s" href="hw-learning-board.html">
+        <div class="thumb"><span class="mono">学</span><img src="https://www.bydlenichytre.cz/images/articles/production/bydlenichytre-kolik-stoji-ZAK-007.jpg" alt="智能家居设备平铺" loading="lazy" onerror="this.remove()"></div>
+        <div class="body"><h3>智能硬件学习看板</h3><p>22 章 720 题，含 AI 原生智能家居硬件、交付物模板与贯通项目拓展页</p><span class="go">打开看板 <i>→</i></span></div>
+      </a>
+      <a class="card" style="--d:.1s" href="hw-product-library.html">
+        <div class="thumb"><span class="mono">库</span><img src="https://i.pinimg.com/736x/b6/4d/06/b64d06d71167ca04a3beabb0bbe08838.jpg" alt="智能硬件产品合集" loading="lazy" onerror="this.remove()"></div>
+        <div class="body"><h3>AI硬件产品库看板</h3><p>300 个 AI 硬件概念、24 个场景，含 NPDP 式筛选评分与开发流程交付物</p><span class="go">打开看板 <i>→</i></span></div>
+      </a>
+      <a class="card" style="--d:.15s" href="hw-pm-deliverables-board/">
+        <div class="thumb"><span class="mono">件</span><img src="https://viasion.com/wp-content/uploads/2024/08/Prototype-PCB-Board.jpg" alt="电路板原型" loading="lazy" onerror="this.remove()"></div>
+        <div class="body"><h3>智能硬件PM开发流程交付件看板</h3><p>产品经理开发流程各阶段交付件</p><span class="go">打开看板 <i>→</i></span></div>
+      </a>
+      <a class="card" style="--d:.2s" href="hw-boards-collection/">
+        <div class="thumb"><span class="mono">集</span><img src="https://mmsmart.ru/upload/iblock/530/wcn5escj3j24tyd8q359tbe1ge1bs2yn/FB_SmartThings_Hub_Ecostystem_Cord_001_061219.jpg" alt="智能家居中枢设备" loading="lazy" onerror="this.remove()"></div>
+        <div class="body"><h3>智能硬件看板合集</h3><p>AI 硬件场景库（970 场景）+ 需求与机会扫描</p><span class="go">打开看板 <i>→</i></span></div>
+      </a>
+      <a class="card" style="--d:.25s" href="triz-300-concepts/">
+        <div class="thumb"><span class="mono">创</span><img src="https://www.energontrade.it/wp-content/uploads/2021/10/light-bulb-with-drawing-graph-768x723.jpg" alt="创意灯泡手绘" loading="lazy" onerror="this.remove()"></div>
+        <div class="body"><h3>TRIZ 方法论与 300 个智能硬件概念分析</h3><p>TRIZ 方法论应用于 300 个智能硬件概念</p><span class="go">打开看板 <i>→</i></span></div>
+      </a>
+      <a class="card" style="--d:.3s" href="hw-pipeline-board/">
+        <div class="thumb"><span class="mono">流</span><img src="https://cdn.shopify.com/s/files/1/0588/3658/2586/files/IMG_1891-1-3.jpg" alt="电子厂流水线" loading="lazy" onerror="this.remove()"><span class="badge">NEW</span></div>
+        <div class="body"><h3>硬件交付物流水线</h3><p>D01–D27 交付物流程画布 · 审阅检查器 · 评分与运行记录</p><span class="go">打开看板 <i>→</i></span></div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <b>手机保存：</b>在手机浏览器打开本页 → 分享 → 添加到主屏幕，之后点图标即可进入看板中心，再点卡片打开对应看板。<br>
+    托管于 GitHub Pages · 卡片配图来自公开网络素材 · 2026-11-14 更新
+  </footer>
+</div>
+</body>
+</html>
