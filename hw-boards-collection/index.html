@@ -14,6 +14,7 @@ nav button{border:0;background:none;padding:8px 16px;font:inherit;color:var(--mu
 nav button.on{color:var(--ac);border-bottom-color:var(--ac);font-weight:600}
 nav small{margin-left:6px;color:var(--mu);font-weight:400}
 iframe{flex:1;width:100%;border:0;display:none;background:var(--bg)}iframe.on{display:block}
+.hubback{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:9999;display:inline-flex;align-items:center;gap:6px;background:var(--navy,#0f2a3d);color:#fff;border:0;border-radius:999px;padding:11px 16px;font:600 13px system-ui,-apple-system,"Noto Sans SC",sans-serif;text-decoration:none;box-shadow:0 6px 20px rgba(15,42,61,.35)}
 </style></head><body>
 <nav><button data-t="0" class="on">AI 硬件场景库<small>970</small></button><button data-t="1">智能硬件需求与机会扫描<small>200</small></button></nav>
 <iframe id="f0" class="on" title="AI 硬件场景库"></iframe><iframe id="f1" title="智能硬件需求与机会扫描"></iframe>
@@ -27,4 +28,5 @@ document.getElementById("f"+t).srcdoc="<script>window.IMGMAP="+m+";<\/script>"+P
 try{location.hash="t"+t}catch(e){}}
 document.querySelector("nav").onclick=e=>{const b=e.target.closest("button");if(b)show(+b.dataset.t)};
 show(location.hash=="#t1"?1:0);
-</script></body></html>
+</script><a class="hubback" href="https://xidaofan1995-art.github.io/hub-dashboards/">⌂ 看板中心</a>
+</body></html>
