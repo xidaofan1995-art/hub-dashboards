@@ -31,6 +31,7 @@ h1{font-size:18px;margin:0 0 4px}
 .done .t{text-decoration:line-through;color:var(--mu)}
 .gate{font-size:12px;border:1px dashed var(--ac);color:var(--ac);border-radius:8px;padding:6px 8px}
 .note{padding:0 16px 20px;color:var(--mu);font-size:12px}
+.hubback{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:9999;display:inline-flex;align-items:center;gap:6px;background:var(--navy,#0f2a3d);color:#fff;border:0;border-radius:999px;padding:11px 16px;font:600 13px system-ui,-apple-system,"Noto Sans SC",sans-serif;text-decoration:none;box-shadow:0 6px 20px rgba(15,42,61,.35)}
 </style>
 </head>
 <body>
@@ -100,5 +101,6 @@ b.appendChild(xc);
 function upd(){const n=Object.values(S).filter(Boolean).length;document.getElementById("pb").style.width=(n/total*100)+"%";document.getElementById("pt").textContent=`已完成 ${n} / ${total}`}
 upd();
 </script>
+<a class="hubback" href="https://xidaofan1995-art.github.io/hub-dashboards/">⌂ 看板中心</a>
 </body>
 </html>

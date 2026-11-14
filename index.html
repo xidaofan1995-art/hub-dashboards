@@ -24,9 +24,11 @@
     --accent:#7D93FF; --accent2:#A48CFF; --green:#3FCB93;
     --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 16px rgba(0,0,0,.25);
     --shadow-lg:0 2px 6px rgba(0,0,0,.35),0 18px 40px rgba(0,0,0,.4); color-scheme:dark }
+  body{background:linear-gradient(180deg,#131A2B 0%,#101319 55%,#0E1013 100%)}
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg)}
+html{margin:0;padding:0;background:var(--bg)}
+body{margin:0;padding:0;background:linear-gradient(180deg,#D7E3F3 0%,#E2EAF6 30%,#EDF0F6 62%,#F4F6F9 100%);background-attachment:fixed;min-height:100vh}
 body{color:var(--ink);font-family:var(--f-ui);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1180px;margin:0 auto;padding:40px 20px 48px}
@@ -36,7 +38,7 @@ header{animation:rise .6s cubic-bezier(.22,.8,.3,1) both}
 h1{font-size:30px;line-height:1.25;margin:8px 0 6px;letter-spacing:-.02em}
 .sub{color:var(--ink2);font-size:14px;margin:0}
 .stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--ink2)}
+.stat{background:rgba(255,255,255,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.85);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--ink2)}
 .stat b{color:var(--ink);font-weight:700}
 .stat .new{color:var(--accent);font-weight:700}
 /* sections */
@@ -47,7 +49,7 @@ section{margin-top:34px}
 .sec-h::after{content:"";flex:1;height:1px;background:var(--line);align-self:center}
 /* grid */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.card{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);position:relative;
+.card{display:flex;flex-direction:column;background:rgba(255,255,255,.86);backdrop-filter:blur(14px) saturate(1.05);-webkit-backdrop-filter:blur(14px) saturate(1.05);border:1px solid rgba(255,255,255,.8);border-radius:22px;overflow:hidden;box-shadow:0 1px 2px rgba(30,45,70,.05),0 10px 28px rgba(30,45,70,.08);position:relative;
   animation:rise .6s cubic-bezier(.22,.8,.3,1) both;animation-delay:var(--d,0s);
   transition:transform .35s cubic-bezier(.22,.8,.3,1),box-shadow .35s,border-color .35s}
 .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
@@ -65,12 +67,27 @@ section{margin-top:34px}
 .card:hover .go i{transform:translateX(4px)}
 footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--ink3);line-height:1.8;animation:rise .6s both;animation-delay:.3s}
 footer b{color:var(--ink2)}
+.manage-btn{margin-left:auto;background:rgba(255,255,255,.8);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font:600 12.5px var(--f-ui);color:var(--ink2);cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.manage-btn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.hide-hint{display:none;margin-top:12px;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.85);border:1px solid var(--line);font-size:12.5px;color:var(--ink2)}
+body.manage .hide-hint{display:block}
+.hide-x{display:none;position:absolute;top:10px;right:10px;z-index:3;width:26px;height:26px;border-radius:50%;border:0;background:rgba(17,19,24,.72);color:#fff;font-size:15px;line-height:1;cursor:pointer;padding:0}
+body.manage .hide-x{display:grid;place-items:center}
+#hiddenSec .hide-x{display:none!important}
+#hiddenSec .card{opacity:.62}
+#hiddenSec .card .thumb img{filter:grayscale(.6)}
+.restore-x{display:none;position:absolute;top:10px;right:10px;z-index:3;border:0;border-radius:999px;padding:5px 11px;background:var(--accent);color:#fff;font:600 11.5px var(--f-ui);cursor:pointer}
+#hiddenSec .restore-x{display:block}
+@media (prefers-color-scheme: dark){
+  .card{background:rgba(22,25,31,.82);border-color:rgba(255,255,255,.09)}
+  .stat,.manage-btn,.hide-hint{background:rgba(22,25,31,.75);border-color:rgba(255,255,255,.1)}
+}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @media (max-width:640px){
   .wrap{padding:28px 14px 36px}
   h1{font-size:24px}
   .grid{grid-template-columns:repeat(2,1fr);gap:10px}
-  .card{border-radius:13px}
+  .card{border-radius:18px}
   .body{padding:10px 11px 11px}
   .body h3{font-size:13.5px}
   .body p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:11.5px}
@@ -92,29 +109,32 @@ footer b{color:var(--ink2)}
       <span class="stat"><b>2</b> 个分组</span>
       <span class="stat"><span class="new">2 个新增</span></span>
       <span class="stat">更新于 2026-11-14</span>
+      <span class="stat" id="hiddenStat" hidden>已隐藏 <b>0</b> 个</span>
+      <button class="manage-btn" id="manageBtn" type="button">管理看板</button>
     </div>
+    <div class="hide-hint" id="hideHint">管理模式：点卡片右上角 × 可隐藏该看板，隐藏后随时能恢复。隐藏状态只保存在这台设备的浏览器里。</div>
   </header>
 
   <section>
     <div class="sec-h"><h2>制造业出海</h2><span>市场 · 流水线 · 工具</span></div>
     <div class="grid">
-      <a class="card" style="--d:.05s" href="fastener-market-map/">
+      <a class="card" data-slug="fastener-market-map" style="--d:.05s" href="fastener-market-map/">
         <div class="thumb"><span class="mono">紧</span><img src="https://img.myloview.com/posters/screw-bolt-for-furniture-on-white-background-isolated-furniture-fittings-concept-700-221897093.jpg" alt="精密螺丝特写" loading="lazy" onerror="this.remove()"></div>
         <div class="body"><h3>紧固件市场全景图</h3><p>紧固件行业市场地图与格局</p><span class="go">打开看板 <i>→</i></span></div>
       </a>
-      <a class="card" style="--d:.1s" href="overseas-control-tower/">
+      <a class="card" data-slug="overseas-control-tower" style="--d:.1s" href="overseas-control-tower/">
         <div class="thumb"><span class="mono">总</span><img src="https://ey.com/adobe/dynamicmedia/deliver/dm-aid--2319279c-65ca-494f-8deb-2d6a208ddc69/ey-aerial-view-of-container-ships-harborside.jpg?preferwebp=true&amp;quality=85&amp;width=700" alt="集装箱港口航拍" loading="lazy" onerror="this.remove()"></div>
         <div class="body"><h3>出海总控台</h3><p>流水线状态、市场矩阵、素材库、内容日历、选品评分与规则库</p><span class="go">打开看板 <i>→</i></span></div>
       </a>
-      <a class="card" style="--d:.15s" href="overseas-automation-workbench/">
+      <a class="card" data-slug="overseas-automation-workbench" style="--d:.15s" href="overseas-automation-workbench/">
         <div class="thumb"><span class="mono">自</span><img src="https://cdn.shopify.com/s/files/1/0873/6240/4634/files/industrial_automation_1.jpg?v=1737444116" alt="工厂机械臂" loading="lazy" onerror="this.remove()"></div>
         <div class="body"><h3>出海自动化工作台</h3><p>潜客管道、每日例行、7 个 AI 工作流、素材库与升级蓝图</p><span class="go">打开看板 <i>→</i></span></div>
       </a>
-      <a class="card" style="--d:.2s" href="overseas-intel-radar/">
+      <a class="card" data-slug="overseas-intel-radar" style="--d:.2s" href="overseas-intel-radar/">
         <div class="thumb"><span class="mono">雷</span><img src="https://s7d1.scene7.com/is/image/dxcdemo/data-analytics-offering-image-1050x650?$landscape_desktop$" alt="数据分析仪表盘" loading="lazy" onerror="this.remove()"></div>
         <div class="body"><h3>出海情报工具雷达</h3><p>出海情报类工具对照与筛选</p><span class="go">打开看板 <i>→</i></span></div>
       </a>
-      <a class="card" style="--d:.25s" href="mfg-export-ai-automation/">
+      <a class="card" data-slug="mfg-export-ai-automation" style="--d:.25s" href="mfg-export-ai-automation/">
         <div class="thumb"><span class="mono">播</span><img src="https://denzongfilms.com/wp-content/uploads/2026/06/podcast-02-1200x780.jpg" alt="播客录音话筒" loading="lazy" onerror="this.remove()"><span class="badge">NEW</span></div>
         <div class="body"><h3>制造业出海 AI 自动化全流程</h3><p>播客系列第一期《先画一张地图》可视化网站 · 8 大版块探索地图</p><span class="go">打开看板 <i>→</i></span></div>
       </a>
@@ -124,31 +144,36 @@ footer b{color:var(--ink2)}
   <section>
     <div class="sec-h"><h2>智能硬件</h2><span>学习 · 产品库 · 开发流程</span></div>
     <div class="grid">
-      <a class="card" style="--d:.05s" href="hw-learning-board.html">
+      <a class="card" data-slug="hw-learning-board" style="--d:.05s" href="hw-learning-board.html">
         <div class="thumb"><span class="mono">学</span><img src="https://www.bydlenichytre.cz/images/articles/production/bydlenichytre-kolik-stoji-ZAK-007.jpg" alt="智能家居设备平铺" loading="lazy" onerror="this.remove()"></div>
         <div class="body"><h3>智能硬件学习看板</h3><p>22 章 720 题，含 AI 原生智能家居硬件、交付物模板与贯通项目拓展页</p><span class="go">打开看板 <i>→</i></span></div>
       </a>
-      <a class="card" style="--d:.1s" href="hw-product-library.html">
+      <a class="card" data-slug="hw-product-library" style="--d:.1s" href="hw-product-library.html">
         <div class="thumb"><span class="mono">库</span><img src="https://i.pinimg.com/736x/b6/4d/06/b64d06d71167ca04a3beabb0bbe08838.jpg" alt="智能硬件产品合集" loading="lazy" onerror="this.remove()"></div>
         <div class="body"><h3>AI硬件产品库看板</h3><p>300 个 AI 硬件概念、24 个场景，含 NPDP 式筛选评分与开发流程交付物</p><span class="go">打开看板 <i>→</i></span></div>
       </a>
-      <a class="card" style="--d:.15s" href="hw-pm-deliverables-board/">
+      <a class="card" data-slug="hw-pm-deliverables-board" style="--d:.15s" href="hw-pm-deliverables-board/">
         <div class="thumb"><span class="mono">件</span><img src="https://viasion.com/wp-content/uploads/2024/08/Prototype-PCB-Board.jpg" alt="电路板原型" loading="lazy" onerror="this.remove()"></div>
         <div class="body"><h3>智能硬件PM开发流程交付件看板</h3><p>产品经理开发流程各阶段交付件</p><span class="go">打开看板 <i>→</i></span></div>
       </a>
-      <a class="card" style="--d:.2s" href="hw-boards-collection/">
+      <a class="card" data-slug="hw-boards-collection" style="--d:.2s" href="hw-boards-collection/">
         <div class="thumb"><span class="mono">集</span><img src="https://mmsmart.ru/upload/iblock/530/wcn5escj3j24tyd8q359tbe1ge1bs2yn/FB_SmartThings_Hub_Ecostystem_Cord_001_061219.jpg" alt="智能家居中枢设备" loading="lazy" onerror="this.remove()"></div>
         <div class="body"><h3>智能硬件看板合集</h3><p>AI 硬件场景库（970 场景）+ 需求与机会扫描</p><span class="go">打开看板 <i>→</i></span></div>
       </a>
-      <a class="card" style="--d:.25s" href="triz-300-concepts/">
+      <a class="card" data-slug="triz-300-concepts" style="--d:.25s" href="triz-300-concepts/">
         <div class="thumb"><span class="mono">创</span><img src="https://www.energontrade.it/wp-content/uploads/2021/10/light-bulb-with-drawing-graph-768x723.jpg" alt="创意灯泡手绘" loading="lazy" onerror="this.remove()"></div>
         <div class="body"><h3>TRIZ 方法论与 300 个智能硬件概念分析</h3><p>TRIZ 方法论应用于 300 个智能硬件概念</p><span class="go">打开看板 <i>→</i></span></div>
       </a>
-      <a class="card" style="--d:.3s" href="hw-pipeline-board/">
+      <a class="card" data-slug="hw-pipeline-board" style="--d:.3s" href="hw-pipeline-board/">
         <div class="thumb"><span class="mono">流</span><img src="https://cdn.shopify.com/s/files/1/0588/3658/2586/files/IMG_1891-1-3.jpg" alt="电子厂流水线" loading="lazy" onerror="this.remove()"><span class="badge">NEW</span></div>
         <div class="body"><h3>硬件交付物流水线</h3><p>D01–D27 交付物流程画布 · 审阅检查器 · 评分与运行记录</p><span class="go">打开看板 <i>→</i></span></div>
       </a>
     </div>
+  </section>
+
+  <section id="hiddenSec" hidden>
+    <div class="sec-h"><h2>已隐藏</h2><span>点“恢复”可放回原位</span></div>
+    <div class="grid" id="hiddenGrid"></div>
   </section>
 
   <footer>
@@ -156,5 +181,56 @@ footer b{color:var(--ink2)}
     托管于 GitHub Pages · 卡片配图来自公开网络素材 · 2026-11-14 更新
   </footer>
 </div>
+<script>
+(function(){
+  var KEY='hub-hidden-v1';
+  var hidden=new Set();
+  try{hidden=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'))}catch(e){}
+  (new URLSearchParams(location.search).get('hide')||'').split(',').map(function(s){return s.trim()}).filter(Boolean).forEach(function(s){hidden.add(s)});
+  var save=function(){try{localStorage.setItem(KEY,JSON.stringify(Array.from(hidden)))}catch(e){}};
+  var cards=Array.prototype.slice.call(document.querySelectorAll('.card'));
+  var hiddenGrid=document.getElementById('hiddenGrid'),hiddenSec=document.getElementById('hiddenSec'),hiddenStat=document.getElementById('hiddenStat');
+  cards.forEach(function(card){
+    var x=document.createElement('button');x.type='button';x.className='hide-x';x.textContent='\u00d7';x.title='隐藏此看板';x.setAttribute('aria-label','隐藏 '+card.querySelector('h3').textContent);card.appendChild(x);
+    var r=document.createElement('button');r.type='button';r.className='restore-x';r.textContent='恢复';r.title='恢复此看板';card.appendChild(r);
+    card._home={parent:card.parentNode,next:card.nextSibling};
+  });
+  function apply(){
+    var n=0;
+    cards.forEach(function(card){
+      var slug=card.getAttribute('data-slug');
+      if(hidden.has(slug)){
+        if(card.parentNode!==hiddenGrid)hiddenGrid.appendChild(card);
+        n++;
+      }else{
+        var h=card._home;
+        if(card.parentNode!==h.parent){if(h.next&&h.next.parentNode===h.parent)h.parent.insertBefore(card,h.next);else h.parent.appendChild(card);}
+      }
+    });
+    hiddenSec.hidden=n===0;
+    hiddenStat.hidden=n===0;
+    hiddenStat.querySelector('b').textContent=n;
+    document.querySelectorAll('section').forEach(function(sec){
+      if(sec.id==='hiddenSec')return;
+      var grid=sec.querySelector('.grid');
+      if(grid)sec.style.display=grid.querySelector('.card')?'':'none';
+    });
+    save();
+  }
+  document.addEventListener('click',function(e){
+    var x=e.target.closest('.hide-x');
+    if(x){e.preventDefault();e.stopPropagation();hidden.add(x.closest('.card').getAttribute('data-slug'));apply();return;}
+    var r=e.target.closest('.restore-x');
+    if(r){e.preventDefault();e.stopPropagation();hidden.delete(r.closest('.card').getAttribute('data-slug'));apply();return;}
+    if(e.target.closest('#hiddenSec .card')){e.preventDefault();}
+  });
+  var btn=document.getElementById('manageBtn');
+  btn.addEventListener('click',function(){
+    var on=document.body.classList.toggle('manage');
+    btn.classList.toggle('on',on);btn.textContent=on?'完成':'管理看板';
+  });
+  apply();
+})();
+</script>
 </body>
 </html>
