@@ -58,6 +58,7 @@ h1{display:flex;align-items:center;gap:10px;font-size:20px;margin:6px 0}
 .g{font-size:12px;color:var(--sub)}
 select.q{margin-bottom:12px}
 .mini{display:flex;gap:8px;align-items:center;margin:6px 0;font-size:14px}.mini span{flex:0 0 40%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.mini .bar{flex:1}
+.hubback{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:9999;display:inline-flex;align-items:center;gap:6px;background:var(--navy,#0f2a3d);color:#fff;border:0;border-radius:999px;padding:11px 16px;font:600 13px system-ui,-apple-system,"Noto Sans SC",sans-serif;text-decoration:none;box-shadow:0 6px 20px rgba(15,42,61,.35)}
 </style>
 </head>
 <body>
@@ -196,5 +197,6 @@ function rFlow(){
 $("v3").onchange=function(e){var t=e.target;if(t.id==="pj"){S.pj=t.value;sv();rFlow()}else if(t.dataset.k){S.ck[S.pj]=S.ck[S.pj]||{};S.ck[S.pj][t.dataset.k]=t.checked;sv();rFlow()}};
 render();
 </script>
+<a class="hubback" href="https://xidaofan1995-art.github.io/hub-dashboards/">⌂ 看板中心</a>
 </body>
 </html>
