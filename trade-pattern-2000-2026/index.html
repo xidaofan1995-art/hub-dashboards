@@ -7,7 +7,8 @@
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
 a{color:var(--blue)}h1{font-size:30px;line-height:1.25;margin:0}h2{font-size:22px;margin:0 0 6px}h3{font-size:16px;margin:0 0 6px}
 .hero{position:relative;color:#fff}.hero img{width:100%;height:340px;object-fit:cover;display:block;filter:brightness(.62)}
-.hero.in{position:absolute;left:0;right:0;bottom:0;padding:28px 24px;background:linear-gradient(transparent,rgba(0,0,0,.72))}
+.hero .in{position:absolute;left:0;right:0;bottom:0;padding:28px 24px;background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.88))}
+.hero h1{text-shadow:0 2px 10px rgba(0,0,0,.85)}.hero p{text-shadow:0 1px 6px rgba(0,0,0,.85)}
 .hero p{margin:8px 0 0;opacity:.92;max-width:900px}
 .wrap{max-width:1120px;margin:0 auto;padding:0 18px 60px}
 .nav{position:sticky;top:0;z-index:5;background:rgba(247,248,245,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);padding:10px 0;display:flex;gap:8px;flex-wrap:wrap}
@@ -214,7 +215,7 @@ ch('c2a',{tooltip:{trigger:'axis'},legend:{top:0},xAxis:{type:'category',data:['
 {name:'美国 (BACI)',type:'bar',data:[19.6,12.5],itemStyle:{color:R}},
 {name:'东盟 (2024)',type:'bar',data:[null,16.4],itemStyle:{color:G}},
 {name:'欧盟 (2024)',type:'bar',data:[null,14.4],itemStyle:{color:B}}]});
-ch('c2b',{tooltip:{},xAxis:{type:'value'},yAxis:{type:'category',data:['欧盟 (约)','美国 (Comtrade)','东盟 (约)']},series:[{type:'bar',data:[515,526,586],itemStyle:{color:G},label:{show:true,position:'right',formatter:'{c}B'}}]});
+ch('c2b',{tooltip:{},grid:{left:70},xAxis:{type:'value'},yAxis:{type:'category',data:['欧盟','美国','东盟']},series:[{type:'bar',data:[515,526,586],itemStyle:{color:G},label:{show:true,position:'right',formatter:'{c}B'}}]});
 ch('c3a',{tooltip:{trigger:'axis'},legend:{top:0},xAxis:{type:'category',data:['2000','2010','2020','2023','2024']},yAxis:{},series:[
 {name:'上海',type:'line',data:[561,2907,4350,4916,5151],itemStyle:{color:R},lineStyle:{width:3}},
 {name:'新加坡',type:'line',data:[1704,2843,3687,3901,4112],itemStyle:{color:B}},
@@ -222,7 +223,7 @@ ch('c3a',{tooltip:{trigger:'axis'},legend:{top:0},xAxis:{type:'category',data:['
 {name:'深圳',type:'line',data:[399,2251,2655,2988,3338],itemStyle:{color:A}},
 {name:'釜山',type:'line',data:[754,1419,2270,2275,2440],itemStyle:{color:Gr}},
 {name:'香港',type:'line',data:[1810,2367,2007,1434,1369],itemStyle:{color:'#7a4a9e'}}]});
-ch('c3b',{tooltip:{trigger:'axis'},xAxis:{type:'category',data:['2020初','2020-11','2021-04','2021-07','2022-01','2022-12','2023中','2026-04']},yAxis:{},series:[{type:'line',areaStyle:{opacity:.12},data:[1000,2000,3000,4000,5110,1107,850,1891],itemStyle:{color:R},lineStyle:{width:3},markPoint:{data:[{coord:[4,5110],value:'5,109.6 历史高点'}]}}]});
+ch('c3b',{tooltip:{trigger:'axis'},xAxis:{type:'category',data:['2020初','2020-11','2021-04','2021-07','2022-01','2022-12','2023中','2026-04']},yAxis:{},series:[{type:'line',areaStyle:{opacity:.12},data:[1000,2000,3000,4000,5110,1107,850,1891],itemStyle:{color:R},lineStyle:{width:3},markLine:{silent:true,label:{formatter:'历史高点 5,109.6'},data:[{yAxis:5110}]}}]});
 ch('c4a',{tooltip:{},grid:{left:130},xAxis:{type:'value'},yAxis:{type:'category',inverse:true,data:['HS42 皮革制品','HS89 船舶','HS38 其他化学品','HS71 贵金属','HS76 铝','HS64 鞋靴','HS27 矿物燃料','HS62 非针织服装','HS72 钢铁','HS90 精密仪器','HS95 玩具','HS29 有机化学品','HS61 针织服装','HS99 未分类*','HS73 钢铁制品','HS94 家具灯具','HS39 塑料','HS87 车辆','HS84 机械','HS85 电气机械']},series:[{type:'bar',data:[32.5,34.1,37,37.6,37.7,51,53.6,67.8,70.8,72.4,82.4,82.6,85.3,96.9,99.9,126.3,141.2,216,568.1,927.1],itemStyle:{color:B},label:{show:true,position:'right',fontSize:10}}]});
 ch('c4b',{tooltip:{trigger:'axis'},legend:{top:0},xAxis:{type:'category',data:['2000','2024']},yAxis:{},series:[
 {name:'机械电子 (HS84+85, 窄口径)',type:'bar',data:[32.0,47.4],itemStyle:{color:B}},
@@ -231,7 +232,7 @@ ch('c4b',{tooltip:{trigger:'axis'},legend:{top:0},xAxis:{type:'category',data:['
 {name:'运输设备',type:'bar',data:[1.9,7.1],itemStyle:{color:G}},
 {name:'玩具家具杂项',type:'bar',data:[11.2,5.9],itemStyle:{color:Gr}}]});
 ch('c4c',{tooltip:{trigger:'axis'},xAxis:{type:'category',data:['2020','2024']},yAxis:{},series:[{type:'bar',data:[389.8,1385.7],itemStyle:{color:G},label:{show:true,position:'top'}}]});
-ch('c5a',{tooltip:{},xAxis:{type:'value'},yAxis:{type:'category',data:['HS12 油料种子','HS74 铜','HS71 贵金属','HS26 矿石','HS85 电气机械','HS27 矿物燃料']},series:[{type:'bar',data:[61.5,71.9,114.8,251,497.3,504],itemStyle:{color:B},label:{show:true,position:'right'}}]});
+ch('c5a',{tooltip:{},grid:{left:150},xAxis:{type:'value'},yAxis:{type:'category',data:['HS12 油料种子','HS74 铜','HS71 贵金属','HS26 矿石','HS85 电气机械','HS27 矿物燃料']},series:[{type:'bar',data:[61.5,71.9,114.8,251,497.3,504],itemStyle:{color:B},label:{show:true,position:'right'}}]});
 ch('c5b',{tooltip:{},xAxis:{type:'value'},yAxis:{type:'category',data:['煤','大豆','铜矿','石油气','黄金','铁矿','原油','集成电路']},series:[{type:'bar',data:[40.5,52.7,67.3,88.1,101,132.4,325.2,386.1],itemStyle:{color:R},label:{show:true,position:'right'}}]});
 ch('c6a',{tooltip:{},xAxis:{type:'value'},yAxis:{type:'category',data:['江苏','浙江','广东']},series:[{type:'bar',data:[5134,5489,8280],itemStyle:{color:G},label:{show:true,position:'right'}}]});
 ch('c6b',{tooltip:{},xAxis:{type:'value'},yAxis:{type:'category',data:['上海','广东','浙江']},series:[{type:'bar',data:[33.7,41.6,43.3],itemStyle:{color:B},label:{show:true,position:'right',formatter:'{c}%'}}]});
