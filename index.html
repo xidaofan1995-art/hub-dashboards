@@ -80,17 +80,32 @@ header {
   border-radius: 26px;
   background: var(--hero);
 }
+/* Knowledge garden: local vector art; no external image request. */
 header::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(95deg, color-mix(in srgb, var(--hero) 80%, transparent), transparent 85%),
-    radial-gradient(ellipse 72% 90% at 91% 0%, var(--haze), transparent 62%),
-    radial-gradient(ellipse 82% 95% at 93% 132%, var(--field) 47%, transparent 48%),
-    radial-gradient(ellipse 74% 85% at 75% 123%, var(--ridge) 58%, transparent 59%),
-    radial-gradient(ellipse 62% 90% at 114% 117%, var(--ridge) 62%, transparent 63%);
+    linear-gradient(90deg, #f3f5e8 0%, #eaf0e4f2 26%, #e7eee2a6 47%, #e7eee226 68%, transparent 100%),
+    url("./assets/hub-knowledge-garden.svg") center right / cover no-repeat;
+}
+@media (max-width: 720px) {
+  header::before {
+    background:
+      linear-gradient(90deg, #eef2e6ed 0%, #e7eee2c9 42%, #e7eee257 75%, #e7eee226 100%),
+      url("./assets/hub-knowledge-garden.svg") 70% center / cover no-repeat;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  header::before {
+    background:
+      linear-gradient(90deg, #1d2a25f5 0%, #1d2a25e0 35%, #1d2a258c 70%, #1d2a256b 100%),
+      url("./assets/hub-knowledge-garden.svg") center right / cover no-repeat;
+  }
+  @media (max-width: 720px) {
+    header::before { background-position: center, 70% center; }
+  }
 }
 .eyebrow { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .15em; }
 h1, .sec-h h2 { font-family: var(--f-title); font-weight: 500; }
