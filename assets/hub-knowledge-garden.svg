@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid slice">
+<defs>
+ <linearGradient id="sky" x2=".86" y2="1"><stop stop-color="#f7f4e6"/><stop offset=".58" stop-color="#dce9dc"/><stop offset="1" stop-color="#a8c8b6"/></linearGradient>
+ <radialGradient id="sun" cx=".85" cy=".12" r=".65"><stop stop-color="#fff2cc"/><stop offset="1" stop-color="#fff3d5" stop-opacity="0"/></radialGradient>
+ <linearGradient id="hill" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#ccddc5"/><stop offset="1" stop-color="#87ad99"/></linearGradient>
+ <linearGradient id="near" x2=".9" y2="1"><stop stop-color="#abc6a1"/><stop offset="1" stop-color="#649280"/></linearGradient>
+ <linearGradient id="grass" x2="0" y2="1"><stop stop-color="#cadbb0"/><stop offset="1" stop-color="#8caa87"/></linearGradient>
+ <linearGradient id="arch" x2="1" y2="0"><stop stop-color="#b8a782"/><stop offset=".4" stop-color="#f6e8c5"/><stop offset="1" stop-color="#d5c29d"/></linearGradient>
+ <linearGradient id="paper" x2=".9" y2="1"><stop stop-color="#fff9e3"/><stop offset="1" stop-color="#ecdab4"/></linearGradient>
+ <g id="leaf"><path d="M0 0C-14-25-4-39 14-45C24-24 21-10 0 0Z" fill="currentColor"/><path d="M0 0Q10-18 14-34" fill="none" stroke="#e8edc9" stroke-opacity=".55" stroke-width="1"/></g>
+ <g id="flower"><path d="M0 0C-13-3-17-15-8-18C-3-19 0-13 0-6C3-21 14-22 16-13C17-7 10-2 4 0C19 1 20 12 11 15C5 16 1 8 0 4C-3 18-14 17-15 9C-15 4-7 1 0 0Z" fill="currentColor"/><circle r="3.4" fill="#d7a85b"/></g>
+ <g id="sprig" stroke="#527861" stroke-width="2" fill="none"><path d="M0 0Q-4-36 14-69M-1-18Q-18-36-33-38M3-37Q23-53 38-51"/><g stroke="none"><use href="#leaf" transform="translate(14 -65) rotate(15) scale(.62)" color="#829e6b"/><use href="#leaf" transform="translate(-6 -22) rotate(-65) scale(.7)" color="#a5bd8a"/><use href="#leaf" transform="translate(6 -37) rotate(60) scale(.65)" color="#6b987e"/><use href="#leaf" transform="translate(-23 -34) rotate(-75) scale(.45)" color="#789a72"/></g></g>
+</defs>
+<rect width="1200" height="620" fill="url(#sky)"/><rect width="1200" height="620" fill="url(#sun)"/>
+<!-- Distant garden ridges -->
+<path d="M0 303Q140 224 276 288T546 295Q684 192 815 231T1028 217Q1136 151 1200 177V620H0Z" fill="#cbded2"/>
+<path d="M0 363Q165 272 314 354T617 331Q785 245 934 310T1200 244V620H0Z" fill="#b8d0c0"/>
+<path d="M0 426Q183 350 335 425T611 394Q799 290 963 352T1200 323V620H0Z" fill="url(#hill)"/>
+<path d="M0 517Q170 423 383 507T700 457Q944 346 1200 448V620H0Z" fill="#b5cda9"/>
+<path d="M0 570Q175 501 360 567T700 522Q915 450 1200 490V620H0Z" fill="url(#near)"/>
+<!-- Curved garden terraces -->
+<path d="M781 394Q824 340 1010 344Q1143 344 1200 378V469Q1118 426 1000 433Q855 438 781 463Z" fill="#87ad8d"/>
+<path d="M781 394Q824 340 1010 344Q1143 344 1200 378Q1125 420 1002 419Q866 424 781 394Z" fill="url(#grass)" stroke="#e8ebcc" stroke-width="2"/>
+<path d="M889 333Q934 293 1066 294Q1154 294 1200 320V381Q1129 349 1063 356Q954 357 889 382Z" fill="#789f80"/>
+<path d="M889 333Q934 293 1066 294Q1154 294 1200 320Q1152 352 1063 351Q952 355 889 333Z" fill="#c4d6a9" stroke="#e6ebc8" stroke-width="2"/>
+<!-- Winding path -->
+<path d="M619 638C677 576 826 565 938 521C1031 484 1058 460 979 447C902 435 849 433 871 414C893 394 987 390 1078 361C1119 348 1120 336 1100 324" fill="none" stroke="#6a8d73" stroke-opacity=".25" stroke-width="52"/>
+<path d="M619 638C677 576 826 565 938 521C1031 484 1058 460 979 447C902 435 849 433 871 414C893 394 987 390 1078 361C1119 348 1120 336 1100 324" fill="none" stroke="#f0e4c8" stroke-width="42" stroke-linecap="round"/>
+<path d="M619 638C677 576 826 565 938 521C1031 484 1058 460 979 447C902 435 849 433 871 414C893 394 987 390 1078 361C1119 348 1120 336 1100 324" fill="none" stroke="#faf2df" stroke-width="33" stroke-linecap="round"/>
+<g stroke="#d9c7a5" stroke-width="1.5" opacity=".65"><path d="M683 583l17 30m64-62 12 35m69-59 12 37m73-66 19 30m43-64 38 10m-73-55-6 38m-76-27 13-33m60 11-8-29m70 10-10-26m72-6-10-23"/></g>
+<!-- Knowledge graph, soft luminous connections -->
+<g fill="none" stroke="#fff8dc" stroke-width="1.5" opacity=".9">
+<path d="M743 308Q789 160 937 174Q1022 183 1050 277M743 308Q845 224 1050 277M775 247Q864 135 989 217M811 296Q876 202 937 174M775 247Q900 318 989 217M937 174Q964 236 1050 277M811 296L989 217"/>
+</g>
+<g fill="#fff9dd" stroke="#e8dcb3" stroke-width="1.5"><circle cx="743" cy="308" r="4"/><circle cx="775" cy="247" r="5"/><circle cx="811" cy="296" r="4"/><circle cx="867" cy="196" r="5"/><circle cx="937" cy="174" r="6"/><circle cx="989" cy="217" r="5"/><circle cx="1050" cy="277" r="4"/></g>
+<!-- Stone arch -->
+<path d="M1060 322V228A57 57 0 0 1 1174 228V322H1152V228A35 35 0 0 0 1082 228V322Z" fill="url(#arch)" stroke="#c6b48e" stroke-width="1.5"/>
+<path d="M1060 322h26m62 0h29M1060 262h22m70 0h22M1060 289h22m70 0h22M1063 207l20 8m72 0 17-8M1117 171v22" fill="none" stroke="#b9a780" stroke-width="1.5" opacity=".7"/>
+<path d="M1056 252Q1038 199 1081 183Q1114 153 1162 178Q1187 199 1172 247" fill="none" stroke="#6e8e5d" stroke-width="4"/>
+<g color="#799b68"><use href="#leaf" transform="translate(1058 222) rotate(-75) scale(.6)"/><use href="#leaf" transform="translate(1064 192) rotate(-35) scale(.7)"/><use href="#leaf" transform="translate(1087 180) rotate(12) scale(.6)"/><use href="#leaf" transform="translate(1110 174) rotate(55) scale(.6)"/><use href="#leaf" transform="translate(1140 179) rotate(85) scale(.65)"/><use href="#leaf" transform="translate(1165 193) rotate(120) scale(.6)"/><use href="#leaf" transform="translate(1176 225) rotate(140) scale(.55)"/></g>
+<!-- Reading platform and open book -->
+<ellipse cx="987" cy="335" rx="89" ry="17" fill="#668f75" opacity=".28"/>
+<path d="M912 319v14c0 12 35 20 75 20s75-8 75-20v-14Z" fill="#86a77e"/>
+<ellipse cx="987" cy="319" rx="75" ry="17" fill="#dce6ba" stroke="#f1edcf" stroke-width="1.5"/>
+<path d="M939 297Q969 291 987 308Q1007 291 1036 297L1047 318Q1011 313 987 329Q961 313 927 318Z" fill="#a77e4a" opacity=".65"/>
+<path d="M943 284Q967 279 987 301V324Q965 307 931 312Z" fill="url(#paper)" stroke="#d9c59a" stroke-width="1.2"/>
+<path d="M987 301Q1008 279 1032 284L1043 312Q1010 307 987 324Z" fill="url(#paper)" stroke="#d9c59a" stroke-width="1.2"/>
+<g fill="none" stroke="#d0bb91" stroke-width="1.2" opacity=".8"><path d="M948 291q20 0 33 13m-36-6q20 0 34 13m-36-6q20 0 34 12M1027 291q-20 0-33 13m36-6q-20 0-34 13m36-6q-20 0-34 12"/></g>
+<!-- Overhanging branches framing the sky -->
+<g fill="none" stroke="#71906a" stroke-linecap="round"><path d="M0 93Q70 22 170 0M28 62Q95 55 142 22M62 34Q112 15 213 20" stroke-width="6"/><path d="M1200 0Q1133 19 1099 72M1161 17Q1166 53 1187 81" stroke-width="4"/></g>
+<g color="#8bab76"><use href="#leaf" transform="translate(34 56) rotate(120) scale(.72)"/><use href="#leaf" transform="translate(57 34) rotate(60) scale(.7)"/><use href="#leaf" transform="translate(87 44) rotate(150) scale(.65)"/><use href="#leaf" transform="translate(120 21) rotate(105) scale(.85)"/><use href="#leaf" transform="translate(153 19) rotate(140) scale(.7)"/><use href="#leaf" transform="translate(185 20) rotate(105) scale(.6)"/><use href="#leaf" transform="translate(1150 22) rotate(-120) scale(.7)"/><use href="#leaf" transform="translate(1123 42) rotate(-100) scale(.64)"/><use href="#leaf" transform="translate(1180 63) rotate(130) scale(.6)"/></g>
+<g color="#f8efcf"><use href="#flower" transform="translate(63 29) scale(.55)"/><use href="#flower" transform="translate(165 13) scale(.35)"/></g>
+<!-- Foreground botanical details -->
+<path d="M0 620V563Q87 502 190 575Q234 602 304 620Z" fill="#799d82"/><path d="M1200 620V510Q1121 506 1049 563Q1008 592 969 620Z" fill="#69917a"/>
+<g><use href="#sprig" transform="translate(27 620) scale(1.28)"/><use href="#sprig" transform="translate(73 620) scale(.9)"/><use href="#sprig" transform="translate(118 620) rotate(14) scale(.75)"/><use href="#sprig" transform="translate(1110 620) rotate(-12) scale(1.4)"/><use href="#sprig" transform="translate(1170 620) rotate(16) scale(1.7)"/><use href="#sprig" transform="translate(1056 620) rotate(-10) scale(.95)"/></g>
+<g stroke="#6d8d64" stroke-width="2" fill="none"><path d="M49 620Q47 587 48 558M97 620Q92 581 110 570M1110 620Q1090 571 1102 554M1150 620Q1138 560 1168 544M1058 620Q1048 591 1063 582"/></g>
+<g color="#fff6da"><use href="#flower" transform="translate(48 558) scale(.85)"/><use href="#flower" transform="translate(110 570) scale(.64)"/><use href="#flower" transform="translate(20 588) scale(.57)"/></g>
+<g color="#edb87b"><use href="#flower" transform="translate(1102 554) scale(.92)"/><use href="#flower" transform="translate(1168 544) scale(.8)"/><use href="#flower" transform="translate(1063 582) scale(.6)"/></g>
+<g fill="#f6dfb5" opacity=".85"><path d="M693 110q16-14 25-4q-10 13-25 4Z"/><path d="M840 88q12-12 22-6q-8 14-22 6Z"/><path d="M735 390q13-10 20 0q-9 10-20 0Z"/></g>
+</svg>
