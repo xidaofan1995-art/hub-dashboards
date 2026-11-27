@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>合作价值主张</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2rem; }
+
+      :root {
+        --bg: #fdfdfb;
+        --surface: #ffffff;
+        --surface-2: #f4f4ef;
+        --ink: #1c1f1d;
+        --ink-2: #454b47;
+        --ink-3: #767d78;
+        --line: #e3e4dc;
+        --accent: #0e5f4d;
+        --accent-soft: #e7f1ec;
+        --accent-ink: #0a4638;
+        --warn-bg: #faf3e3;
+        --warn-line: #e6d3a3;
+        --warn-ink: #6d5518;
+        color-scheme: light dark;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #141615;
+          --surface: #1c1f1e;
+          --surface-2: #222625;
+          --ink: #eceee9;
+          --ink-2: #b9beb8;
+          --ink-3: #8b918a;
+          --line: #313633;
+          --accent: #4cc2a4;
+          --accent-soft: #173028;
+          --accent-ink: #8fd8c3;
+          --warn-bg: #2c2513;
+          --warn-line: #57471f;
+          --warn-ink: #e3c87e;
+        }
+      }
+
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+        font-size: 16px;
+        line-height: 1.75;
+      }
+      .page { max-width: 880px; margin: 0 auto; padding: 0 20px 72px; }
+
+      /* ---------- Hero ---------- */
+      .hero { padding: 52px 0 40px; border-bottom: 1px solid var(--line); }
+      .brandline {
+        display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+        font-size: 13px; letter-spacing: .14em; color: var(--ink-3);
+        text-transform: uppercase; margin-bottom: 26px;
+      }
+      .brandline strong { color: var(--accent); font-weight: 700; letter-spacing: .14em; }
+      .hero h1 {
+        font-family: "Noto Serif SC", "Songti SC", serif;
+        font-size: clamp(30px, 6vw, 46px);
+        line-height: 1.3; font-weight: 900; margin: 0 0 18px;
+      }
+      .hero h1 .hl { color: var(--accent); }
+      .hero .lede { font-size: 17px; color: var(--ink-2); margin: 0 0 28px; max-width: 40em; }
+      .hero .lede strong { color: var(--ink); }
+      .hero-facts { display: flex; flex-wrap: wrap; gap: 10px; }
+      .chip {
+        font-size: 13.5px; padding: 7px 14px; border: 1px solid var(--line);
+        border-radius: 999px; background: var(--surface); color: var(--ink-2);
+      }
+      .chip b { color: var(--accent); font-weight: 700; }
+
+      /* ---------- Sections ---------- */
+      section { padding: 42px 0 6px; }
+      .sec-head { margin-bottom: 22px; }
+      .sec-head h2 {
+        font-family: "Noto Serif SC", "Songti SC", serif;
+        font-size: 24px; font-weight: 700; margin: 0 0 6px; line-height: 1.4;
+      }
+      .sec-head p { margin: 0; color: var(--ink-2); font-size: 15px; }
+
+      /* Pain points */
+      .pains { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      .pain {
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 10px; padding: 20px 22px;
+      }
+      .pain h3 { margin: 0 0 8px; font-size: 16.5px; font-weight: 700; }
+      .pain p { margin: 0; font-size: 14.5px; color: var(--ink-2); line-height: 1.7; }
+
+      /* Workflow */
+      .flow { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+      .flow li {
+        display: flex; gap: 18px; padding: 18px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .flow li:last-child { border-bottom: none; }
+      .flow .num {
+        counter-increment: step; flex: 0 0 auto;
+        width: 38px; height: 38px; border-radius: 50%;
+        background: var(--accent-soft); color: var(--accent-ink);
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 700; font-size: 16px; margin-top: 2px;
+      }
+      .flow .num::before { content: counter(step); }
+      .flow h3 { margin: 0 0 4px; font-size: 16.5px; font-weight: 700; }
+      .flow p { margin: 0; font-size: 14.5px; color: var(--ink-2); }
+      .flow .out {
+        display: inline-block; margin-top: 6px; font-size: 13px;
+        color: var(--accent-ink); background: var(--accent-soft);
+        padding: 2px 10px; border-radius: 999px;
+      }
+
+      /* Modes */
+      .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+      .mode {
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 10px; padding: 20px;
+      }
+      .mode .tag { font-size: 12.5px; color: var(--accent); font-weight: 700; letter-spacing: .08em; }
+      .mode h3 { margin: 6px 0 8px; font-size: 17px; font-weight: 700; }
+      .mode p { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.7; }
+      .honest {
+        margin-top: 16px; background: var(--warn-bg); border: 1px solid var(--warn-line);
+        border-radius: 10px; padding: 16px 20px; font-size: 14.5px; color: var(--warn-ink);
+      }
+      .honest strong { font-weight: 700; }
+
+      /* Evidence */
+      .case {
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 12px; padding: 26px 28px; margin-bottom: 14px;
+      }
+      .case-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+      .case-head h3 { margin: 0; font-size: 19px; font-weight: 700; font-family: "Noto Serif SC", "Songti SC", serif; }
+      .badge {
+        font-size: 12.5px; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+        background: var(--accent-soft); color: var(--accent-ink);
+      }
+      .badge.sample { background: var(--surface-2); color: var(--ink-2); }
+      .case .who { margin: 0 0 14px; font-size: 14.5px; color: var(--ink-2); }
+      .deliver { list-style: none; margin: 0 0 18px; padding: 0; }
+      .deliver li {
+        position: relative; padding: 7px 0 7px 26px; font-size: 15px;
+        border-bottom: 1px dashed var(--line);
+      }
+      .deliver li:last-child { border-bottom: none; }
+      .deliver li::before {
+        content: ""; position: absolute; left: 2px; top: 15px;
+        width: 8px; height: 8px; border-radius: 2px; background: var(--accent);
+      }
+      .deliver li span { color: var(--ink-3); font-size: 13.5px; }
+      .case-links { display: flex; flex-wrap: wrap; gap: 10px; }
+      .btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        min-height: 44px; padding: 10px 20px; border-radius: 8px;
+        font-size: 15px; font-weight: 500; text-decoration: none;
+        border: 1px solid var(--accent); color: var(--accent-ink);
+        background: var(--accent-soft);
+      }
+      .btn.ghost { background: transparent; border-color: var(--line); color: var(--ink); }
+      .btn:active { opacity: .75; }
+
+      /* Call guide */
+      .talk { list-style: none; margin: 0; padding: 0; }
+      .talk li {
+        display: flex; gap: 14px; align-items: flex-start;
+        padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 15.5px;
+      }
+      .talk li:last-child { border-bottom: none; }
+      .talk .q {
+        flex: 0 0 auto; font-family: "Noto Serif SC", serif; font-weight: 700;
+        color: var(--accent); font-size: 17px; line-height: 1.6;
+      }
+      .talk small { display: block; color: var(--ink-3); font-size: 13.5px; margin-top: 2px; }
+
+      .steps-strip {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 8px;
+      }
+      .stepbox { background: var(--surface-2); border-radius: 10px; padding: 18px 20px; }
+      .stepbox .s { font-size: 12.5px; font-weight: 700; color: var(--accent); letter-spacing: .1em; }
+      .stepbox h3 { margin: 5px 0 6px; font-size: 16px; }
+      .stepbox p { margin: 0; font-size: 13.5px; color: var(--ink-2); line-height: 1.65; }
+
+      footer {
+        margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line);
+        display: flex; justify-content: space-between; align-items: center;
+        flex-wrap: wrap; gap: 12px; font-size: 13.5px; color: var(--ink-3);
+      }
+      footer a { color: var(--accent); text-decoration: none; font-weight: 500; padding: 8px 0; display: inline-block; }
+
+      @media (max-width: 640px) {
+        .page { padding: 0 16px 56px; }
+        .hero { padding: 36px 0 30px; }
+        .pains, .modes, .steps-strip { grid-template-columns: 1fr; }
+        .case { padding: 22px 20px; }
+        section { padding: 34px 0 4px; }
+      }
+      @media print {
+        body { background: #fff; }
+        .page { max-width: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <p style="margin:0 0 14px"><a href="https://hub.hevoy.cn/" style="display:inline-block;padding:7px 14px;border:1px solid var(--line);border-radius:999px;color:var(--accent);font:600 13px/1.4 'Noto Sans SC',sans-serif;text-decoration:none">← 返回看板中心</a></p>
+
+      <!-- Hero -->
+      <header class="hero">
+        <div class="brandline"><strong>HEVOYAGE</strong><span>AI × 制造业出海 · 合作说明</span></div>
+        <h1>你的工厂不缺产能，<br />缺的是<span class="hl">海外客户找得到你</span>。</h1>
+        <p class="lede">
+          很多工厂给海外品牌代工多年，产品和认证都过硬，但海外买家在网上搜不到你——没有英文站、没有海外社媒、没有独立站，订单只能经过贸易商。
+          我做的事，是用 <strong>AI 工作流</strong>帮这类工厂把海外获客从零跑起来：市场调研、目标客户清单、英文内容、开发信、海外阵地搭建，一条链交付，做你的<strong>出海合伙人</strong>，不是卖课的，也不是代运营。
+        </p>
+        <div class="hero-facts">
+          <span class="chip">首个实践场：<b>苏州特耐五金</b>，市场地图已交付工厂并获确认</span>
+          <span class="chip">首批只谈 <b>2–3 家</b> 试点工厂</span>
+          <span class="chip">不接纯代运营 · <b>不承诺订单量</b></span>
+        </div>
+      </header>
+
+      <!-- Pain points -->
+      <section>
+        <div class="sec-head">
+          <h2>先看看，是不是这几个卡点</h2>
+          <p>这是我筛了大湾区 30 家有代工实力的工厂后，看到的最集中的四种状态。如果占了两条以上，这页下面的内容就是为你写的。</p>
+        </div>
+        <div class="pains">
+          <div class="pain">
+            <h3>有实力，没窗口</h3>
+            <p>验厂、认证、产能都齐全，海外买家却只能通过贸易商认识你，利润和客户关系都不在自己手里。</p>
+          </div>
+          <div class="pain">
+            <h3>想做，没人手</h3>
+            <p>知道该做英文站和海外社媒，但厂里没有懂外贸内容的人，招一个团队又太重，一直拖着。</p>
+          </div>
+          <div class="pain">
+            <h3>做了，没询盘</h3>
+            <p>阿里国际站开着、展会也去，来的询盘要么不对口，要么跟进两封就断了，没有持续的客户开发节奏。</p>
+          </div>
+          <div class="pain">
+            <h3>市场，心里没数</h3>
+            <p>哪个国家、哪类客户最值得打，竞品在海外怎么卖、价格带在哪——没人系统查过，决策全靠感觉。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Workflow -->
+      <section>
+        <div class="sec-head">
+          <h2>我具体做什么：一条 AI 获客链</h2>
+          <p>每一步都有看得见的交付物，不是“帮你运营一下”。AI 负责检索、整理和起草，关键判断和对外沟通由人把关。</p>
+        </div>
+        <ol class="flow">
+          <li>
+            <div class="num"></div>
+            <div>
+              <h3>市场调研与定位</h3>
+              <p>目标市场、需求规模、竞品与价格带、关税与合规，用多路并行检索加证据登记的方式查实，不靠拍脑袋。</p>
+              <span class="out">交付：市场全景图 + 证据登记表</span>
+            </div>
+          </li>
+          <li>
+            <div class="num"></div>
+            <div>
+              <h3>目标客户清单</h3>
+              <p>按你的产品和产能，筛出对口的海外分销商、经销商和品牌方，逐家标注匹配理由和切入点。</p>
+              <span class="out">交付：可直接开打的目标客户名单</span>
+            </div>
+          </li>
+          <li>
+            <div class="num"></div>
+            <div>
+              <h3>英文内容与开发信</h3>
+              <p>产品英文介绍、公司介绍、针对不同客户类型定制的开发信与跟进信，让第一次接触就像内行写的。</p>
+              <span class="out">交付：开发信 + 跟进信模板套装</span>
+            </div>
+          </li>
+          <li>
+            <div class="num"></div>
+            <div>
+              <h3>海外阵地搭建</h3>
+              <p>英文官网或落地页、LinkedIn 等海外社媒账号与内容节奏，让客户搜得到你、查得到你、信得过你。</p>
+              <span class="out">交付：能对外见人的海外门面</span>
+            </div>
+          </li>
+          <li>
+            <div class="num"></div>
+            <div>
+              <h3>询盘跟进与复盘</h3>
+              <p>询盘分级、跟进节奏、回复话术支持；每一轮跑完复盘，把有效打法沉淀成你厂自己的获客手册。</p>
+              <span class="out">交付：跟进节奏表 + 复盘记录</span>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Cooperation modes -->
+      <section>
+        <div class="sec-head">
+          <h2>怎么合作：三种方式，谈得拢再开始</h2>
+          <p>具体用哪种、怎么收费，要等摸底和验厂之后坐下来谈——先把丑话说在前面。</p>
+        </div>
+        <div class="modes">
+          <div class="mode">
+            <div class="tag">方式一</div>
+            <h3>联合开拓</h3>
+            <p>深度绑定一个品类或市场，一起投入、一起开发客户，按谈定的方式分担成本与收益。适合决心大、想认真做自有海外渠道的工厂。</p>
+          </div>
+          <div class="mode">
+            <div class="tag">方式二</div>
+            <h3>AI 工作流植入</h3>
+            <p>把整套 AI 获客工作流搭进你厂里，培训你的人能自己跑，我在关键节点把关。适合有外贸团队、想提效的工厂。</p>
+          </div>
+          <div class="mode">
+            <div class="tag">方式三</div>
+            <h3>轻合作 · 单次项目</h3>
+            <p>先做一件具体的事：一份市场调研、一批客户清单、一套开发信。低成本试一轮，看到东西再谈长期。</p>
+          </div>
+        </div>
+        <div class="honest">
+          <strong>先说清两条：</strong>我不接纯代运营——账号和客户资产必须长在你厂自己名下；我也不承诺订单量——获客链路我负责跑通、跑实，订单最终取决于产品、价格和你的交付，这一点谁承诺谁就是在骗你。
+        </div>
+      </section>
+
+      <!-- Evidence -->
+      <section>
+        <div class="sec-head">
+          <h2>实证：这不是概念，已经有工厂拿到产出</h2>
+          <p>下面是第一个实践场已经做出的产出，每条都标了实际状态（哪条交给了工厂、哪条还在手边，一条一条写清），和一家用户点名要重点合作的同类工厂。点开链接就能看到真实产出。</p>
+        </div>
+
+        <article class="case">
+          <div class="case-head">
+            <h3>苏州特耐五金</h3>
+            <span class="badge">实证案例 · 状态见每条标注</span>
+          </div>
+          <p class="who">十五年精密紧固件制造商：M1.2–M12 微型精密螺丝、CNC 精密零件、防松涂覆螺丝；200 余台台日进口设备，苏州 / 东莞 / 越南三地交付，通过 IATF 16949、ISO 9001、ISO 14001。和大湾区很多工厂一样：实力过硬，海外获客从零开始。</p>
+          <ul class="deliver">
+            <li>紧固件市场全景图 <span>—— 已交付工厂方并获确认，作为对外沟通与内部定方向的底图</span></li>
+            <li>24 家海外目标分销商清单 <span>—— 逐家匹配特耐产品线，附切入角度；状态：已完成的产出，是做给决策方本人看的，未交给工厂（以实际交付记录为准）</span></li>
+            <li>英文开发信三件套 <span>—— 初次信 + 两封跟进信 + 按分销商类型定制的要点，已备好、待小批量试发验证</span></li>
+            <li>「精密微型螺丝 × AI 服务器」专项调研 <span>—— 完整调研流水线跑通：市场规模、竞品占位、关税逐项核实，109 条证据登记，结论带明确的 Go / Hold 条件；状态：已完成的产出，是做给决策方本人看的，未交给工厂（以实际交付记录为准）</span></li>
+          </ul>
+          <div class="case-links">
+            <a class="btn" href="https://hub.hevoy.cn/" target="_blank" rel="noopener">看实证产出 · 看板中心</a>
+            <a class="btn ghost" href="https://www.tnhardware.cn" target="_blank" rel="noopener">特耐官网 tnhardware.cn</a>
+          </div>
+        </article>
+
+        <article class="case">
+          <div class="case-head">
+            <h3>顺羽皮具</h3>
+            <span class="badge sample">点名要谈的同类工厂</span>
+          </div>
+          <p class="who">
+            皮具工厂，是我点名要重点合作的同类对象之一。它具体属于哪种情形——有海外代工经验但没布局海外渠道，还是没做过外贸但有代工潜力——要在第一次接触时当面核实，这正是下面首谈五问里 Q1、Q3 要问清的。
+            但画像是清楚的：这类工厂不缺产品和产能，缺的是被海外客户看见、被找上门、被持续跟进。在特耐验证过的做法，换到皮具品类同样成立：先查市场和客户，再建阵地，再持续开发。
+          </p>
+          <div class="case-links">
+            <a class="btn ghost" href="https://hevoy.cn" target="_blank" rel="noopener">合作方式总览 · hevoy.cn</a>
+          </div>
+        </article>
+      </section>
+
+      <!-- First call -->
+      <section>
+        <div class="sec-head">
+          <h2>第一次通话，我们聊这五件事</h2>
+          <p>不谈价格，先互相摸底。聊完你觉得不对路，随时停，没有任何绑定。</p>
+        </div>
+        <ol class="talk">
+          <li><span class="q">Q1</span><div>现在外贸走什么渠道？<small>自营、贸易商还是平台——先搞清你现在离海外客户有多远。</small></div></li>
+          <li><span class="q">Q2</span><div>想做海外社媒和独立站，卡在哪？<small>没人、没内容、还是不知道从哪下手——卡点不同，打法完全不同。</small></div></li>
+          <li><span class="q">Q3</span><div>代工过哪些海外品牌，能看凭证吗？<small>订单或验厂报告看一眼，是后面所有对外背书的底气。</small></div></li>
+          <li><span class="q">Q4</span><div>产能和交期还有多少余量？<small>新客户进来接不接得住，要不要扩产，先有个数。</small></div></li>
+          <li><span class="q">Q5</span><div>合作方式哪种能接受？<small>联合开拓、工作流植入、单次项目——先对齐预期，再谈细节。</small></div></li>
+        </ol>
+
+        <div class="steps-strip">
+          <div class="stepbox">
+            <div class="s">第一步</div>
+            <h3>电话摸底</h3>
+            <p>就是上面五件事，半小时左右。核实接单路径、你的出海意愿、品牌背书。</p>
+          </div>
+          <div class="stepbox">
+            <div class="s">第二步</div>
+            <h3>实地验厂</h3>
+            <p>看产线、看认证原件、看代工凭证。实力对得上宣传，才往下谈。</p>
+          </div>
+          <div class="stepbox">
+            <div class="s">第三步</div>
+            <h3>试点启动</h3>
+            <p>从一个市场、一批客户清单开始跑，用真实结果决定要不要扩大合作。</p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <span>HEVOYAGE · 帮工厂用 AI 跑海外获客</span>
+        <a href="https://hevoy.cn" target="_blank" rel="noopener">hevoy.cn — 了解更多与联系方式</a>
+      </footer>
+
+    </div>
+  </body>
+</html>
